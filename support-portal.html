@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCS OS — System Health &amp; Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --qcs-espresso:#241811; --qcs-espresso-2:#2E211A; --qcs-ink:#211915;
+    --qcs-red:#C33A2B; --qcs-red-light:#DB574A; --qcs-red-deep:#9E2C20;
+    --qcs-copper:#B27A45; --qcs-copper-deep:#8A5C31; --qcs-copper-tint:#F0E4D4;
+    --page:#F5F1EB; --paper:#FFFFFF; --linen-2:#FBF7F1; --bone:#F1EADF;
+    --border:#E7DECF; --border-strong:#D8CCB8;
+    --text-primary:#241811; --text-secondary:#5C5148; --text-muted:#8C8074;
+    --text-on-dark:#F5F1EB; --text-on-dark-soft:rgba(245,241,235,.64);
+    --success:#3F8C6E; --success-soft:#DDEFE7; --warning:#C9852E; --warning-soft:#F8EED6; --info:#3C6E9E; --info-soft:#DEEAF3;
+    --font-display:'Space Grotesk',-apple-system,sans-serif;
+    --font-sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+    --ls-wide:.08em; --ls-wider:.16em;
+    --r-sm:6px; --r-md:9px; --r-lg:12px; --r-xl:16px; --r-pill:999px;
+    --shadow-card:0 1px 3px rgba(36,24,17,.05), 0 6px 20px rgba(36,24,17,.05);
+    --s-2:6px;--s-3:10px;--s-4:14px;--s-5:18px;--s-6:24px;--s-8:32px;--s-10:44px;--s-12:56px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--text-primary);font-family:var(--font-sans);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:var(--s-12)}
+  a{color:inherit;text-decoration:none}
+
+  .pkg-bar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:16px;background:#1B120D;border-bottom:1px solid #3A2A20;padding:0 22px;height:44px}
+  .pkg-bar .home{display:flex;align-items:center;gap:9px;color:var(--qcs-copper);font-weight:600;font-size:13px;letter-spacing:.03em;white-space:nowrap}
+  .pkg-bar .links{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+  .pkg-bar .links a{color:#C9BCA9;font-size:12.5px;padding:6px 12px;border-radius:7px;white-space:nowrap;transition:.15s}
+  .pkg-bar .links a:hover{color:#fff;background:rgba(245,241,235,.08)}
+  .pkg-bar .links a.on{color:#1B120D;background:var(--qcs-copper);font-weight:600}
+  @media(max-width:700px){.pkg-bar .links a:not(.on){display:none}}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:0 var(--s-8)}
+
+  /* header banner */
+  .banner{background:var(--qcs-espresso);color:var(--text-on-dark);border-bottom:4px solid var(--success);padding:var(--s-10) 0 var(--s-8)}
+  .banner .row{display:flex;align-items:flex-start;gap:var(--s-6);flex-wrap:wrap}
+  .banner .kick{font-size:11px;font-weight:700;letter-spacing:var(--ls-wider);text-transform:uppercase;color:var(--qcs-copper)}
+  .banner h1{font-family:var(--font-display);font-weight:600;font-size:clamp(1.8rem,3.4vw,2.4rem);letter-spacing:-.02em;margin-top:var(--s-3)}
+  .banner .big-status{margin-left:auto;text-align:right}
+  .statuspill{display:inline-flex;align-items:center;gap:9px;background:rgba(63,140,110,.18);border:1px solid rgba(63,140,110,.5);color:#8FD9BE;font-weight:600;font-size:14px;padding:8px 16px;border-radius:var(--r-pill)}
+  .statuspill .beat{width:9px;height:9px;border-radius:50%;background:#3FCF8E;box-shadow:0 0 0 0 rgba(63,207,142,.6);animation:beat 2s infinite}
+  @keyframes beat{0%{box-shadow:0 0 0 0 rgba(63,207,142,.5)}70%{box-shadow:0 0 0 8px rgba(63,207,142,0)}100%{box-shadow:0 0 0 0 rgba(63,207,142,0)}}
+  .banner .clk{font-family:var(--font-mono);font-size:11.5px;color:var(--text-on-dark-soft);margin-top:8px}
+
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-4);margin-top:var(--s-8)}
+  @media(max-width:820px){.kpis{grid-template-columns:1fr 1fr}}
+  .kpi{background:rgba(245,241,235,.05);border:1px solid rgba(245,241,235,.12);border-radius:var(--r-lg);padding:var(--s-5)}
+  .kpi .kl{font-size:11px;letter-spacing:var(--ls-wide);text-transform:uppercase;color:var(--text-on-dark-soft)}
+  .kpi .kv{font-family:var(--font-display);font-weight:600;font-size:26px;color:#fff;margin-top:5px;line-height:1}
+  .kpi .ks{font-size:11.5px;color:var(--qcs-copper);margin-top:5px}
+
+  main{padding-top:var(--s-10)}
+  .block{margin-bottom:var(--s-10)}
+  .block-head{display:flex;align-items:baseline;gap:var(--s-4);margin-bottom:var(--s-5)}
+  .block-head h2{font-family:var(--font-display);font-size:19px;font-weight:600;color:var(--qcs-ink)}
+  .block-head .hint{font-size:12.5px;color:var(--text-muted);margin-left:auto}
+
+  .grid{display:grid;gap:var(--s-4)}
+  .g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:1fr 1fr} .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:900px){.g3,.g4{grid-template-columns:1fr 1fr}} @media(max-width:620px){.grid{grid-template-columns:1fr}}
+
+  .card{background:var(--paper);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s-5);box-shadow:var(--shadow-card)}
+  .svc{display:flex;align-items:center;gap:var(--s-4)}
+  .svc .sd{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+  .sd.ok{background:var(--success)} .sd.warn{background:var(--warning)} .sd.info{background:var(--info)} .sd.idle{background:#B9AE9E}
+  .svc .st{flex:1}
+  .svc .st b{font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--qcs-ink);display:block}
+  .svc .st small{font-size:12px;color:var(--text-secondary)}
+  .badge{font-size:10.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:4px 9px;border-radius:var(--r-pill)}
+  .b-ok{background:var(--success-soft);color:#2c6552} .b-warn{background:var(--warning-soft);color:var(--qcs-copper-deep)} .b-info{background:var(--info-soft);color:#2f587e} .b-idle{background:var(--bone);color:var(--text-muted)}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{font-size:11px;letter-spacing:var(--ls-wide);text-transform:uppercase;color:var(--text-muted);font-weight:700}
+  td{color:var(--text-secondary)} td b{color:var(--qcs-ink);font-weight:600}
+  tr:last-child td{border-bottom:0}
+
+  /* release timeline */
+  .rel{display:flex;gap:var(--s-4);padding:var(--s-4) 0;border-bottom:1px solid var(--border)}
+  .rel:last-child{border-bottom:0}
+  .rel .rm{flex-shrink:0;width:52px;font-family:var(--font-display);font-weight:700;font-size:15px;color:var(--qcs-red)}
+  .rel .rc{flex:1}
+  .rel .rc b{font-family:var(--font-display);font-weight:600;font-size:14.5px;color:var(--qcs-ink)}
+  .rel .rc p{font-size:12.5px;color:var(--text-secondary);margin-top:2px}
+  .rel .rd{flex-shrink:0;text-align:right}
+  .rel .rd .date{font-family:var(--font-mono);font-size:11.5px;color:var(--text-muted)}
+
+  /* support form */
+  .support{display:grid;grid-template-columns:1.3fr 1fr;gap:var(--s-5)}
+  @media(max-width:820px){.support{grid-template-columns:1fr}}
+  .form label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--text-secondary);margin:var(--s-4) 0 6px}
+  .form input,.form select,.form textarea{width:100%;font-family:var(--font-sans);font-size:14px;color:var(--qcs-ink);background:var(--linen-2);border:1px solid var(--border);border-radius:var(--r-md);padding:10px 12px}
+  .form textarea{resize:vertical;min-height:78px}
+  .form .btn{margin-top:var(--s-5);width:100%;font-family:var(--font-sans);font-weight:600;font-size:15px;color:#fff;background:var(--qcs-red);border:none;border-radius:var(--r-md);padding:12px;cursor:pointer;transition:.15s}
+  .form .btn:hover{background:var(--qcs-red-deep)}
+  .sla{font-size:13px;color:var(--text-secondary)}
+  .sla .srow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)}
+  .sla .srow:last-child{border-bottom:0}
+  .sla .srow b{color:var(--qcs-ink);font-weight:600}
+  .contact{margin-top:var(--s-5);background:var(--qcs-espresso);color:var(--text-on-dark);border-radius:var(--r-lg);padding:var(--s-5)}
+  .contact .cl{font-size:11px;letter-spacing:var(--ls-wide);text-transform:uppercase;color:var(--qcs-copper)}
+  .contact .cv{font-size:14px;margin-top:4px;color:var(--text-on-dark)}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--success);color:#fff;font-weight:600;font-size:14px;padding:12px 20px;border-radius:var(--r-pill);box-shadow:0 10px 30px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:.3s}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  footer{color:var(--text-muted);text-align:center;font-size:12px;padding:var(--s-8) 0 0}
+</style>
+</head>
+<body>
+
+<div class="pkg-bar">
+  <a class="home" href="#top">
+    <svg width="17" height="17" viewBox="0 0 48 48" fill="none"><path d="M12 20h20a2 2 0 0 1 2 2v3a11 11 0 0 1-11 11h-2A11 11 0 0 1 10 25v-3a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="3.2"/><path d="M34 22h4a5 5 0 0 1 0 10h-4" stroke="currentColor" stroke-width="3.2"/><path d="M18 8c-1.5 2-1.5 3.5 0 5.5M24 7c-1.5 2-1.5 3.5 0 5.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    Quality Coffee Systems
+  </a>
+  <div class="links">
+    <a href="information-request.html">Information Request</a>
+    <a href="delivery-1-plan.html">Delivery 1 Plan</a>
+    <a class="on" href="#top">Support Portal</a>
+    <a href="#">Operating System</a>
+  </div>
+</div>
+
+<div class="banner" id="top">
+  <div class="wrap">
+    <div class="row">
+      <div>
+        <div class="kick">QCS Operating System · Health &amp; Support</div>
+        <h1>Your system, at a glance</h1>
+      </div>
+      <div class="big-status">
+        <span class="statuspill"><span class="beat"></span>All systems operational</span>
+        <div class="clk" id="clk">Last checked —</div>
+      </div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="kl">Uptime · 30 days</div><div class="kv">99.98%</div><div class="ks">▲ within target</div></div>
+      <div class="kpi"><div class="kl">Avg response</div><div class="kv">182<span style="font-size:14px">ms</span></div><div class="ks">API &amp; app</div></div>
+      <div class="kpi"><div class="kl">Open tickets</div><div class="kv" id="kpi-tickets">1</div><div class="ks">0 urgent</div></div>
+      <div class="kpi"><div class="kl">Current phase</div><div class="kv" style="font-size:19px">Delivery 1</div><div class="ks">M1 · in progress</div></div>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <!-- module health -->
+  <div class="block">
+    <div class="block-head"><h2>Module health</h2><span class="hint">Live modules and those coming online in your sprints</span></div>
+    <div class="grid g3">
+      <div class="card svc"><span class="sd ok"></span><div class="st"><b>ERP Core</b><small>Inventory · Purchasing · Sales · Parts</small></div><span class="badge b-warn">Provisioning · M1</span></div>
+      <div class="card svc"><span class="sd ok"></span><div class="st"><b>Machines</b><small>Catalogue · stock · warranty</small></div><span class="badge b-warn">Provisioning · M1</span></div>
+      <div class="card svc"><span class="sd ok"></span><div class="st"><b>Control Centre</b><small>KPIs · needs-attention · feed</small></div><span class="badge b-warn">Provisioning · M1</span></div>
+      <div class="card svc"><span class="sd info"></span><div class="st"><b>Booking &amp; CRM</b><small>Inbox · accounts · booking</small></div><span class="badge b-info">On · populating</span></div>
+      <div class="card svc"><span class="sd info"></span><div class="st"><b>Service &amp; Dispatch</b><small>Tasks · routes · POD</small></div><span class="badge b-info">On · populating</span></div>
+      <div class="card svc"><span class="sd info"></span><div class="st"><b>Reports</b><small>Sales · service · inventory</small></div><span class="badge b-info">Baseline</span></div>
+    </div>
+  </div>
+
+  <!-- integrations -->
+  <div class="block">
+    <div class="block-head"><h2>Connections &amp; infrastructure</h2><span class="hint">The systems your OS talks to</span></div>
+    <div class="grid g4">
+      <div class="card svc"><span class="sd ok"></span><div class="st"><b>Atelio backbone</b><small>Tenant · database</small></div><span class="badge b-ok">Operational</span></div>
+      <div class="card svc"><span class="sd idle"></span><div class="st"><b>WooCommerce</b><small>Catalogue · web orders</small></div><span class="badge b-idle">Awaiting keys</span></div>
+      <div class="card svc"><span class="sd idle"></span><div class="st"><b>Outlook / M365</b><small>Email · calendar</small></div><span class="badge b-idle">Later sprint</span></div>
+      <div class="card svc"><span class="sd ok"></span><div class="st"><b>Hosting &amp; backups</b><small>Daily snapshots</small></div><span class="badge b-ok">Operational</span></div>
+    </div>
+  </div>
+
+  <!-- releases + tickets -->
+  <div class="block">
+    <div class="grid g2">
+      <div class="card">
+        <div class="block-head" style="margin-bottom:var(--s-3)"><h2 style="font-size:16px">Delivery log</h2></div>
+        <div class="rel"><div class="rm">M1</div><div class="rc"><b>ERP · Machines · Control Centre live</b><p>Ready modules online on real data</p></div><div class="rd"><div class="date">Jul 31</div><span class="badge b-warn">In progress</span></div></div>
+        <div class="rel"><div class="rm">M2</div><div class="rc"><b>Booking &amp; CRM populated</b><p>Customer accounts + shared inbox</p></div><div class="rd"><div class="date">Aug 14</div><span class="badge b-idle">Scheduled</span></div></div>
+        <div class="rel"><div class="rm">M3</div><div class="rc"><b>Service &amp; Dispatch populated</b><p>Serial registry + technician routes</p></div><div class="rd"><div class="date">Sep 4</div><span class="badge b-idle">Scheduled</span></div></div>
+        <div class="rel"><div class="rm">M4</div><div class="rc"><b>Payments &amp; portals</b><p>Payment links + tiered client portals</p></div><div class="rd"><div class="date">Sep 18</div><span class="badge b-idle">Scheduled</span></div></div>
+        <div class="rel"><div class="rm">M5</div><div class="rc"><b>Full go-live</b><p>HR, reporting depth, accounting cutover</p></div><div class="rd"><div class="date">Oct 2</div><span class="badge b-idle">Scheduled</span></div></div>
+      </div>
+      <div class="card">
+        <div class="block-head" style="margin-bottom:var(--s-3)"><h2 style="font-size:16px">Open support requests</h2></div>
+        <table id="tickets">
+          <thead><tr><th>Ref</th><th>Subject</th><th>Priority</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td><b>#1042</b></td><td>Kickoff &amp; intake coordination</td><td>Normal</td><td><span class="badge b-info">Open</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- support -->
+  <div class="block">
+    <div class="block-head"><h2>Get support</h2><span class="hint">We're on your Teams channel too — this logs a tracked request</span></div>
+    <div class="support">
+      <div class="card">
+        <form class="form" id="supForm" onsubmit="return submitTicket(event)">
+          <label for="s_subj">Subject</label>
+          <input id="s_subj" required placeholder="e.g. A price looks wrong on the JURA GIGA X8">
+          <label for="s_pri">Priority</label>
+          <select id="s_pri"><option>Normal</option><option>Low</option><option>High</option><option>Urgent — system down</option></select>
+          <label for="s_desc">What's happening?</label>
+          <textarea id="s_desc" placeholder="Tell us what you saw, and where in the OS."></textarea>
+          <button class="btn" type="submit">Submit request</button>
+        </form>
+      </div>
+      <div>
+        <div class="card">
+          <div class="block-head" style="margin-bottom:var(--s-2)"><h2 style="font-size:15px">Response targets</h2></div>
+          <div class="sla">
+            <div class="srow"><span>Urgent — system down</span><b>1 business hour</b></div>
+            <div class="srow"><span>High</span><b>Same business day</b></div>
+            <div class="srow"><span>Normal</span><b>1 business day</b></div>
+            <div class="srow"><span>Low / enhancement</span><b>Next release cycle</b></div>
+          </div>
+        </div>
+        <div class="contact">
+          <div class="cl">Your support team</div>
+          <div class="cv">Atelio · built &amp; run by Forma</div>
+          <div class="cl" style="margin-top:12px">Fastest route</div>
+          <div class="cv">The QCS channel on Microsoft Teams</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>QCS Operating System · Health &amp; Support · Powered by Atelio — a Forma platform · Demo portal, sample metrics</footer>
+</main>
+
+<div class="toast" id="toast">Request logged — we'll be in touch</div>
+
+<script>
+(function(){
+  function tick(){
+    var d=new Date();
+    var s=d.toLocaleString('en-CA',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    var el=document.getElementById('clk'); if(el) el.textContent='Last checked '+s;
+  }
+  tick(); setInterval(tick,1000);
+  var ref=1042;
+  window.submitTicket=function(e){
+    e.preventDefault();
+    var subj=document.getElementById('s_subj').value.trim();
+    var pri=document.getElementById('s_pri').value;
+    if(!subj) return false;
+    ref++;
+    var tb=document.querySelector('#tickets tbody');
+    var tr=document.createElement('tr');
+    var pcls = pri.indexOf('Urgent')>-1?'b-warn':(pri.indexOf('High')>-1?'b-warn':'b-info');
+    tr.innerHTML='<td><b>#'+ref+'</b></td><td>'+subj.replace(/</g,'&lt;')+'</td><td>'+pri.split(' —')[0]+'</td><td><span class="badge '+pcls+'">Open</span></td>';
+    tb.insertBefore(tr,tb.firstChild);
+    document.getElementById('kpi-tickets').textContent=tb.querySelectorAll('tr').length;
+    document.getElementById('supForm').reset();
+    var t=document.getElementById('toast'); t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},2600);
+    return false;
+  };
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quality Coffee Systems — Delivery 1 Plan &amp; Runbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --qcs-espresso:#241811; --qcs-espresso-2:#2E211A; --qcs-ink:#211915;
+    --qcs-red:#C33A2B; --qcs-red-light:#DB574A; --qcs-red-deep:#9E2C20;
+    --qcs-copper:#B27A45; --qcs-copper-deep:#8A5C31; --qcs-copper-tint:#F0E4D4;
+    --page:#F5F1EB; --paper:#FFFFFF; --linen-2:#FBF7F1; --bone:#F1EADF;
+    --border:#E7DECF; --border-strong:#D8CCB8;
+    --text-primary:#241811; --text-secondary:#5C5148; --text-muted:#8C8074;
+    --text-on-dark:#F5F1EB; --text-on-dark-soft:rgba(245,241,235,.64);
+    --success:#3F8C6E; --warning:#C9852E; --info:#3C6E9E;
+    --font-display:'Space Grotesk',-apple-system,sans-serif;
+    --font-sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+    --ls-tight:-0.02em; --ls-wide:.08em; --ls-wider:.16em;
+    --r-sm:6px; --r-md:9px; --r-lg:12px; --r-xl:16px; --r-pill:999px;
+    --shadow-card:0 1px 3px rgba(36,24,17,.05), 0 6px 20px rgba(36,24,17,.05);
+    --s-2:6px;--s-3:10px;--s-4:14px;--s-5:18px;--s-6:24px;--s-8:32px;--s-10:44px;--s-12:56px;--s-16:80px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--text-primary);font-family:var(--font-sans);line-height:1.62;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  .pkg-bar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:16px;background:#1B120D;border-bottom:1px solid #3A2A20;padding:0 22px;height:44px}
+  .pkg-bar .home{display:flex;align-items:center;gap:9px;color:var(--qcs-copper);font-weight:600;font-size:13px;letter-spacing:.03em;white-space:nowrap}
+  .pkg-bar .links{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+  .pkg-bar .links a{color:#C9BCA9;font-size:12.5px;padding:6px 12px;border-radius:7px;white-space:nowrap;transition:.15s}
+  .pkg-bar .links a:hover{color:#fff;background:rgba(245,241,235,.08)}
+  .pkg-bar .links a.on{color:#1B120D;background:var(--qcs-copper);font-weight:600}
+  @media(max-width:700px){.pkg-bar .links a:not(.on){display:none}}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:0 var(--s-8)}
+  section{padding:var(--s-12) 0;border-bottom:1px solid var(--border)}
+  section:last-of-type{border-bottom:0}
+  .eyebrow{display:block;font-size:11px;font-weight:700;letter-spacing:var(--ls-wide);text-transform:uppercase;color:var(--qcs-copper-deep);margin-bottom:var(--s-3)}
+  .sec-head{max-width:780px;margin-bottom:var(--s-8)}
+  .sec-head h2{font-family:var(--font-display);font-size:28px;font-weight:600;letter-spacing:var(--ls-tight);line-height:1.14;color:var(--qcs-ink)}
+  .sec-head p{margin-top:var(--s-4);font-size:15.5px;color:var(--text-secondary)}
+
+  .hero{background:var(--qcs-espresso);color:var(--text-on-dark);border-bottom:5px solid var(--qcs-red);padding:var(--s-16) 0 var(--s-12);position:relative;overflow:hidden}
+  .hero .kicker{font-size:11px;font-weight:700;letter-spacing:var(--ls-wider);text-transform:uppercase;color:var(--qcs-copper)}
+  .hero h1{font-family:var(--font-display);font-weight:600;font-size:clamp(2rem,4.6vw,3.1rem);line-height:1.06;letter-spacing:var(--ls-tight);margin:var(--s-5) 0}
+  .hero h1 em{font-style:normal;color:var(--qcs-red-light)}
+  .hero .lede{max-width:660px;font-size:17.5px;color:var(--text-on-dark-soft);line-height:1.5}
+  .hero .meta{display:flex;flex-wrap:wrap;gap:var(--s-8);margin-top:var(--s-8);padding-top:var(--s-6);border-top:1px solid rgba(245,241,235,.16)}
+  .hero .meta .k{display:block;font-size:11px;letter-spacing:var(--ls-wide);text-transform:uppercase;color:var(--text-on-dark-soft);margin-bottom:4px}
+  .hero .meta .v{display:block;font-size:14px;color:var(--text-on-dark);font-weight:600}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-5)}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5)}
+  @media(max-width:840px){.grid2,.grid3{grid-template-columns:1fr}}
+  .mod{background:var(--paper);border:1px solid var(--border);border-radius:var(--r-xl);padding:var(--s-6);box-shadow:var(--shadow-card);border-top:4px solid var(--acc)}
+  .mod h4{font-family:var(--font-display);font-weight:600;font-size:16.5px;color:var(--qcs-ink)}
+  .mod .tag{font-size:11px;font-weight:700;letter-spacing:var(--ls-wide);text-transform:uppercase;color:var(--qcs-copper-deep);margin-top:2px}
+  .mod ul{list-style:none;margin-top:var(--s-4)}
+  .mod li{font-size:13.5px;color:var(--text-secondary);padding:5px 0 5px 20px;position:relative}
+  .mod li::before{content:'';position:absolute;left:2px;top:12px;width:6px;height:6px;border-radius:50%;background:var(--acc)}
+  .statusrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;margin-top:var(--s-4);padding:4px 10px;border-radius:var(--r-pill)}
+  .st-live{background:#DDEFE7;color:#2c6552} .st-on{background:var(--qcs-copper-tint);color:var(--qcs-copper-deep)}
+
+  /* timeline */
+  .tl{position:relative;margin-top:var(--s-4);padding-left:34px}
+  .tl::before{content:'';position:absolute;left:11px;top:6px;bottom:6px;width:2px;background:var(--border-strong)}
+  .day{position:relative;padding:var(--s-4) 0}
+  .day .dot{position:absolute;left:-28px;top:19px;width:14px;height:14px;border-radius:50%;background:var(--qcs-red);border:3px solid var(--page)}
+  .day .d{font-family:var(--font-mono);font-size:11.5px;font-weight:600;color:var(--qcs-red-deep);text-transform:uppercase;letter-spacing:.04em}
+  .day h4{font-family:var(--font-display);font-weight:600;font-size:16px;color:var(--qcs-ink);margin:2px 0 3px}
+  .day p{font-size:14px;color:var(--text-secondary);max-width:680px}
+  .day .who{display:inline-block;margin-top:6px;font-size:11px;font-family:var(--font-mono);color:var(--text-muted)}
+
+  table{width:100%;border-collapse:collapse;margin-top:var(--s-5);font-size:13.5px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top}
+  th{font-size:11px;letter-spacing:var(--ls-wide);text-transform:uppercase;color:var(--text-muted);font-weight:700}
+  td{color:var(--text-secondary)} td b{color:var(--qcs-ink);font-weight:600}
+  tr:last-child td{border-bottom:0}
+  .pill{display:inline-block;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:var(--r-pill)}
+  .pill.qcs{background:#FBE4E0;color:var(--qcs-red-deep)} .pill.forma{background:var(--qcs-copper-tint);color:var(--qcs-copper-deep)}
+
+  .ac{display:flex;gap:var(--s-4);padding:var(--s-4) 0;border-top:1px solid var(--border)}
+  .ac:first-child{border-top:0}
+  .ac .chk{flex-shrink:0;width:24px;height:24px;border-radius:6px;border:2px solid var(--success);color:var(--success);display:grid;place-items:center;margin-top:1px}
+  .ac p{font-size:14.5px;color:var(--text-secondary)} .ac p b{color:var(--qcs-ink);font-weight:600}
+
+  .note{background:var(--paper);border:1px solid var(--border);border-left:4px solid var(--qcs-copper);border-radius:var(--r-lg);padding:var(--s-5) var(--s-6);box-shadow:var(--shadow-card);max-width:840px;margin-top:var(--s-6)}
+  .note h3{font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--qcs-ink);margin-bottom:var(--s-2)}
+  .note p{font-size:14px;color:var(--text-secondary)} .note strong{color:var(--qcs-ink);font-weight:600}
+
+  .deliv{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-4);margin-top:var(--s-4)}
+  @media(max-width:840px){.deliv{grid-template-columns:1fr 1fr}}
+  .dcard{background:var(--paper);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s-5);box-shadow:var(--shadow-card)}
+  .dcard .ic{width:38px;height:38px;border-radius:10px;background:var(--qcs-espresso);color:var(--qcs-copper);display:grid;place-items:center;margin-bottom:var(--s-3)}
+  .dcard h4{font-family:var(--font-display);font-weight:600;font-size:14.5px;color:var(--qcs-ink)}
+  .dcard p{font-size:12.5px;color:var(--text-secondary);margin-top:3px}
+
+  footer{background:var(--qcs-espresso);color:var(--text-on-dark-soft);padding:var(--s-10) 0;text-align:center}
+  footer .fwm{font-family:var(--font-display);font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--qcs-copper);font-size:1rem}
+  footer p{font-size:12.5px;margin-top:var(--s-3)}
+</style>
+</head>
+<body>
+
+<div class="pkg-bar">
+  <a class="home" href="#top">
+    <svg width="17" height="17" viewBox="0 0 48 48" fill="none"><path d="M12 20h20a2 2 0 0 1 2 2v3a11 11 0 0 1-11 11h-2A11 11 0 0 1 10 25v-3a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="3.2"/><path d="M34 22h4a5 5 0 0 1 0 10h-4" stroke="currentColor" stroke-width="3.2"/><path d="M18 8c-1.5 2-1.5 3.5 0 5.5M24 7c-1.5 2-1.5 3.5 0 5.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    Quality Coffee Systems
+  </a>
+  <div class="links">
+    <a href="information-request.html">Information Request</a>
+    <a class="on" href="#top">Delivery 1 Plan</a>
+    <a href="support-portal.html">Support Portal</a>
+    <a href="#">Project Plan</a>
+    <a href="#">Operating System</a>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="kicker">Delivery 1 · Week 1 / Milestone M1 · Runbook</div>
+    <h1>Your ERP goes live<br><em>in the first week.</em></h1>
+    <p class="lede">Delivery 1 brings the modules that are already built online on your real data — the ERP core, Machines and Control Centre — with Booking/CRM and Service switched on and populated as their data arrives. This is the plan, the sequence, and exactly what "done" means.</p>
+    <div class="meta">
+      <div><span class="k">Window</span><span class="v">Mon Jul 27 → Fri Jul 31, 2026</span></div>
+      <div><span class="k">Milestone</span><span class="v">M1 · Ready modules live</span></div>
+      <div><span class="k">Critical path</span><span class="v">Delivery-1 intake data</span></div>
+      <div><span class="k">Backbone</span><span class="v">Atelio · tenant provisioned</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- Scope -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">What ships in Delivery 1</span>
+      <h2>ERP-led, with every ready module switched on</h2>
+      <p>Three modules go live on your real data this week. The other two are already built and turned on for your team to explore — they fill with real records as we reach the CRM and Service sprints.</p>
+    </div>
+    <div class="grid3">
+      <div class="mod" style="--acc:var(--success)">
+        <h4>ERP Core</h4><div class="tag">Live on real data</div>
+        <ul><li>Inventory — showroom, warehouse &amp; vans</li><li>Purchasing &amp; suppliers with lead times</li><li>Sales orders &amp; invoicing</li><li>Parts &amp; warranty registry</li></ul>
+        <span class="statusrow st-live">● Live · M1</span>
+      </div>
+      <div class="mod" style="--acc:#7A4535">
+        <h4>Machines</h4><div class="tag">Live on real data</div>
+        <ul><li>Catalogue by type &amp; segment</li><li>Price, stock &amp; parts per model</li><li>Warranty terms + service-history shell</li><li>Seeded from your real catalogue</li></ul>
+        <span class="statusrow st-live">● Live · M1</span>
+      </div>
+      <div class="mod" style="--acc:var(--qcs-red)">
+        <h4>Control Centre</h4><div class="tag">Live on real data</div>
+        <ul><li>KPIs across sales, stock &amp; service</li><li>"Needs attention" — low stock, overdue</li><li>Cross-module activity feed</li><li>One launcher for the team</li></ul>
+        <span class="statusrow st-live">● Live · M1</span>
+      </div>
+      <div class="mod" style="--acc:#7A5C9E">
+        <h4>Booking &amp; CRM</h4><div class="tag">On — fills in CRM sprint</div>
+        <ul><li>Switched on for your team now</li><li>Shared inbox + account book ready</li><li>Populates when the customer list lands</li></ul>
+        <span class="statusrow st-on">◐ On · populating</span>
+      </div>
+      <div class="mod" style="--acc:var(--warning)">
+        <h4>Service &amp; Dispatch</h4><div class="tag">On — fills in Service sprint</div>
+        <ul><li>Technician task list + route map ready</li><li>Checklists &amp; proof-of-delivery live</li><li>Populates with the serial registry</li></ul>
+        <span class="statusrow st-on">◐ On · populating</span>
+      </div>
+      <div class="mod" style="--acc:#6A7580">
+        <h4>Reports</h4><div class="tag">Baseline</div>
+        <ul><li>Sales by channel &amp; brand</li><li>Inventory turns &amp; attach rate</li><li>Deepens as more data flows in</li></ul>
+        <span class="statusrow st-on">◐ Baseline</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Sequence -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">The week, day by day</span>
+      <h2>Build sequence</h2>
+      <p>Dates are the target path assuming the Delivery 1 intake lands early in the week. If data slips, the sign-off date moves with it — the sequence stays the same.</p>
+    </div>
+    <div class="tl">
+      <div class="day"><div class="dot"></div><div class="d">Mon · Jul 27</div><h4>Kickoff &amp; intake</h4><p>Confirm Delivery 1 scope, walk the intake list together, and set up the Teams channel + secure credential drop. QCS begins sending the six Delivery-1 items.</p><span class="who">QCS + Forma</span></div>
+      <div class="day"><div class="dot"></div><div class="d">Mon–Tue</div><h4>Data mapping</h4><p>We map your exports (WooCommerce catalogue, parts sheet, inventory, suppliers) to the ERP schema and flag anything that needs a second pass. Tenant is already provisioned on Atelio.</p><span class="who">Forma</span></div>
+      <div class="day"><div class="dot"></div><div class="d">Tue–Wed</div><h4>Load &amp; brand</h4><p>Real catalogue, parts, inventory, suppliers and open POs loaded into your tenant. Placeholders swapped for your official logo and product photos.</p><span class="who">Forma</span></div>
+      <div class="day"><div class="dot"></div><div class="d">Wed</div><h4>Configure</h4><p>User accounts + roles created, stock locations set (showroom / warehouse / vans), reorder points and warranty terms applied.</p><span class="who">Forma · confirm w/ QCS</span></div>
+      <div class="day"><div class="dot"></div><div class="d">Thu</div><h4>Internal QA</h4><p>We validate the data — spot-check prices, stock counts and totals against your source — and run the core flows end to end before you see it.</p><span class="who">Forma</span></div>
+      <div class="day"><div class="dot"></div><div class="d">Thu–Fri</div><h4>Walkthrough</h4><p>A 30–45 min live walkthrough of the modules on your data, with your team logged into their own accounts. We capture any fixes on the spot.</p><span class="who">QCS + Forma</span></div>
+      <div class="day"><div class="dot"></div><div class="d">Fri · Jul 31</div><h4>Sign-off &amp; handover</h4><p>Deliverable email, documentation, and portal access sent. M1 signed off against the acceptance checklist below.</p><span class="who">QCS + Forma</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Dependencies -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Dependencies</span>
+      <h2>What each item unlocks</h2>
+      <p>Everything in Delivery 1 traces back to a piece of the intake. The <span class="pill qcs">QCS</span> items are the critical path; the <span class="pill forma">Forma</span> work runs in parallel and is already underway.</p>
+    </div>
+    <table>
+      <thead><tr><th>Owner</th><th>Input</th><th>Unlocks in Delivery 1</th></tr></thead>
+      <tbody>
+        <tr><td><span class="pill qcs">QCS</span></td><td><b>Machine catalogue + parts</b></td><td>Machines module &amp; Parts registry on real records</td></tr>
+        <tr><td><span class="pill qcs">QCS</span></td><td><b>Inventory counts</b></td><td>ERP stock levels + "needs attention" low-stock alerts</td></tr>
+        <tr><td><span class="pill qcs">QCS</span></td><td><b>Suppliers + open POs</b></td><td>Purchasing, lead times, incoming-stock view</td></tr>
+        <tr><td><span class="pill qcs">QCS</span></td><td><b>WooCommerce API access</b></td><td>Catalogue &amp; web-order sync with your store</td></tr>
+        <tr><td><span class="pill qcs">QCS</span></td><td><b>Users &amp; roles (confirm draft)</b></td><td>Team logins at the right access levels</td></tr>
+        <tr><td><span class="pill qcs">QCS</span></td><td><b>Logo (vector) + product photos</b></td><td>Real branding on every primary screen</td></tr>
+        <tr><td><span class="pill forma">Forma</span></td><td>Tenant on Atelio</td><td>Done — provisioned, branded, feature flags on</td></tr>
+        <tr><td><span class="pill forma">Forma</span></td><td>Data mapping + load + QA</td><td>The build itself — runs as data arrives</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Acceptance -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Definition of done</span>
+      <h2>Acceptance checklist for M1</h2>
+      <p>Delivery 1 is signed off when each of these is true on your real data. We run them with you in the walkthrough.</p>
+    </div>
+    <div class="ac"><div class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><p><b>Team logs in.</b> Each named user signs in with their own account at the agreed access level.</p></div>
+    <div class="ac"><div class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><p><b>Catalogue is real.</b> Machines and parts are searchable; prices and stock match your source on a spot-check.</p></div>
+    <div class="ac"><div class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><p><b>Inventory is accurate.</b> On-hand counts are correct for showroom and warehouse (vans as counted).</p></div>
+    <div class="ac"><div class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><p><b>Purchasing works.</b> Suppliers and open POs are present, and a new PO can be raised with a lead time.</p></div>
+    <div class="ac"><div class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><p><b>Sell &amp; invoice.</b> A sales order can be created and turned into an invoice end to end.</p></div>
+    <div class="ac"><div class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><p><b>Control Centre is live.</b> KPIs and "needs attention" reflect the loaded data, not demo placeholders.</p></div>
+    <div class="ac"><div class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><p><b>It looks like QCS.</b> Real logo and photography on primary screens — no placeholders where the team works daily.</p></div>
+    <div class="ac"><div class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></div><p><b>Handover complete.</b> Walkthrough delivered, documentation provided, and support-portal access granted.</p></div>
+  </div>
+</section>
+
+<!-- What you receive -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">At delivery</span>
+      <h2>What lands in your inbox</h2>
+      <p>Every deliverable in this engagement arrives the same way, so you always know what to expect.</p>
+    </div>
+    <div class="deliv">
+      <div class="dcard"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></div><h4>Deliverable email</h4><p>What went live, links, and what's next.</p></div>
+      <div class="dcard"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 10l4.5-2.6v9.2L15 14M3 8h12v8H3z"/></svg></div><h4>Live walkthrough</h4><p>30–45 min on your data, team logged in.</p></div>
+      <div class="dcard"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/></svg></div><h4>Documentation</h4><p>How to use each new feature, step by step.</p></div>
+      <div class="dcard"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/><path d="M12 8v4l3 2"/></svg></div><h4>Portal access</h4><p>Monitor system health &amp; request support.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Risks -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Assumptions &amp; risks</span>
+      <h2>What could move the date</h2>
+    </div>
+    <table>
+      <thead><tr><th>Item</th><th>How we handle it</th></tr></thead>
+      <tbody>
+        <tr><td><b>Data readiness is the critical path</b></td><td>M1's date follows the intake. We start loading the moment the first export lands and layer the rest in — we don't wait for everything.</td></tr>
+        <tr><td><b>Van stock may lag</b></td><td>We go live with showroom + warehouse counts and add van locations as they're counted, without blocking sign-off.</td></tr>
+        <tr><td><b>Outlook / M365 integration</b></td><td>Deferred to the comms sprint — not required for Delivery 1, so admin consent can come later.</td></tr>
+        <tr><td><b>Accounting migration</b></td><td>Runs on a separate track with Marie; QuickBooks stays the book of record until that cutover.</td></tr>
+        <tr><td><b>Branding alignment</b></td><td>The demo tenant carries a working theme; final logo + photos lock it to your brand before sign-off.</td></tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <h3>The one thing that keeps this on track</h3>
+      <p>Get the <strong>six Delivery-1 intake items</strong> to us early in the week. Everything else is our work, already in motion. The sooner the data lands, the sooner your team is running the day from one screen.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fwm">Quality Coffee Systems</div>
+  <p>Delivery 1 Plan &amp; Runbook · Prepared by Atelio · July 2026</p>
+</footer>
+</body>
+</html>

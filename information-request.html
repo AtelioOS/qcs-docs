@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quality Coffee Systems — Onboarding: What We Need to Begin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --qcs-espresso:#241811; --qcs-espresso-2:#2E211A; --qcs-ink:#211915;
+    --qcs-red:#C33A2B; --qcs-red-light:#DB574A; --qcs-red-deep:#9E2C20;
+    --qcs-copper:#B27A45; --qcs-copper-deep:#8A5C31; --qcs-copper-tint:#F0E4D4;
+    --page:#F5F1EB; --paper:#FFFFFF; --linen-2:#FBF7F1; --bone:#F1EADF;
+    --border:#E7DECF; --border-strong:#D8CCB8;
+    --text-primary:#241811; --text-secondary:#5C5148; --text-muted:#8C8074;
+    --text-on-dark:#F5F1EB; --text-on-dark-soft:rgba(245,241,235,.64);
+    --success:#3F8C6E; --warning:#C9852E; --info:#3C6E9E;
+    --font-display:'Space Grotesk',-apple-system,sans-serif;
+    --font-sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+    --ls-tight:-0.02em; --ls-wide:.08em; --ls-wider:.16em;
+    --r-sm:6px; --r-md:9px; --r-lg:12px; --r-xl:16px; --r-pill:999px;
+    --shadow-card:0 1px 3px rgba(36,24,17,.05), 0 6px 20px rgba(36,24,17,.05);
+    --shadow-lift:0 12px 34px rgba(36,24,17,.16);
+    --s-2:6px;--s-3:10px;--s-4:14px;--s-5:18px;--s-6:24px;--s-8:32px;--s-10:44px;--s-12:56px;--s-16:80px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--text-primary);font-family:var(--font-sans);line-height:1.62;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  .pkg-bar{position:sticky;top:0;z-index:60;display:flex;align-items:center;gap:16px;background:#1B120D;border-bottom:1px solid #3A2A20;padding:0 22px;height:44px}
+  .pkg-bar .home{display:flex;align-items:center;gap:9px;color:var(--qcs-copper);font-weight:600;font-size:13px;letter-spacing:.03em;white-space:nowrap}
+  .pkg-bar .links{display:flex;gap:5px;margin-left:auto;flex-wrap:wrap}
+  .pkg-bar .links a{color:#C9BCA9;font-size:12.5px;padding:6px 12px;border-radius:7px;white-space:nowrap;transition:.15s}
+  .pkg-bar .links a:hover{color:#fff;background:rgba(245,241,235,.08)}
+  .pkg-bar .links a.on{color:#1B120D;background:var(--qcs-copper);font-weight:600}
+  @media(max-width:700px){.pkg-bar .links a:not(.on){display:none}}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:0 var(--s-8)}
+  section{padding:var(--s-12) 0;border-bottom:1px solid var(--border)}
+  section:last-of-type{border-bottom:0}
+  .eyebrow{display:block;font-size:11px;font-weight:700;letter-spacing:var(--ls-wide);text-transform:uppercase;color:var(--qcs-copper-deep);margin-bottom:var(--s-3)}
+  .sec-head{max-width:780px;margin-bottom:var(--s-8)}
+  .sec-head h2{font-family:var(--font-display);font-size:28px;font-weight:600;letter-spacing:var(--ls-tight);line-height:1.14;color:var(--qcs-ink)}
+  .sec-head p{margin-top:var(--s-4);font-size:15.5px;color:var(--text-secondary)}
+  p.body{font-size:15.5px;color:var(--text-secondary);max-width:780px;margin-bottom:var(--s-4)}
+  p.body strong{color:var(--qcs-ink);font-weight:600}
+
+  .hero{background:var(--qcs-espresso);color:var(--text-on-dark);border-bottom:5px solid var(--qcs-red);padding:var(--s-16) 0 var(--s-12);position:relative;overflow:hidden}
+  .hero .wrap{position:relative;z-index:2}
+  .hero .kicker{font-size:11px;font-weight:700;letter-spacing:var(--ls-wider);text-transform:uppercase;color:var(--qcs-copper)}
+  .hero h1{font-family:var(--font-display);font-weight:600;font-size:clamp(2rem,4.6vw,3.1rem);line-height:1.06;letter-spacing:var(--ls-tight);margin:var(--s-5) 0}
+  .hero h1 em{font-style:normal;color:var(--qcs-red-light)}
+  .hero .lede{max-width:660px;font-size:17.5px;color:var(--text-on-dark-soft);line-height:1.5}
+  .hero .meta{display:flex;flex-wrap:wrap;gap:var(--s-8);margin-top:var(--s-8);padding-top:var(--s-6);border-top:1px solid rgba(245,241,235,.16)}
+  .hero .meta .k{display:block;font-size:11px;letter-spacing:var(--ls-wide);text-transform:uppercase;color:var(--text-on-dark-soft);margin-bottom:4px}
+  .hero .meta .v{display:block;font-size:14px;color:var(--text-on-dark);font-weight:600}
+
+  .legend{display:flex;gap:var(--s-4);flex-wrap:wrap;margin-top:var(--s-6)}
+  .pri{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;padding:5px 12px;border-radius:var(--r-pill)}
+  .pri .dot{width:8px;height:8px;border-radius:50%}
+  .pri.m1{background:#FBE4E0;color:var(--qcs-red-deep)} .pri.m1 .dot{background:var(--qcs-red)}
+  .pri.later{background:var(--qcs-copper-tint);color:var(--qcs-copper-deep)} .pri.later .dot{background:var(--qcs-copper)}
+
+  .req{background:var(--paper);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-card);overflow:hidden;margin-bottom:var(--s-5)}
+  .req>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:var(--s-4);padding:var(--s-5) var(--s-6);font-family:var(--font-display);font-weight:600;font-size:16.5px;color:var(--qcs-ink)}
+  .req>summary::-webkit-details-marker{display:none}
+  .req>summary .num{flex-shrink:0;width:34px;height:34px;border-radius:9px;background:var(--qcs-espresso);color:var(--qcs-copper);display:grid;place-items:center;font-size:14px}
+  .req>summary .tag{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-family:var(--font-sans);font-size:11px;font-weight:700;padding:4px 10px;border-radius:var(--r-pill)}
+  .req>summary .tag.m1{background:#FBE4E0;color:var(--qcs-red-deep)}
+  .req>summary .tag.later{background:var(--qcs-copper-tint);color:var(--qcs-copper-deep)}
+  .req>summary .chev{flex-shrink:0;color:var(--text-muted);transition:.2s}
+  .req[open]>summary .chev{transform:rotate(90deg)}
+  .req .rbody{padding:0 var(--s-6) var(--s-6) calc(var(--s-6) + 34px + var(--s-4));border-top:1px solid var(--border)}
+  .req .rbody p{font-size:14px;color:var(--text-secondary);margin-top:var(--s-4)}
+  .req .rbody .fields{margin-top:var(--s-4);display:flex;flex-wrap:wrap;gap:7px}
+  .req .rbody .f{font-family:var(--font-mono);font-size:11.5px;color:var(--qcs-copper-deep);background:var(--linen-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:4px 9px}
+  .req .rbody .fmt{margin-top:var(--s-4);font-size:12.5px;color:var(--text-muted)}
+  .req .rbody .fmt b{color:var(--qcs-ink);font-weight:600}
+
+  table{width:100%;border-collapse:collapse;margin-top:var(--s-5);font-size:13.5px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--border)}
+  th{font-size:11px;letter-spacing:var(--ls-wide);text-transform:uppercase;color:var(--text-muted);font-weight:700}
+  td{color:var(--text-secondary)} td b{color:var(--qcs-ink);font-weight:600}
+  tr:last-child td{border-bottom:0}
+
+  .note{background:var(--paper);border:1px solid var(--border);border-left:4px solid var(--qcs-copper);border-radius:var(--r-lg);padding:var(--s-5) var(--s-6);box-shadow:var(--shadow-card);max-width:840px}
+  .note h3{font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--qcs-ink);margin-bottom:var(--s-2)}
+  .note p{font-size:14px;color:var(--text-secondary)}
+  .note strong{color:var(--qcs-ink);font-weight:600}
+  .note.warn{border-left-color:var(--qcs-red)}
+
+  .steps{counter-reset:st;margin-top:var(--s-4)}
+  .step{display:flex;gap:var(--s-4);padding:var(--s-4) 0}
+  .step .sc{counter-increment:st;flex-shrink:0;width:30px;height:30px;border-radius:50%;background:var(--qcs-red);color:#fff;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;font-size:13px}
+  .step .sc::before{content:counter(st)}
+  .step div p{font-size:14.5px;color:var(--text-secondary)} .step div b{color:var(--qcs-ink)}
+
+  footer{background:var(--qcs-espresso);color:var(--text-on-dark-soft);padding:var(--s-10) 0;text-align:center}
+  footer .fwm{font-family:var(--font-display);font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:var(--qcs-copper);font-size:1rem}
+  footer p{font-size:12.5px;margin-top:var(--s-3)}
+</style>
+</head>
+<body>
+
+<div class="pkg-bar">
+  <a class="home" href="#top">
+    <svg width="17" height="17" viewBox="0 0 48 48" fill="none"><path d="M12 20h20a2 2 0 0 1 2 2v3a11 11 0 0 1-11 11h-2A11 11 0 0 1 10 25v-3a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="3.2"/><path d="M34 22h4a5 5 0 0 1 0 10h-4" stroke="currentColor" stroke-width="3.2"/><path d="M18 8c-1.5 2-1.5 3.5 0 5.5M24 7c-1.5 2-1.5 3.5 0 5.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+    Quality Coffee Systems
+  </a>
+  <div class="links">
+    <a class="on" href="#top">Information Request</a>
+    <a href="delivery-1-plan.html">Delivery 1 Plan</a>
+    <a href="support-portal.html">Support Portal</a>
+    <a href="#">Proposal</a>
+    <a href="#">Operating System</a>
+  </div>
+</div>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="kicker">Onboarding · Delivery 1 · Prepared by Atelio</div>
+    <h1>Let's get your OS live.<br><em>Here's what we need from you.</em></h1>
+    <p class="lede">Everything below is the information we'll use to build the real QCS Operating System on your data. The items marked <strong>Delivery 1</strong> are what we need first to bring your ERP and Machines modules online in Week 1 — the rest can follow as we reach those sprints.</p>
+    <div class="meta">
+      <div><span class="k">Prepared for</span><span class="v">Quality Coffee Systems · Burnaby, BC</span></div>
+      <div><span class="k">From</span><span class="v">Atelio (Forma)</span></div>
+      <div><span class="k">Target return</span><span class="v">Within 3 business days</span></div>
+    </div>
+    <div class="legend">
+      <span class="pri m1"><span class="dot"></span>Needed for Delivery 1 (Week 1)</span>
+      <span class="pri later"><span class="dot"></span>Needed for a later sprint</span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">How this works</span>
+      <h2>One short intake, then we build</h2>
+      <p>Send us as much as you have in whatever form it already lives — a WooCommerce export, a spreadsheet, a QuickBooks report, even a clean photo of a parts binder. We'll do the shaping and mapping on our end. Don't hold anything back waiting for it to be perfect; partial and messy is fine, and we'll flag anything we need cleaned up.</p>
+    </div>
+    <div class="note">
+      <h3>A note on anything sensitive</h3>
+      <p>Passwords, API keys and financial exports should come to us through a <strong>secure channel</strong> — a shared password manager entry, an encrypted note, or our Teams channel with restricted access — <strong>never</strong> in plain email. We'll confirm the exact secure method with you before you send credentials.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 1. Product database -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 1 · Your product database</span>
+      <h2>Machines, parts &amp; prices</h2>
+      <p>This is the heart of the ERP and the Machines module. We already seeded the demo from your public catalogue at qualitycoffeesystems.ca — now we replace that with your real, complete records.</p>
+    </div>
+
+    <details class="req" open>
+      <summary><span class="num">1</span>Machine catalogue<span class="tag m1">Delivery 1</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>Every machine model you sell or service — commercial and residential — across all 16 brands. One row per model.</p>
+        <div class="fields">
+          <span class="f">brand</span><span class="f">model</span><span class="f">type (Traditional / Superauto / Grinder)</span><span class="f">segment (Commercial / Residential)</span><span class="f">SKU</span><span class="f">retail price</span><span class="f">cost</span><span class="f">stock on hand</span><span class="f">warranty terms</span><span class="f">short description</span>
+        </div>
+        <p class="fmt"><b>Easiest source:</b> a WooCommerce product export (CSV) — we'll map the columns. Anything not in Woo (cost, real stock, warranty) can come as a second sheet.</p>
+      </div>
+    </details>
+
+    <details class="req">
+      <summary><span class="num">2</span>Parts &amp; consumables list<span class="tag m1">Delivery 1</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>The parts you stock for service and sales, and which machines they fit. This powers the Parts &amp; Warranty registry and auto-deduction on service jobs.</p>
+        <div class="fields">
+          <span class="f">part number</span><span class="f">description</span><span class="f">compatible models</span><span class="f">price</span><span class="f">cost</span><span class="f">stock on hand</span><span class="f">bin / location</span><span class="f">primary supplier</span>
+        </div>
+        <p class="fmt"><b>Format:</b> spreadsheet export from wherever it lives today (inFlow, a shared sheet, or a binder we can transcribe from a scan).</p>
+      </div>
+    </details>
+
+    <details class="req">
+      <summary><span class="num">3</span>Brand &amp; product photography<span class="tag m1">Delivery 1</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>Your official logo (vector — SVG/AI/EPS/PDF) and product shots, so we can swap out the placeholders in the design system for the real thing.</p>
+        <div class="fields"><span class="f">logo (vector + PNG)</span><span class="f">brand colours / guidelines (if any)</span><span class="f">machine photos</span><span class="f">team / storefront photos (optional)</span></div>
+        <p class="fmt"><b>Note:</b> if you don't have a vector logo, send the highest-resolution version you have and we'll redraw it.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 2. Data migration -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 2 · Data migration</span>
+      <h2>Inventory, suppliers, accounts &amp; history</h2>
+      <p>The operational records that make the ERP real. Inventory and suppliers come first for Delivery 1; customers and service history feed the CRM and Service modules in the following sprints.</p>
+    </div>
+
+    <details class="req" open>
+      <summary><span class="num">4</span>Current inventory &amp; stock<span class="tag m1">Delivery 1</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>On-hand counts across every location you hold stock — showroom, warehouse, and each service van — with bins where you use them.</p>
+        <div class="fields"><span class="f">item / SKU</span><span class="f">location (showroom / warehouse / van)</span><span class="f">bin</span><span class="f">qty on hand</span><span class="f">reorder point</span><span class="f">top-up-to level</span></div>
+        <p class="fmt"><b>Even a rough count is useful</b> — we can start with showroom + warehouse and layer van stock in as you count it.</p>
+      </div>
+    </details>
+
+    <details class="req">
+      <summary><span class="num">5</span>Suppliers / vendors<span class="tag m1">Delivery 1</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>Who you buy machines and parts from, so purchasing and PO lead-times work from day one.</p>
+        <div class="fields"><span class="f">supplier name</span><span class="f">contact + email</span><span class="f">currency (CAD/USD/CHF/EUR)</span><span class="f">typical lead time</span><span class="f">payment terms</span><span class="f">what they supply</span></div>
+      </div>
+    </details>
+
+    <details class="req">
+      <summary><span class="num">6</span>Open purchase orders<span class="tag m1">Delivery 1</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>Anything currently on order and not yet received, so the ERP opens with an accurate incoming-stock picture.</p>
+        <div class="fields"><span class="f">PO number</span><span class="f">supplier</span><span class="f">items + qty</span><span class="f">expected date</span><span class="f">status</span></div>
+      </div>
+    </details>
+
+    <details class="req">
+      <summary><span class="num">7</span>Customer &amp; account list<span class="tag later">Later — CRM sprint</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>Commercial and residential accounts, including which machines they own or hold under contract. Powers the CRM account book and links sales to service.</p>
+        <div class="fields"><span class="f">account name</span><span class="f">type (commercial / residential)</span><span class="f">contact + email + phone</span><span class="f">site address(es)</span><span class="f">machines owned / under contract</span><span class="f">notes</span></div>
+      </div>
+    </details>
+
+    <details class="req">
+      <summary><span class="num">8</span>Service history &amp; serial registry<span class="tag later">Later — Service sprint</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>As much service history as you can pull — even a partial serial registry lets us start warranty tracking and PM reminders.</p>
+        <div class="fields"><span class="f">machine serial</span><span class="f">customer</span><span class="f">install date</span><span class="f">warranty end</span><span class="f">past work orders (date / work / parts / tech)</span></div>
+      </div>
+    </details>
+
+    <details class="req">
+      <summary><span class="num">9</span>Accounting export (QuickBooks)<span class="tag later">Later — Accounting track</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>Handled on the separate accounting track with Marie — chart of accounts, open AR/AP, and tax setup — when we migrate off QuickBooks. Nothing needed here for Delivery 1.</p>
+        <div class="fields"><span class="f">chart of accounts</span><span class="f">open AR</span><span class="f">open AP</span><span class="f">tax codes</span></div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 3. Logins -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 3 · Logins &amp; access</span>
+      <h2>Credentials we'll need (sent securely)</h2>
+      <p>Only what's needed to connect your OS to the systems it talks to. We'll set up a secure way to receive these before you send anything.</p>
+    </div>
+
+    <details class="req" open>
+      <summary><span class="num">10</span>WooCommerce / WordPress<span class="tag m1">Delivery 1</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>So the catalogue and web orders stay in sync between your store and the OS.</p>
+        <div class="fields"><span class="f">WooCommerce REST API key + secret</span><span class="f">store URL</span><span class="f">admin login (or a scoped user for us)</span></div>
+        <p class="fmt"><b>Preferred:</b> generate a read/write REST API key (WooCommerce → Settings → Advanced → REST API) rather than sharing your admin password.</p>
+      </div>
+    </details>
+
+    <details class="req">
+      <summary><span class="num">11</span>Microsoft 365 / Outlook<span class="tag later">Later — comms sprint</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>For email + calendar integration (quotes, booking, dispatch notifications). This needs an admin to approve a connection — no passwords change hands.</p>
+        <div class="fields"><span class="f">M365 tenant / domain</span><span class="f">admin consent for the app connection</span><span class="f">shared mailbox(es) to connect</span></div>
+      </div>
+    </details>
+
+    <details class="req">
+      <summary><span class="num">12</span>Domain / DNS<span class="tag later">Later — go-live</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>Only if you want the OS on your own subdomain (e.g. os.qualitycoffeesystems.ca). We'll send the exact DNS record to add — you keep control of the domain.</p>
+        <div class="fields"><span class="f">preferred subdomain</span><span class="f">who manages your DNS</span></div>
+      </div>
+    </details>
+
+    <details class="req">
+      <summary><span class="num">13</span>Tools we're replacing<span class="tag later">As available</span><span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span></summary>
+      <div class="rbody">
+        <p>If any of your data lives in another tool today (inventory, field-service, CRM), read-only access or an export lets us migrate it cleanly instead of re-typing.</p>
+        <div class="fields"><span class="f">tool name</span><span class="f">export or read-only login</span></div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 4. People -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 4 · People &amp; access</span>
+      <h2>Who gets a login, and what they can do</h2>
+      <p>Below is our draft based on what we know of your team — please <strong>correct names, spellings and roles</strong>, and tell us who we've missed. Roles map to what each person sees and can change in the OS.</p>
+    </div>
+    <div class="note" style="margin-bottom:var(--s-6)">
+      <h3>Draft — please confirm</h3>
+      <p>We've pre-filled this so you're editing rather than starting from scratch. Anything you're unsure about, leave it and we'll set a sensible default you can change later.</p>
+    </div>
+    <table>
+      <thead><tr><th>Name</th><th>Suggested role</th><th>Access level</th></tr></thead>
+      <tbody>
+        <tr><td><b>Kazuto</b></td><td>Master technician</td><td>Admin + Service</td></tr>
+        <tr><td><b>Roya</b></td><td>ERP &amp; Service lead</td><td>Admin</td></tr>
+        <tr><td><b>Marie</b></td><td>Accounting</td><td>Finance / Accounting</td></tr>
+        <tr><td><b>Alissa</b></td><td>Marketing &amp; web</td><td>Catalogue / CRM</td></tr>
+        <tr><td><b>Reza, Manuel</b></td><td>Sales</td><td>Sales &amp; CRM</td></tr>
+        <tr><td><b>Lynn, Anna</b></td><td>Operations</td><td>ERP / Purchasing / Dispatch</td></tr>
+        <tr><td><b>Raffi, Paul, Mike, Tom, Farzan</b></td><td>Technicians</td><td>Service (mobile task list)</td></tr>
+        <tr><td>—</td><td>Owner / management</td><td>Admin (full)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- How to send -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Sending it to us</span>
+      <h2>The simplest path</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="sc"></div><div><p><b>Gather the Delivery 1 items first</b> — the six red-tagged ones above. Those unlock Week 1; the rest can trickle in.</p></div></div>
+      <div class="step"><div class="sc"></div><div><p><b>Drop files in the shared folder / Teams channel</b> we'll set up with you. Spreadsheets, exports, PDFs, even photos of lists — all fine.</p></div></div>
+      <div class="step"><div class="sc"></div><div><p><b>Send credentials the secure way</b> we agree on — not in plain email. We'll confirm the method before you send.</p></div></div>
+      <div class="step"><div class="sc"></div><div><p><b>Tell us what's messy or missing.</b> We'd rather know than guess. We handle the cleanup and mapping on our side.</p></div></div>
+    </div>
+    <div class="note warn" style="margin-top:var(--s-8)">
+      <h3>Questions as you go?</h3>
+      <p>Anything unclear, ping us in the QCS channel — that's exactly what it's for. No item on this list should slow you down; when in doubt, send what you have and flag the gap.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fwm">Quality Coffee Systems</div>
+  <p>Onboarding · Information Request · Prepared by Atelio · July 2026</p>
+</footer>
+</body>
+</html>
