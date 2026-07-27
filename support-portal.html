@@ -234,7 +234,7 @@
     </div>
   </div>
 
-  <footer>QCS Operating System · Health &amp; Support · Powered by Atelio — a Forma platform · Demo portal, sample metrics</footer>
+  <footer>QCS Operating System · Health &amp; Support · Powered by Atelio — a Forma platform · Live support intake · system metrics are sample data during onboarding</footer>
 </main>
 
 <div class="toast" id="toast">Request logged — we'll be in touch</div>
@@ -247,21 +247,33 @@
     var el=document.getElementById('clk'); if(el) el.textContent='Last checked '+s;
   }
   tick(); setInterval(tick,1000);
-  var ref=1042;
+  var ENDPOINT='https://gmdlcnsgkxqengqvhlrz.supabase.co/functions/v1/qcs-support';
+  function showToast(msg,ok){var t=document.getElementById('toast');t.textContent=msg;t.style.background=ok?'':'#C0392B';t.classList.add('show');setTimeout(function(){t.classList.remove('show');t.style.background='';},3400);}
   window.submitTicket=function(e){
     e.preventDefault();
     var subj=document.getElementById('s_subj').value.trim();
     var pri=document.getElementById('s_pri').value;
+    var desc=document.getElementById('s_desc').value;
     if(!subj) return false;
-    ref++;
-    var tb=document.querySelector('#tickets tbody');
-    var tr=document.createElement('tr');
-    var pcls = pri.indexOf('Urgent')>-1?'b-warn':(pri.indexOf('High')>-1?'b-warn':'b-info');
-    tr.innerHTML='<td><b>#'+ref+'</b></td><td>'+subj.replace(/</g,'&lt;')+'</td><td>'+pri.split(' —')[0]+'</td><td><span class="badge '+pcls+'">Open</span></td>';
-    tb.insertBefore(tr,tb.firstChild);
-    document.getElementById('kpi-tickets').textContent=tb.querySelectorAll('tr').length;
-    document.getElementById('supForm').reset();
-    var t=document.getElementById('toast'); t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},2600);
+    var btn=document.querySelector('#supForm .btn'); if(btn){btn.disabled=true;btn.textContent='Sending…';}
+    fetch(ENDPOINT,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({subject:subj,priority:pri,description:desc})})
+      .then(function(r){return r.json();})
+      .then(function(j){
+        if(btn){btn.disabled=false;btn.textContent='Submit request';}
+        if(!j||!j.ok){throw new Error((j&&j.error)||'Failed');}
+        var tb=document.querySelector('#tickets tbody');
+        var tr=document.createElement('tr');
+        var pcls = pri.indexOf('Urgent')>-1?'b-warn':(pri.indexOf('High')>-1?'b-warn':'b-info');
+        tr.innerHTML='<td><b>'+j.ref+'</b></td><td>'+subj.replace(/</g,'&lt;')+'</td><td>'+pri.split(' —')[0]+'</td><td><span class="badge '+pcls+'">Open</span></td>';
+        tb.insertBefore(tr,tb.firstChild);
+        document.getElementById('kpi-tickets').textContent=tb.querySelectorAll('tr').length;
+        document.getElementById('supForm').reset();
+        showToast('Request logged — '+j.ref,true);
+      })
+      .catch(function(){
+        if(btn){btn.disabled=false;btn.textContent='Submit request';}
+        showToast('Could not send — please try again',false);
+      });
     return false;
   };
 })();
