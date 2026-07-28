@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quality Coffee Systems — Sign in</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241811;--ink-soft:#3A2A20;--ink-deep:#1B120D;
+    --primary:#C33A2B;--primary-deep:#9E2C20;--primary-soft:#FBE4E0;
+    --accent:#B27A45;--accent-deep:#8A5C31;--accent-soft:#F0E4D4;
+    --page:#F5F1EB;--surface:#FFFFFF;--border:#E7DECF;--border-strong:#D8CCB8;
+    --text:#241811;--text2:#5C5148;--muted:#8C8074;
+    --success:#3F8C6E;--success-soft:#DDEFE7;--danger:#C0392B;--danger-soft:#F7E1DE;
+    --fd:'Space Grotesk',system-ui,sans-serif;--fs:'Inter',system-ui,sans-serif;--fm:'IBM Plex Mono',monospace;
+    --sh:0 1px 3px rgba(36,24,17,.07),0 6px 20px rgba(36,24,17,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--fs);background:var(--page);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .card{background:var(--surface);border:1px solid var(--border);border-top:4px solid var(--primary);border-radius:16px;box-shadow:var(--sh);padding:40px 36px 30px;width:100%;max-width:410px;text-align:center}
+  .mark{width:54px;height:54px;border-radius:15px;background:var(--ink);color:var(--accent);display:grid;place-items:center;margin:0 auto 16px}
+  .wordmark{font-family:var(--fd);font-weight:600;font-size:1.35rem;letter-spacing:-.01em;color:var(--ink)}
+  .wordmark small{display:block;font-family:var(--fs);font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-deep);margin-top:3px}
+  .sub{color:var(--text2);margin:14px 0 22px;font-size:.92rem}
+  .sso{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px 16px;margin-bottom:10px;border:1.5px solid var(--border-strong);border-radius:9px;background:var(--surface);color:var(--ink);font-family:var(--fs);font-size:.96rem;font-weight:600;cursor:pointer;transition:.14s}
+  .sso:hover{border-color:var(--accent);box-shadow:var(--sh);transform:translateY(-1px)}
+  .sso:disabled{opacity:.5;cursor:default}
+  .emaillink{display:inline-block;margin-top:8px;background:none;border:none;cursor:pointer;color:var(--text2);font-family:var(--fs);font-size:.85rem;text-decoration:underline;text-decoration-color:var(--accent)}
+  .emaillink:hover{color:var(--primary)}
+  .emailform{display:none;flex-direction:column;gap:10px;margin-top:12px}
+  .input{width:100%;padding:11px 14px;border:1.5px solid var(--border-strong);border-radius:9px;background:var(--surface);color:var(--ink);font-family:var(--fs);font-size:.95rem}
+  .input:focus{outline:none;border-color:var(--accent)}
+  .submit{width:100%;padding:12px 16px;border:none;border-radius:9px;background:var(--primary);color:#fff;font-family:var(--fs);font-size:.96rem;font-weight:700;cursor:pointer}
+  .submit:hover{background:var(--primary-deep)}
+  .msg{margin-top:14px;padding:10px 12px;border-radius:9px;font-size:.85rem;text-align:left;display:none}
+  .msg.err{background:var(--danger-soft);color:var(--danger);display:block}
+  .msg.ok{background:var(--success-soft);color:#2c6552;display:block}
+  .foot{margin-top:20px;font-size:11px;color:var(--muted);font-family:var(--fm)}
+  /* signed-in view */
+  .signed{display:none;text-align:left}
+  .signed.show{display:block}
+  .signed h2{font-family:var(--fd);font-size:1.1rem;color:var(--success);text-align:center;margin-bottom:4px}
+  .signed .who{text-align:center;color:var(--text2);font-size:.9rem;margin-bottom:16px}
+  .kv{background:var(--page);border:1px solid var(--border);border-radius:9px;padding:12px 14px;font-family:var(--fm);font-size:11.5px;color:var(--text2);word-break:break-all;margin-bottom:8px}
+  .kv b{color:var(--ink);font-weight:600}
+  .signout{width:100%;margin-top:8px;padding:11px 16px;border:1.5px solid var(--border-strong);border-radius:9px;background:var(--surface);color:var(--ink);font-family:var(--fs);font-weight:600;cursor:pointer}
+  .signout:hover{border-color:var(--primary);color:var(--primary)}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="mark">
+    <svg width="27" height="27" viewBox="0 0 48 48" fill="none"><path d="M12 20h20a2 2 0 0 1 2 2v3a11 11 0 0 1-11 11h-2A11 11 0 0 1 10 25v-3a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="3.4"/><path d="M34 22h4a5 5 0 0 1 0 10h-4" stroke="currentColor" stroke-width="3.4"/><path d="M18 8c-1.5 2-1.5 3.5 0 5.5M24 7c-1.5 2-1.5 3.5 0 5.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+  </div>
+  <div class="wordmark">Quality Coffee Systems<small>Operating System</small></div>
+
+  <!-- Signed-out view -->
+  <div id="loginView">
+    <p class="sub">Sign in to your operating system.</p>
+    <button class="sso" id="msBtn" type="button">
+      <svg width="18" height="18" viewBox="0 0 21 21"><rect x="1" y="1" width="9" height="9" fill="#F25022"/><rect x="11" y="1" width="9" height="9" fill="#7FBA00"/><rect x="1" y="11" width="9" height="9" fill="#00A4EF"/><rect x="11" y="11" width="9" height="9" fill="#FFB900"/></svg>
+      Sign in with Microsoft
+    </button>
+    <button class="sso" id="gBtn" type="button">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62Z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18Z"/><path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33Z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58Z"/></svg>
+      Sign in with Google
+    </button>
+    <button class="emaillink" id="emailToggle" type="button">Sign in with email instead</button>
+    <form class="emailform" id="emailForm">
+      <input class="input" id="email" type="email" placeholder="you@qualitycoffeesystems.ca" autocomplete="email" required>
+      <input class="input" id="password" type="password" placeholder="Password" autocomplete="current-password" required>
+      <button class="submit" type="submit">Sign in</button>
+    </form>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <!-- Signed-in view -->
+  <div class="signed" id="signedView">
+    <h2>✓ Signed in</h2>
+    <div class="who" id="whoLine"></div>
+    <div class="kv"><b>Email:</b> <span id="sEmail"></span></div>
+    <div class="kv"><b>Provider:</b> <span id="sProvider"></span></div>
+    <div class="kv"><b>Session token:</b> <span id="sToken"></span></div>
+    <button class="signout" id="signout" type="button">Sign out</button>
+  </div>
+
+  <div class="foot">Quality Coffee Systems · Powered by Atelio · live sign-in</div>
+</div>
+
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+  const SUPABASE_URL = 'https://gmdlcnsgkxqengqvhlrz.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_2XfrRfxVDcdiFiBWD_oong_l7x4CujY';
+  const sb = createClient(SUPABASE_URL, SUPABASE_KEY, {
+    auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+  });
+
+  const $ = (id) => document.getElementById(id);
+  const redirectTo = window.location.href.split('#')[0].split('?')[0];
+
+  function showMsg(text, ok) {
+    const m = $('msg');
+    m.className = 'msg ' + (ok ? 'ok' : 'err');
+    m.textContent = text;
+  }
+
+  function render(session) {
+    if (session && session.user) {
+      $('loginView').style.display = 'none';
+      $('signedView').classList.add('show');
+      const u = session.user;
+      $('whoLine').textContent = u.user_metadata?.name || u.email || 'Signed in';
+      $('sEmail').textContent = u.email || '(no email claim)';
+      $('sProvider').textContent = u.app_metadata?.provider || '—';
+      $('sToken').textContent = (session.access_token || '').slice(0, 24) + '…';
+    } else {
+      $('loginView').style.display = 'block';
+      $('signedView').classList.remove('show');
+    }
+  }
+
+  // Establish session (handles the OAuth return via detectSessionInUrl).
+  const { data } = await sb.auth.getSession();
+  render(data.session);
+  sb.auth.onAuthStateChange((_e, session) => render(session));
+
+  $('msBtn').onclick = () =>
+    sb.auth.signInWithOAuth({ provider: 'azure', options: { scopes: 'openid email profile', redirectTo } });
+  $('gBtn').onclick = () =>
+    sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo } });
+
+  $('emailToggle').onclick = () => {
+    $('emailForm').style.display = 'flex';
+    $('emailToggle').style.display = 'none';
+  };
+  $('emailForm').onsubmit = async (e) => {
+    e.preventDefault();
+    showMsg('Signing in…', true);
+    const { error } = await sb.auth.signInWithPassword({ email: $('email').value.trim(), password: $('password').value });
+    if (error) showMsg(error.message, false);
+  };
+  $('signout').onclick = async () => { await sb.auth.signOut(); };
+</script>
+</body>
+</html>
