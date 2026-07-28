@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quality Coffee Systems — Delivery 1 Intake Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --espresso:#241811;--espresso2:#2E211A;--ink:#211915;
+    --red:#C33A2B;--red-light:#DB574A;--red-deep:#9E2C20;
+    --copper:#B27A45;--copper-deep:#8A5C31;--copper-tint:#F0E4D4;
+    --page:#F5F1EB;--paper:#FFFFFF;--linen:#FBF7F1;--bone:#F1EADF;
+    --border:#E7DECF;--border-strong:#D8CCB8;
+    --text:#241811;--text2:#5C5148;--muted:#8C8074;
+    --done:#3F8C6E;--done-bg:#DDEFE7;
+    --quick:#3C6E9E;--quick-bg:#DEEAF3;
+    --data:#8A5C31;--data-bg:#F0E4D4;
+    --access:#9E2C20;--access-bg:#FBE0DC;
+    --fd:'Space Grotesk',sans-serif;--fs:'Inter',sans-serif;--fm:'IBM Plex Mono',monospace;
+    --sh:0 1px 3px rgba(36,24,17,.05),0 6px 20px rgba(36,24,17,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--text);font-family:var(--fs);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .bar{background:#1B120D;color:var(--copper);font-weight:600;font-size:13px;letter-spacing:.03em;padding:11px 24px;display:flex;align-items:center;gap:10px}
+  .hero{background:var(--espresso);color:var(--page);border-bottom:5px solid var(--red);padding:40px 24px 32px}
+  .wrap{max-width:900px;margin:0 auto;padding:0 24px}
+  .kick{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--copper)}
+  h1{font-family:var(--fd);font-weight:600;font-size:clamp(1.7rem,3.6vw,2.4rem);letter-spacing:-.02em;margin:8px 0 6px}
+  .hero .sub{color:rgba(245,241,235,.72);font-size:15.5px;max-width:640px}
+  .prog-wrap{margin-top:22px}
+  .prog-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+  .prog-top .lbl{font-size:12.5px;color:rgba(245,241,235,.7)}
+  .prog-top .pct{font-family:var(--fd);font-weight:600;font-size:19px;color:var(--page)}
+  .track{height:11px;background:rgba(245,241,235,.14);border-radius:999px;overflow:hidden}
+  .track .fill{height:100%;background:var(--copper);width:0;transition:width .3s}
+
+  .body{padding:26px 0 64px}
+  .intro{background:var(--paper);border:1px solid var(--border);border-left:4px solid var(--copper);border-radius:12px;padding:16px 20px;box-shadow:var(--sh);margin-bottom:8px}
+  .intro p{font-size:14.5px;color:var(--text2)} .intro b{color:var(--ink)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:18px 2px 6px}
+  .legend span{font-size:12px;color:var(--text2);display:inline-flex;align-items:center;gap:6px}
+  .tag{font-size:10.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:2px 8px;border-radius:999px;white-space:nowrap}
+  .t-quick{background:var(--quick-bg);color:var(--quick)}
+  .t-data{background:var(--data-bg);color:var(--data-deep,#6f4a27)}
+  .t-access{background:var(--access-bg);color:var(--access)}
+
+  .group-h{font-family:var(--fd);font-weight:600;font-size:15px;color:var(--copper-deep);margin:26px 2px 10px;display:flex;align-items:center;gap:10px}
+  .group-h .n{font-family:var(--fm);font-size:12px;background:var(--copper-tint);color:var(--copper-deep);padding:2px 8px;border-radius:6px}
+
+  .chunk{background:var(--paper);border:1px solid var(--border);border-radius:14px;box-shadow:var(--sh);margin-bottom:12px;overflow:hidden}
+  .chunk.done{opacity:.62}
+  .chunk-top{display:flex;align-items:flex-start;gap:13px;padding:16px 18px 12px;cursor:pointer}
+  .box{flex-shrink:0;width:24px;height:24px;border-radius:7px;border:2px solid var(--border-strong);display:grid;place-items:center;margin-top:1px;transition:.12s}
+  .chunk.done .box{background:var(--done);border-color:var(--done)}
+  .box svg{opacity:0} .chunk.done .box svg{opacity:1}
+  .chunk-main{flex:1;min-width:0}
+  .chunk-title{font-family:var(--fd);font-weight:600;font-size:16px;color:var(--ink);display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .chunk.done .chunk-title{text-decoration:line-through;text-decoration-color:rgba(140,128,116,.5)}
+  .chunk-what{font-size:14px;color:var(--text2);margin-top:4px}
+  .chunk-body{padding:0 18px 16px 55px;font-size:13.5px;color:var(--text2)}
+  .chunk-body .row{margin-top:9px}
+  .chunk-body .k{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+  .chunk-body .eg{background:var(--linen);border:1px solid var(--border);border-radius:8px;padding:8px 11px;font-family:var(--fm);font-size:12px;color:var(--text2)}
+  .done-when{margin-top:10px;padding:8px 11px;background:var(--done-bg);border-radius:8px;color:#2c6552;font-size:12.5px;font-weight:600}
+  .done-when b{color:#22513f}
+
+  .note{background:#FCEFEC;border:1px solid #F1C7C0;border-left:4px solid var(--red);border-radius:12px;padding:14px 18px;margin:22px 0 4px;box-shadow:var(--sh)}
+  .note h3{font-family:var(--fd);font-size:14px;color:var(--red-deep)}
+  .note p{font-size:13.5px;color:var(--text2);margin-top:5px}
+  .foot{color:var(--muted);font-size:12px;text-align:center;padding:34px 24px 0;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="bar">Quality Coffee Systems × Atelio — Delivery 1</div>
+<header class="hero">
+  <div class="wrap">
+    <div class="kick">What we need from you · Week 1</div>
+    <h1>Delivery 1 — intake checklist</h1>
+    <p class="sub">Eight small, self-contained pieces. Send them one at a time as they're ready — no need to wait until you have everything. Messy, partial, even photos of lists are all fine; we handle the cleanup.</p>
+    <div class="prog-wrap">
+      <div class="prog-top"><span class="lbl" id="lbl">0 of 8 sent</span><span class="pct" id="pct">0%</span></div>
+      <div class="track"><div class="fill" id="fill"></div></div>
+    </div>
+  </div>
+</header>
+
+<div class="body">
+  <div class="wrap">
+    <div class="intro">
+      <p><b>How to send:</b> drop files (or photos) straight into the <b>Material for ERP</b> channel here in Teams. <b>One rule:</b> anything sensitive — passwords, API keys, financial exports — goes in a <b>private 1:1 chat with Viviana</b>, never in a channel. Tick items off here as you go (this is your own view; tell us in the channel when something's sent).</p>
+    </div>
+
+    <div class="legend">
+      <span><span class="tag t-quick">Quick win</span> a few minutes</span>
+      <span><span class="tag t-data">Data export</span> a report or spreadsheet</span>
+      <span><span class="tag t-access">Access</span> a connection or login</span>
+    </div>
+
+    <div class="group-h"><span class="n">A</span> Quick wins — knock these out first</div>
+    <div id="groupA"></div>
+
+    <div class="group-h"><span class="n">B</span> Your data — the core of the build</div>
+    <div id="groupB"></div>
+
+    <div class="group-h"><span class="n">C</span> Access — so we can connect your store</div>
+    <div id="groupC"></div>
+
+    <div class="note">
+      <h3>The one thing that keeps this on track</h3>
+      <p>Get these to us <b>early in the week</b> — even a few at a time. The sooner your data lands, the sooner your whole team is running the day from one screen. Stuck on any item, or not sure what counts? Ask in <b>Questions</b> — no item is too small to check.</p>
+    </div>
+    <div class="foot">Quality Coffee Systems · Operating System · Prepared by Atelio — a Forma platform</div>
+  </div>
+</div>
+
+<script>
+var CHUNKS = {
+  A: [
+    {tag:'quick', title:'Your logo', what:'A clean version of the QCS logo so your operating system looks like you from day one.',
+     format:'Vector if you have it (.svg / .ai / .pdf), otherwise the highest-resolution PNG you\'ve got.', eg:'logo.svg  ·  QCS-logo-4x.png',
+     done:'a logo file lands in the channel (or a link to it).'},
+    {tag:'quick', title:'A handful of product photos', what:'5–15 photos of your machines/products so screens aren\'t placeholder-grey. More can follow later.',
+     format:'Any photos you already have — website images, supplier shots, phone pics all work.', eg:'jura-x8.jpg, grinder-01.jpg …',
+     done:'a few product images are shared.'},
+    {tag:'quick', title:'Confirm your team & roles', what:'We\'ll send a short draft list of who gets access and at what level. You just confirm or tweak it.',
+     format:'Reply to the draft with names, emails, and a role each (e.g. owner / manager / staff).', eg:'Kazuto — owner · Roya — manager · Mazda — manager',
+     done:'you\'ve confirmed the user list (we\'ll post the draft in Material for ERP).'}
+  ],
+  B: [
+    {tag:'data', title:'Machine catalogue', what:'Your espresso machines / equipment — so the Machines module and pricing go live on real records.',
+     format:'Export or spreadsheet with, per model: brand, model, type, price, stock on hand, warranty terms. Partial is fine.', eg:'Brand | Model | Type | Price | Qty | Warranty',
+     done:'a catalogue export (or your WooCommerce products) is shared.'},
+    {tag:'data', title:'Parts list', what:'The parts you stock and sell — feeds the parts registry and service module.',
+     format:'Spreadsheet: part name/number, which machines it fits, price, stock. Even a rough list gets us started.', eg:'Part # | Description | Fits | Price | Qty',
+     done:'a parts list is shared.'},
+    {tag:'data', title:'Inventory counts', what:'What\'s on hand right now — powers stock levels and low-stock alerts.',
+     format:'Counts for showroom + warehouse to start; van stock can follow as you count it. A spreadsheet or even photos of a count sheet.', eg:'Location | Item | Count',
+     done:'showroom + warehouse counts are shared (vans later is OK).'},
+    {tag:'data', title:'Suppliers + open purchase orders', what:'Who you buy from and what\'s currently on order — unlocks purchasing and incoming-stock views.',
+     format:'A supplier list (name, contact, lead time) and any open POs. Copies of PO emails/PDFs are fine.', eg:'Supplier | Contact | Lead time  ·  PO#1042 — 12 units, due Aug 3',
+     done:'a supplier list and any open POs are shared.'}
+  ],
+  C: [
+    {tag:'access', title:'WooCommerce store access', what:'A connection to your WooCommerce store so your catalogue and web orders sync automatically.',
+     format:'WooCommerce → Settings → Advanced → REST API → create a key (Read/Write). Send the key + secret in a PRIVATE 1:1 chat with Viviana — never in a channel.', eg:'Consumer key: ck_… · Consumer secret: cs_…',
+     done:'the API key + secret reach Viviana via private chat (we\'ll confirm the exact steps with you first).'}
+  ]
+};
+
+var CHK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2"><path d="M20 6L9 17l-5-5"/></svg>';
+var TAGLABEL = {quick:'Quick win', data:'Data export', access:'Access'};
+var TAGCLASS = {quick:'t-quick', data:'t-data', access:'t-access'};
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+
+var order = [];
+function render(){
+  ['A','B','C'].forEach(function(g){
+    var host = document.getElementById('group'+g);
+    host.innerHTML = CHUNKS[g].map(function(c,i){
+      var id = g+i;
+      if(order.indexOf(id)<0) order.push(id);
+      return '<div class="chunk'+(c._done?' done':'')+'" data-id="'+id+'">'+
+        '<div class="chunk-top">'+
+          '<div class="box">'+CHK+'</div>'+
+          '<div class="chunk-main">'+
+            '<div class="chunk-title">'+esc(c.title)+' <span class="tag '+TAGCLASS[c.tag]+'">'+TAGLABEL[c.tag]+'</span></div>'+
+            '<div class="chunk-what">'+esc(c.what)+'</div>'+
+          '</div>'+
+        '</div>'+
+        '<div class="chunk-body">'+
+          '<div class="row"><span class="k">How to send</span>'+esc(c.format)+'</div>'+
+          '<div class="row"><span class="k">Example</span><div class="eg">'+esc(c.eg)+'</div></div>'+
+          '<div class="done-when"><b>Done when:</b> '+esc(c.done)+'</div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+  });
+  document.querySelectorAll('.chunk-top').forEach(function(el){
+    el.addEventListener('click',function(){
+      var id=this.parentElement.getAttribute('data-id');
+      var g=id[0], i=+id.slice(1);
+      CHUNKS[g][i]._done=!CHUNKS[g][i]._done;
+      render();
+    });
+  });
+  recalc();
+}
+function recalc(){
+  var all=[]; ['A','B','C'].forEach(function(g){CHUNKS[g].forEach(function(c){all.push(c);});});
+  var done=all.filter(function(c){return c._done;}).length;
+  var pct=Math.round(done/all.length*100);
+  document.getElementById('lbl').textContent=done+' of '+all.length+' sent';
+  document.getElementById('pct').textContent=pct+'%';
+  document.getElementById('fill').style.width=pct+'%';
+}
+render();
+</script>
+</body>
+</html>
