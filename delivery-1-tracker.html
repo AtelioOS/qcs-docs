@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCS × Atelio — Delivery 1 Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --espresso:#241811;--espresso2:#2E211A;--ink:#211915;
+    --red:#C33A2B;--red-light:#DB574A;--red-deep:#9E2C20;
+    --copper:#B27A45;--copper-deep:#8A5C31;--copper-tint:#F0E4D4;
+    --page:#F5F1EB;--paper:#FFFFFF;--linen:#FBF7F1;--bone:#F1EADF;
+    --border:#E7DECF;--border-strong:#D8CCB8;
+    --text:#241811;--text2:#5C5148;--muted:#8C8074;
+    --done:#3F8C6E;--done-bg:#DDEFE7;
+    --prog:#C9852E;--prog-bg:#F6E9D2;
+    --blocked:#C33A2B;--blocked-bg:#FBE0DC;
+    --wait:#3C6E9E;--wait-bg:#DEEAF3;
+    --todo:#6A7580;--todo-bg:#EAE7E1;
+    --later:#9A8F82;--later-bg:#EFEAE2;
+    --fd:'Space Grotesk',sans-serif;--fs:'Inter',sans-serif;--fm:'IBM Plex Mono',monospace;
+    --sh:0 1px 3px rgba(36,24,17,.05),0 6px 20px rgba(36,24,17,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--text);font-family:var(--fs);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .bar{background:#1B120D;color:var(--copper);font-weight:600;font-size:13px;letter-spacing:.03em;padding:11px 24px;display:flex;align-items:center;gap:10px}
+  .bar svg{flex-shrink:0}
+  .hero{background:var(--espresso);color:var(--page);border-bottom:5px solid var(--red);padding:38px 24px 30px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .kick{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--copper)}
+  h1{font-family:var(--fd);font-weight:600;font-size:clamp(1.6rem,3.4vw,2.2rem);letter-spacing:-.02em;margin:8px 0 4px}
+  .hero .sub{color:rgba(245,241,235,.66);font-size:15px;max-width:640px}
+  .metarow{display:flex;flex-wrap:wrap;gap:26px;margin-top:22px;padding-top:18px;border-top:1px solid rgba(245,241,235,.16)}
+  .metarow .k{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:rgba(245,241,235,.6);margin-bottom:3px}
+  .metarow .v{font-size:14px;font-weight:600;color:var(--page)}
+  .metarow .v.mono{font-family:var(--fm)}
+
+  /* progress */
+  .prog-wrap{margin-top:20px}
+  .prog-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+  .prog-top .lbl{font-size:12px;color:rgba(245,241,235,.66);letter-spacing:.04em}
+  .prog-top .pct{font-family:var(--fd);font-weight:600;font-size:19px;color:var(--page)}
+  .track{height:11px;background:rgba(245,241,235,.14);border-radius:999px;overflow:hidden;display:flex}
+  .track .seg{height:100%}
+  .seg.done{background:var(--done)} .seg.prog{background:var(--prog)}
+
+  .body{padding:30px 0 60px}
+  .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px}
+  @media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+  .tile{background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:var(--sh);border-top:3px solid var(--tc)}
+  .tile .n{font-family:var(--fd);font-weight:600;font-size:28px;line-height:1;color:var(--tc)}
+  .tile .l{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+  .callout{background:#FCEFEC;border:1px solid #F1C7C0;border-left:4px solid var(--red);border-radius:12px;padding:16px 20px;margin:20px 0 4px;box-shadow:var(--sh)}
+  .callout h3{font-family:var(--fd);font-size:14.5px;color:var(--red-deep);display:flex;align-items:center;gap:8px}
+  .callout ul{margin:9px 0 0;padding-left:20px}
+  .callout li{font-size:13.5px;color:var(--text2);margin:4px 0}
+  .callout li b{color:var(--ink)}
+
+  .group{margin-top:30px}
+  .group-h{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .group-h .idx{font-family:var(--fm);font-size:12px;font-weight:600;color:var(--copper-deep);background:var(--copper-tint);padding:3px 9px;border-radius:6px}
+  .group-h h2{font-family:var(--fd);font-weight:600;font-size:18px;color:var(--ink);letter-spacing:-.01em}
+  .group-h .gcount{margin-left:auto;font-size:12px;font-family:var(--fm);color:var(--muted)}
+
+  .list{background:var(--paper);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
+  .row{display:flex;align-items:flex-start;gap:13px;padding:13px 18px;border-top:1px solid var(--border);cursor:pointer;transition:background .12s}
+  .row:first-child{border-top:0}
+  .row:hover{background:var(--linen)}
+  .box{flex-shrink:0;width:22px;height:22px;border-radius:6px;border:2px solid var(--border-strong);display:grid;place-items:center;margin-top:1px;transition:.12s}
+  .row[data-status="done"] .box{background:var(--done);border-color:var(--done)}
+  .box svg{opacity:0;transition:opacity .12s}
+  .row[data-status="done"] .box svg{opacity:1}
+  .row[data-status="done"] .task{color:var(--muted)}
+  .row[data-status="done"] .task b{text-decoration:line-through;text-decoration-color:rgba(140,128,116,.5)}
+  .main{flex:1;min-width:0}
+  .task{font-size:14px;color:var(--text2)}
+  .task b{color:var(--ink);font-weight:600}
+  .note{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .meta{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:120px}
+  @media(max-width:680px){.meta{min-width:0}.owner{display:none}}
+  .status{font-size:10.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .s-done{background:var(--done-bg);color:var(--done)}
+  .s-prog{background:var(--prog-bg);color:var(--prog)}
+  .s-blocked{background:var(--blocked-bg);color:var(--blocked)}
+  .s-wait{background:var(--wait-bg);color:var(--wait)}
+  .s-todo{background:var(--todo-bg);color:var(--todo)}
+  .s-later{background:var(--later-bg);color:var(--later)}
+  .owner{font-size:10.5px;font-family:var(--fm);color:var(--muted);white-space:nowrap}
+
+  .foot{color:var(--muted);font-size:12px;text-align:center;padding:34px 24px 0;line-height:1.7}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:26px 0 6px}
+  .legend span{font-size:11.5px;color:var(--text2);display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+</style>
+</head>
+<body>
+<div class="bar">
+  <svg width="16" height="16" viewBox="0 0 48 48" fill="none"><path d="M12 20h20a2 2 0 0 1 2 2v3a11 11 0 0 1-11 11h-2A11 11 0 0 1 10 25v-3a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="3.2"/><path d="M34 22h4a5 5 0 0 1 0 10h-4" stroke="currentColor" stroke-width="3.2"/><path d="M18 8c-1.5 2-1.5 3.5 0 5.5M24 7c-1.5 2-1.5 3.5 0 5.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+  Quality Coffee Systems × Atelio — Delivery Tracker
+</div>
+<header class="hero">
+  <div class="wrap">
+    <div class="kick">Delivery 1 · Milestone M1 · Week 1 Runbook</div>
+    <h1>Delivery 1 — where we are</h1>
+    <p class="sub">Live status across the whole delivery: platform, collaboration, the data intake, the build itself, and M1 sign-off. Every "done" row verified against the live system today.</p>
+    <div class="metarow">
+      <div><div class="k">Window</div><div class="v mono">Mon Jul 27 → Fri Jul 31</div></div>
+      <div><div class="k">Today</div><div class="v mono">Wed Jul 29 · Day 3 of 5</div></div>
+      <div><div class="k">Milestone</div><div class="v">M1 — ready modules live</div></div>
+      <div><div class="k">Critical path</div><div class="v">QCS Delivery-1 intake</div></div>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog-top"><span class="lbl">Overall progress (Week 1 items)</span><span class="pct" id="pct">—</span></div>
+      <div class="track" id="track"></div>
+    </div>
+  </div>
+</header>
+
+<div class="body">
+  <div class="wrap">
+    <div class="tiles">
+      <div class="tile" style="--tc:var(--done)"><div class="n" id="c-done">0</div><div class="l">Done</div></div>
+      <div class="tile" style="--tc:var(--prog)"><div class="n" id="c-prog">0</div><div class="l">In progress</div></div>
+      <div class="tile" style="--tc:var(--wait)"><div class="n" id="c-wait">0</div><div class="l">Waiting on QCS</div></div>
+      <div class="tile" style="--tc:var(--blocked)"><div class="n" id="c-blocked">0</div><div class="l">Blocked</div></div>
+      <div class="tile" style="--tc:var(--todo)"><div class="n" id="c-todo">0</div><div class="l">Not started</div></div>
+    </div>
+
+    <div class="callout">
+      <h3>⚑ Clear these now to keep M1 on track</h3>
+      <ul>
+        <li><b>Send the intake items</b> — every module is live and working, currently on demo records. The moment your exports land in "Material for ERP" we swap in the real data; this is the only thing between here and M1.</li>
+        <li><b>Close the roster gaps</b> — we still need email addresses for Mike, Tom Zizak and Farzan Payravi, and a Microsoft-capable address for Raffi so he can sign in.</li>
+        <li><b>Access invites land once your data is in</b> — the platform is ready for the team; invites go out as soon as real data is loaded so first sign-in isn't a demo. Target: tomorrow.</li>
+      </ul>
+    </div>
+
+    <div id="groups"></div>
+
+    <div class="legend">
+      <span><i style="background:var(--done)"></i>Done</span>
+      <span><i style="background:var(--prog)"></i>In progress</span>
+      <span><i style="background:var(--wait)"></i>Waiting on QCS</span>
+      <span><i style="background:var(--blocked)"></i>Blocked</span>
+      <span><i style="background:var(--todo)"></i>Not started</span>
+      <span><i style="background:var(--later)"></i>Later sprint</span>
+    </div>
+    <div class="foot">
+      Status current as of <b>Wed Jul 29, 2026</b> — every "done" row verified against the live deployment today. Tap any row to toggle it done for your own view (resets on reload). Questions → the Questions channel or the support portal.<br>
+      Quality Coffee Systems · Operating System · Prepared by Atelio — a Forma platform
+    </div>
+  </div>
+</div>
+
+<script>
+var GROUPS = [
+  { title:"Platform & Infrastructure", tasks:[
+    {t:"Atelio tenant provisioned for QCS", o:"Forma", s:"done", n:"Live on shared Atelio codebase — tenant = DB row + config, no fork."},
+    {t:"Tenant branding applied across the whole OS", o:"Forma", s:"done", n:"Espresso / red / copper + Space Grotesk · Inter. Theme tokens now skin every screen — login, Control Centre, all modules. Verified side-by-side with Forma: each tenant renders its own look."},
+    {t:"Feature flags on for all 6 modules", o:"Forma", s:"done", n:"ERP, Machines, Control Centre, Booking/CRM, Service & Dispatch, Reports all switched on."},
+    {t:"GitHub Org + docs repo", o:"Forma", s:"done", n:"AtelioOS org · qcs-docs repo (public, so Pages can serve)."},
+    {t:"Client document hub hosted live", o:"Forma", s:"done", n:"GitHub Pages — Info Request, Delivery 1 Plan, Support Portal + landing hub."},
+    {t:"Support ticket pipeline live", o:"Forma", s:"done", n:"Portal form → Supabase → logs a ticket (QCS-1001 tested). Feeds Atelio HQ console."},
+    {t:"Atelio HQ support console built", o:"Forma", s:"done", n:"Internal dashboard, auto-refresh, reads the live support API."},
+    {t:"Automated deployments live", o:"Forma", s:"done", n:"Every improvement now ships to your live system automatically within minutes of being built."},
+    {t:"Microsoft sign-in live & verified", o:"Forma", s:"done", n:"Sign in with your Microsoft work accounts — connected and verified end-to-end on the live system, including hand-off between modules and deep links (e.g. straight into the ERP catalog)."},
+    {t:"Support notifications", o:"Forma", s:"prog", n:"Real-time alerts live in our support console now; instant email alerts are being wired up."}
+  ]},
+  { title:"Client Collaboration & Comms", tasks:[
+    {t:"Teams community created + channels structured", o:"Forma", s:"done", n:"General · Data & Intake · Deliverables & Walkthroughs · Support."},
+    {t:"Channel pinned posts written", o:"Forma", s:"done", n:"Each channel has a pinned explainer of what it's for."},
+    {t:"Doc links added into the right Teams channels", o:"Forma", s:"done", n:"Live GitHub Pages links pinned where they belong."},
+    {t:"Credentials method set + note updated", o:"Forma", s:"done", n:"Private 1:1 chat. Info Request note reflects this."},
+    {t:"Onboarding email sent to QCS", o:"Forma", s:"done", n:"Sent 11:06, Tue Jul 28 — intake clock is running. Watch Material for ERP for exports."},
+    {t:"Teams access + onboarding space (M365)", o:"QCS · Forma", s:"done", n:"'QCS × Atelio — Operating System' lives in QCS's own Microsoft 365 tenant; Kazuto, Roya, Mazda, Roger and Marie are all in with work accounts."}
+  ]},
+  { title:"Delivery-1 Intake — critical path (QCS provides)", tasks:[
+    {t:"Machine catalogue + parts list", o:"QCS", s:"wait", n:"Unlocks the Machines module & parts registry on real records. Cross-reference engine is already built and waiting."},
+    {t:"Inventory counts (showroom / warehouse / vans)", o:"QCS", s:"wait", n:"Unlocks real stock levels — the three locations already exist in the system, ready to load."},
+    {t:"Suppliers + open purchase orders", o:"QCS", s:"wait", n:"Unlocks purchasing on real vendors. PO creation + receiving + tracking is built and live."},
+    {t:"WooCommerce API access", o:"QCS", s:"wait", n:"Unlocks live web-order sync. The order register already supports online orders — sync flips on when keys arrive."},
+    {t:"Users & roles (confirm the draft)", o:"QCS", s:"prog", n:"Draft roster received — 12 accounts provisioned with roles. Missing: emails for Mike, Tom Zizak, Farzan Payravi + a Microsoft-capable address for Raffi."},
+    {t:"Logo (vector) + product photos", o:"QCS", s:"wait", n:"Real branding on every primary screen before sign-off."}
+  ]},
+  { title:"The Build (Forma)", tasks:[
+    {t:"Control Centre dashboard to the QCS mockup", o:"Forma", s:"done", n:"Rail + hero + KPI cards (open WOs, service due, machines, pending quotes) + needs-attention feed + today's schedule — all data-driven, matches the design shared with QCS."},
+    {t:"Sales & CRM live", o:"Forma", s:"done", n:"Client accounts, opportunity pipeline, follow-ups — live in the QCS ERP app."},
+    {t:"ERP: catalog + supplier directory", o:"Forma", s:"done", n:"23 products enriched with brand / model / product type; 8 suppliers with terms & lead times."},
+    {t:"ERP: multi-location inventory + cross-reference", o:"Forma", s:"done", n:"Stock levels across Main Warehouse / Showroom / Service Van 1, search by brand & model, low-stock flags, and the parts↔machine cross-reference (e.g. CLARIS Pro → 5 JURA models). Verified live today."},
+    {t:"ERP: purchasing — create, receive, track", o:"Forma", s:"done", n:"New PO with supplier, line items, ETA, carrier + tracking #; mark sent; receive in. Verified live today."},
+    {t:"ERP: sales orders (incl. online)", o:"Forma", s:"done", n:"Order register with source tags (online / phone / in-person / rep), confirm → fulfill flow, order creation from the catalog. Verified live today."},
+    {t:"ERP: install projects (PO → Install)", o:"Forma", s:"done", n:"Pipeline board: planning → PO placed → goods received → install scheduled → installed → closed. Verified live today."},
+    {t:"ERP: shipping log", o:"Forma", s:"done", n:"Inbound vendor freight + outbound customer deliveries with carrier, tracking # and status flow. Verified live today."},
+    {t:"Service & Dispatch module live", o:"Forma", s:"done", n:"Work orders, service quotes, preventative-maintenance plans, machine records (serials, warranty dates)."},
+    {t:"ERP data model ready for real records", o:"Forma", s:"done", n:"The database is ready to receive your exports directly — stock, orders, projects, shipments and PO tracking all have their homes."},
+    {t:"Map QCS exports to the ERP schema", o:"Forma", s:"todo", n:"Starts the moment the first export arrives in Material for ERP."},
+    {t:"Load real catalogue, parts, inventory, suppliers, POs", o:"Forma", s:"todo", n:"Current records are working demo data so every screen shows real flows; will be replaced wholesale."},
+    {t:"Swap placeholders for real logo + photos", o:"Forma", s:"todo", n:"Locks the look to the QCS brand. Needs the intake assets."},
+    {t:"Configure users/roles, stock locations, reorder points, warranty", o:"Forma", s:"prog", n:"12 accounts with roles live · 3 stock locations + reorder points configured (sample values) · warranty fields tracked per machine. Final settings confirmed with QCS on real data."},
+    {t:"Internal QA — spot-check vs source, run core flows", o:"Forma", s:"todo", n:"Thu target. Prices, stock & totals validated against QCS source files before the walkthrough."}
+  ]},
+  { title:"Go-Live & M1 Sign-off", tasks:[
+    {t:"ERP Core live on real data", o:"Forma", s:"prog", n:"Fully live end-to-end on demo data — inventory, purchasing, orders, projects, shipping all working. Flips to done when the intake lands."},
+    {t:"Machines module live on real data", o:"Forma", s:"prog", n:"Machine records with serials + warranty live; real fleet loads from the machine catalogue intake."},
+    {t:"Control Centre live on real data", o:"Forma", s:"prog", n:"KPIs + needs-attention live and data-driven today; numbers become real with the data load."},
+    {t:"Booking/CRM, Service & Reports switched on", o:"Forma", s:"done", n:"On now; populated further in the CRM & Service sprints."},
+    {t:"Send team access invites", o:"Forma", s:"todo", n:"Held on purpose until real data is in — target tomorrow. Sign-in flow already tested end-to-end."},
+    {t:"Run the M1 acceptance checklist with QCS", o:"QCS · Forma", s:"todo", n:"8 criteria — login, real catalogue, accurate inventory, purchasing, sell & invoice, live Control Centre, QCS branding, handover."},
+    {t:"Live walkthrough (30–45 min, team logged in)", o:"QCS · Forma", s:"todo", n:"Thu–Fri. Book the slot with the QCS team."},
+    {t:"Deliverable email + documentation + portal access", o:"Forma", s:"todo", n:"The standard delivery package."},
+    {t:"M1 sign-off", o:"QCS · Forma", s:"todo", n:"Fri Jul 31 target — signed against the acceptance checklist."}
+  ]},
+  { title:"Deferred — not Week 1 (tracked so they're not forgotten)", tasks:[
+    {t:"WooCommerce live order sync", o:"Forma · QCS", s:"later", n:"Order register already handles online orders; live sync switches on when the Woo API keys arrive (intake item)."},
+    {t:"Dispatch map & route view", o:"Forma", s:"later", n:"Scheduling exists in Service & Dispatch today; the map/route view is a Sprint-2 item."},
+    {t:"On-site work-order creation for techs (mobile)", o:"Forma", s:"later", n:"Techs can be assigned WOs now; creating them on site from a phone is Sprint 2."},
+    {t:"PM & warranty auto-notifications", o:"Forma", s:"later", n:"Due dates + warranty dates are tracked; automated alerts (email/push) to follow."},
+    {t:"Outlook / Microsoft 365 integration", o:"Forma", s:"later", n:"Comms sprint — admin consent can come later; not needed for Delivery 1."},
+    {t:"Accounting migration (QuickBooks cutover)", o:"Forma · Marie", s:"later", n:"Separate track; QuickBooks stays book of record until cutover."}
+  ]}
+];
+
+var CHK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2"><path d="M20 6L9 17l-5-5"/></svg>';
+var SLABEL = {done:"Done",prog:"In progress",blocked:"Blocked",wait:"Waiting on QCS",todo:"Not started",later:"Later"};
+var SCLASS = {done:"s-done",prog:"s-prog",blocked:"s-blocked",wait:"s-wait",todo:"s-todo",later:"s-later"};
+
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+
+function render(){
+  var host = document.getElementById('groups');
+  host.innerHTML = GROUPS.map(function(g,gi){
+    var done = g.tasks.filter(function(t){return t.s==='done';}).length;
+    var rows = g.tasks.map(function(t,ti){
+      return '<div class="row" data-status="'+t.s+'" data-g="'+gi+'" data-t="'+ti+'">'+
+        '<div class="box">'+CHK+'</div>'+
+        '<div class="main"><div class="task"><b>'+esc(t.t)+'</b></div>'+
+        (t.n?'<div class="note">'+esc(t.n)+'</div>':'')+'</div>'+
+        '<div class="meta"><span class="status '+SCLASS[t.s]+'">'+SLABEL[t.s]+'</span>'+
+        '<span class="owner">'+esc(t.o)+'</span></div></div>';
+    }).join('');
+    return '<div class="group"><div class="group-h">'+
+      '<span class="idx">'+(gi+1)+'</span><h2>'+esc(g.title)+'</h2>'+
+      '<span class="gcount">'+done+' / '+g.tasks.length+' done</span></div>'+
+      '<div class="list">'+rows+'</div></div>';
+  }).join('');
+  bindRows();
+  recalc();
+}
+
+function bindRows(){
+  var rows = document.querySelectorAll('.row');
+  for(var i=0;i<rows.length;i++){
+    rows[i].addEventListener('click',function(){
+      var g=+this.getAttribute('data-g'), t=+this.getAttribute('data-t');
+      var task=GROUPS[g].tasks[t];
+      if(task.s==='done'){ task.s = task._prev || 'todo'; }
+      else { task._prev = task.s; task.s='done'; }
+      render();
+    });
+  }
+}
+
+function recalc(){
+  var all=[]; GROUPS.forEach(function(g){g.tasks.forEach(function(t){all.push(t);});});
+  var active = all.filter(function(t){return t.s!=='later';});
+  var c={done:0,prog:0,wait:0,blocked:0,todo:0};
+  active.forEach(function(t){ if(c[t.s]!==undefined) c[t.s]++; });
+  document.getElementById('c-done').textContent=c.done;
+  document.getElementById('c-prog').textContent=c.prog;
+  document.getElementById('c-wait').textContent=c.wait;
+  document.getElementById('c-blocked').textContent=c.blocked;
+  document.getElementById('c-todo').textContent=c.todo;
+  var total=active.length;
+  var score=c.done + c.prog*0.5;
+  var pct=Math.round(score/total*100);
+  document.getElementById('pct').textContent=pct+'%';
+  var dPct=Math.round(c.done/total*100), pPct=Math.round(c.prog*0.5/total*100);
+  document.getElementById('track').innerHTML='<div class="seg done" style="width:'+dPct+'%"></div><div class="seg prog" style="width:'+pPct+'%"></div>';
+}
+
+render();
+</script>
+</body>
+</html>
