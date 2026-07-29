@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCS × Atelio — Delivery Trackers</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --espresso:#241811;--espresso2:#2E211A;--ink:#211915;
+    --red:#C33A2B;--red-light:#DB574A;--red-deep:#9E2C20;
+    --copper:#B27A45;--copper-deep:#8A5C31;--copper-tint:#F0E4D4;
+    --page:#F5F1EB;--paper:#FFFFFF;--linen:#FBF7F1;--bone:#F1EADF;
+    --border:#E7DECF;--border-strong:#D8CCB8;
+    --text:#241811;--text2:#5C5148;--muted:#8C8074;
+    --done:#3F8C6E;--done-bg:#DDEFE7;
+    --prog:#C9852E;--prog-bg:#F6E9D2;
+    --blocked:#C33A2B;--blocked-bg:#FBE0DC;
+    --wait:#3C6E9E;--wait-bg:#DEEAF3;
+    --todo:#6A7580;--todo-bg:#EAE7E1;
+    --later:#9A8F82;--later-bg:#EFEAE2;
+    --fd:'Space Grotesk',sans-serif;--fs:'Inter',sans-serif;--fm:'IBM Plex Mono',monospace;
+    --sh:0 1px 3px rgba(36,24,17,.05),0 6px 20px rgba(36,24,17,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--text);font-family:var(--fs);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .bar{background:#1B120D;color:var(--copper);font-weight:600;font-size:13px;letter-spacing:.03em;padding:11px 24px;display:flex;align-items:center;gap:10px}
+  .hero{background:var(--espresso);color:var(--page);border-bottom:5px solid var(--red);padding:34px 24px 0}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .kick{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--copper)}
+  h1{font-family:var(--fd);font-weight:600;font-size:clamp(1.5rem,3.2vw,2.1rem);letter-spacing:-.02em;margin:8px 0 4px}
+  .hero .sub{color:rgba(245,241,235,.66);font-size:14.5px;max-width:680px}
+
+  /* delivery tabs */
+  .tabs{display:flex;gap:6px;margin-top:24px;overflow-x:auto;padding-bottom:0}
+  .tab{flex-shrink:0;background:rgba(245,241,235,.07);border:1px solid rgba(245,241,235,.14);border-bottom:none;border-radius:10px 10px 0 0;padding:10px 16px 12px;cursor:pointer;min-width:150px;transition:.15s}
+  .tab:hover{background:rgba(245,241,235,.12)}
+  .tab.active{background:var(--page);border-color:var(--page)}
+  .tab .tl{font-family:var(--fd);font-weight:600;font-size:13.5px;color:var(--page)}
+  .tab.active .tl{color:var(--ink)}
+  .tab .tw{font-size:10.5px;font-family:var(--fm);color:rgba(245,241,235,.55);margin-top:1px}
+  .tab.active .tw{color:var(--muted)}
+  .tab .tp{margin-top:7px;height:5px;border-radius:99px;background:rgba(245,241,235,.15);overflow:hidden;display:flex}
+  .tab.active .tp{background:var(--bone)}
+  .tab .tp i{height:100%;display:block}
+  .tab .tp .d{background:var(--done)} .tab .tp .p{background:var(--prog)}
+  .tab .tpct{font-size:10px;font-family:var(--fm);color:rgba(245,241,235,.6);margin-top:4px}
+  .tab.active .tpct{color:var(--text2)}
+
+  .body{padding:26px 0 60px}
+  .dhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;margin-bottom:14px}
+  .dhead h2{font-family:var(--fd);font-weight:600;font-size:21px;color:var(--ink);letter-spacing:-.01em}
+  .dhead .win{font-family:var(--fm);font-size:12px;color:var(--muted)}
+  .dhead .pct{margin-left:auto;font-family:var(--fd);font-weight:600;font-size:19px;color:var(--copper-deep)}
+  .dsub{font-size:13.5px;color:var(--text2);max-width:760px;margin-bottom:16px}
+  .track{height:10px;background:var(--bone);border-radius:999px;overflow:hidden;display:flex;margin-bottom:18px}
+  .track .seg{height:100%}
+  .seg.done{background:var(--done)} .seg.prog{background:var(--prog)}
+
+  .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px}
+  @media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+  .tile{background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:12px 15px;box-shadow:var(--sh);border-top:3px solid var(--tc)}
+  .tile .n{font-family:var(--fd);font-weight:600;font-size:25px;line-height:1;color:var(--tc)}
+  .tile .l{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+  .callout{background:#FCEFEC;border:1px solid #F1C7C0;border-left:4px solid var(--red);border-radius:12px;padding:14px 18px;margin:16px 0 4px;box-shadow:var(--sh)}
+  .callout h3{font-family:var(--fd);font-size:14px;color:var(--red-deep)}
+  .callout ul{margin:8px 0 0;padding-left:20px}
+  .callout li{font-size:13px;color:var(--text2);margin:4px 0}
+  .callout li b{color:var(--ink)}
+
+  .group{margin-top:26px}
+  .group-h{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .group-h .idx{font-family:var(--fm);font-size:12px;font-weight:600;color:var(--copper-deep);background:var(--copper-tint);padding:3px 9px;border-radius:6px}
+  .group-h h2{font-family:var(--fd);font-weight:600;font-size:17px;color:var(--ink);letter-spacing:-.01em}
+  .group-h .gcount{margin-left:auto;font-size:12px;font-family:var(--fm);color:var(--muted)}
+  .list{background:var(--paper);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
+  .row{display:flex;align-items:flex-start;gap:13px;padding:12px 18px;border-top:1px solid var(--border)}
+  .row:first-child{border-top:0}
+  .row:hover{background:var(--linen)}
+  .box{flex-shrink:0;width:21px;height:21px;border-radius:6px;border:2px solid var(--border-strong);display:grid;place-items:center;margin-top:1px}
+  .row[data-status="done"] .box{background:var(--done);border-color:var(--done)}
+  .box svg{opacity:0}
+  .row[data-status="done"] .box svg{opacity:1}
+  .row[data-status="done"] .task{color:var(--muted)}
+  .row[data-status="done"] .task b{text-decoration:line-through;text-decoration-color:rgba(140,128,116,.5)}
+  .main{flex:1;min-width:0}
+  .task{font-size:14px;color:var(--text2)}
+  .task b{color:var(--ink);font-weight:600}
+  .note{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .meta{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:120px}
+  @media(max-width:680px){.meta{min-width:0}.owner{display:none}}
+  .status{font-size:10.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .s-done{background:var(--done-bg);color:var(--done)}
+  .s-prog{background:var(--prog-bg);color:var(--prog)}
+  .s-blocked{background:var(--blocked-bg);color:var(--blocked)}
+  .s-wait{background:var(--wait-bg);color:var(--wait)}
+  .s-todo{background:var(--todo-bg);color:var(--todo)}
+  .s-later{background:var(--later-bg);color:var(--later)}
+  .owner{font-size:10.5px;font-family:var(--fm);color:var(--muted);white-space:nowrap}
+  .foot{color:var(--muted);font-size:12px;text-align:center;padding:34px 24px 0;line-height:1.7}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:26px 0 6px}
+  .legend span{font-size:11.5px;color:var(--text2);display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+</style>
+</head>
+<body>
+<div class="bar">
+  <svg width="16" height="16" viewBox="0 0 48 48" fill="none"><path d="M12 20h20a2 2 0 0 1 2 2v3a11 11 0 0 1-11 11h-2A11 11 0 0 1 10 25v-3a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="3.2"/><path d="M34 22h4a5 5 0 0 1 0 10h-4" stroke="currentColor" stroke-width="3.2"/><path d="M18 8c-1.5 2-1.5 3.5 0 5.5M24 7c-1.5 2-1.5 3.5 0 5.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+  Quality Coffee Systems × Atelio — Delivery Trackers
+</div>
+<header class="hero">
+  <div class="wrap">
+    <div class="kick">Scope &amp; Build Plan · Live Status</div>
+    <h1>Every delivery, tracked</h1>
+    <p class="sub">One tracker per delivery, mirroring the Scope &amp; Build Plan: the Week-1 launch, then four sprints. Statuses are verified against the live system and updated as the build progresses.</p>
+    <div class="tabs" id="tabs"></div>
+  </div>
+</header>
+
+<div class="body">
+  <div class="wrap" id="content"></div>
+  <div class="wrap">
+    <div class="legend">
+      <span><i style="background:var(--done)"></i>Done</span>
+      <span><i style="background:var(--prog)"></i>In progress</span>
+      <span><i style="background:var(--wait)"></i>Waiting on QCS</span>
+      <span><i style="background:var(--blocked)"></i>Blocked</span>
+      <span><i style="background:var(--todo)"></i>Not started</span>
+      <span><i style="background:var(--later)"></i>Deferred</span>
+    </div>
+    <div class="foot">
+      Status current as of <b>Wed Jul 29, 2026</b>. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
+      Quality Coffee Systems · Operating System · Prepared by Atelio — a Forma platform
+    </div>
+  </div>
+</div>
+
+<script>
+var DELIVERIES = [
+  { id:'d1', label:'Delivery 1', win:'Week 1 · Jul 27–31', title:'Live on what’s already built',
+    sub:'Tenant, brand, sign-in, the six ready modules, and the team’s first logins — the platform your team starts using in week one.',
+    flags:[
+      '<b>Send the intake items</b> — modules run on demo records until your exports land in "Material for ERP".',
+      '<b>Roster gaps</b> — emails needed for Mike, Tom Zizak, Farzan Payravi + a Microsoft-capable address for Raffi.',
+      '<b>Access invites</b> go out the moment real data is loaded.'
+    ],
+    groups:[
+      { title:'Platform & Access', tasks:[
+        {t:'QCS tenant + branding across the whole OS', o:'Forma', s:'done', n:'White + maroon + red, Space Grotesk/Inter — every screen themed, verified live.'},
+        {t:'Microsoft sign-in, verified end-to-end', o:'Forma', s:'done', n:'Including module-to-module hand-off and deep links.'},
+        {t:'All 6 ready modules switched on', o:'Forma', s:'done', n:'Control Centre, ERP core, Machines, Booking/CRM, Service & Dispatch, Reports.'},
+        {t:'Team accounts provisioned (12)', o:'Forma', s:'done', n:'Roles per the org chart; invites held until data is in.'},
+        {t:'Automated deployments + staging environment', o:'Forma', s:'done', n:'Every change ships automatically; a separate staging sandbox tests new features before they reach production.'},
+        {t:'Docs hub, support portal & Teams space', o:'Forma · QCS', s:'done', n:'M365 team live with intake checklist pinned; support tickets flow to the Atelio console.'}
+      ]},
+      { title:'Data & Go-Live', tasks:[
+        {t:'QCS intake: catalogue, counts, suppliers, POs, Woo keys, logo', o:'QCS', s:'wait', n:'The critical path — everything else is ready to receive it.'},
+        {t:'Users & roles confirmed', o:'QCS', s:'prog', n:'Draft roster live; 3 emails + Raffi’s Microsoft address outstanding.'},
+        {t:'Load real data + swap demo records', o:'Forma', s:'todo', n:'Starts the moment exports arrive.'},
+        {t:'Internal QA against source files', o:'Forma', s:'todo', n:'Prices, stock, totals validated before the walkthrough.'},
+        {t:'Team access invites', o:'Forma', s:'todo', n:'Sign-in flow already tested; invites follow the data load.'},
+        {t:'Live walkthrough + M1 acceptance + sign-off', o:'QCS · Forma', s:'todo', n:'Fri Jul 31 target against the 8-point checklist.'}
+      ]}
+    ]},
+  { id:'s1', label:'Sprint 1', win:'Weeks 2–3 · ERP core', title:'ERP core, hardened to your ops',
+    sub:'Inventory with locations and cross-reference, vendor POs with ETAs, projects, orders and shipping. Much of this landed early — during Week 1.',
+    flags:[
+      '<b>WooCommerce API keys</b> unlock live online-order sync (intake item).',
+      '<b>Parts export</b> (5–10K SKUs) needed to load the real parts catalogue behind bins & back-orders.'
+    ],
+    groups:[
+      { title:'Inventory', tasks:[
+        {t:'Multi-type inventory with brand/model cross-reference', o:'Forma', s:'done', n:'Machines, grinders, service parts, accessories; search by brand & model; parts↔machine fitment live. Ahead of schedule.'},
+        {t:'Warehouse + van + showroom locations', o:'Forma', s:'done', n:'Per-location stock levels with low-stock flags; vans are mobile locations.'},
+        {t:'Bin system per warehouse, organised by brand', o:'Forma', s:'done', n:'Bin per stock line, click-to-edit right in Inventory; the deep hierarchy grows in as the real 5–10K-SKU parts catalogue loads.'},
+        {t:'Top-up-to-max: auto-draft PO on low stock', o:'Forma', s:'done', n:'"Draft top-up POs" builds draft vendor POs (grouped by supplier, to max level) and holds them in Purchasing for review — no duplicates on re-runs.'},
+        {t:'Back-order queue linked to customers', o:'Forma', s:'done', n:'Back-orders view: customer + product + needed-by, status flow open → ordered → received → fulfilled.'}
+      ]},
+      { title:'Projects & Vendor POs', tasks:[
+        {t:'Projects: PO → receive → install pipeline', o:'Forma', s:'done', n:'Stage board with client, machine and target dates. Ahead of schedule.'},
+        {t:'Vendor PO register: create, send, receive, track', o:'Forma', s:'done', n:'Supplier, lines, ETA, carrier + tracking number.'},
+        {t:'ETAs surfaced on Needs Attention', o:'Forma', s:'done', n:'Inbound POs and in-transit shipments feed the Control Centre.'}
+      ]},
+      { title:'Orders & Shipping', tasks:[
+        {t:'Unified orders (showroom, phone, rep, online)', o:'Forma', s:'done', n:'Order register with source tags, confirm → fulfill → invoice flow.'},
+        {t:'Outbound shipping: record + create', o:'Forma', s:'done', n:'Inbound freight and outbound deliveries with carrier/tracking.'},
+        {t:'WooCommerce online-order sync', o:'QCS · Forma', s:'wait', n:'Register already handles online orders; live sync flips on when API keys arrive.'}
+      ]}
+    ]},
+  { id:'s2', label:'Sprint 2', win:'Weeks 3–6 · Service & Jura', title:'Service, Work Orders, Dispatch & Jura',
+    sub:'The full work-order system to Roya’s spec, PM + warranty reminders, dispatch with routes, and the Jura tablet intake with barcode labels. The biggest net-new build.',
+    flags:[
+      '<b>Label printer + 2 barcode scanners</b> — confirm hardware + label spec for the Jura intake flow.',
+      '<b>Email provider key</b> (~3 min) unlocks the automated quote/approval/pickup and PM-reminder emails.'
+    ],
+    groups:[
+      { title:'Work-Order System (Roya’s spec)', tasks:[
+        {t:'Work orders: RI/RO, statuses, technician, scheduling', o:'Forma', s:'done', n:'Full status vocabulary (New WO → On Bench → Waiting on Parts → … → Approved → Finished PM) live.'},
+        {t:'On-site creation by techs (tablet/phone)', o:'Forma', s:'done', n:'The Field flow: find customer → pick machine → describe issue → create, with on-hold warnings. Ahead of schedule.'},
+        {t:'View / edit / duplicate / void / issue invoice', o:'Forma', s:'done', n:'All work-order actions from the pending list.'},
+        {t:'Four-tab layout aligned to the spec', o:'Forma', s:'prog', n:'Customers, Work Orders, Quotes, Serials all exist; aligning columns, buttons and sort exactly to Roya’s document.'},
+        {t:'Structured note/invoice template, auto-emailed', o:'Forma', s:'todo', n:'Call log + customer + machine + technician notes template attached to Issue Invoice; email needs the provider key.'},
+        {t:'Serial registry → customer → invoice history', o:'Forma', s:'prog', n:'Serials tab live; invoice-history view and export to finish.'}
+      ]},
+      { title:'PM, Warranty & Dispatch', tasks:[
+        {t:'PM scheduler with due/overdue computation', o:'Forma', s:'done', n:'Interval-driven due dates; due list on the Control Centre.'},
+        {t:'Warranty registry + expiry visibility', o:'Forma', s:'done', n:'60-day expiry window surfaces on Needs Attention.'},
+        {t:'Email/push reminders (PM + warranty)', o:'Forma', s:'todo', n:'In-app alerts live; outbound reminders wait on the email provider key.'},
+        {t:'Dispatch scheduling', o:'Forma', s:'done', n:'Tech assignment + scheduled visits live in the service desk.'},
+        {t:'Map view + drag-to-reorder routes', o:'Forma', s:'todo', n:'Route visualisation and optimisation for ops.'}
+      ]},
+      { title:'Jura Service & Tablet Intake', tasks:[
+        {t:'Client-facing tablet intake', o:'Forma', s:'todo', n:'Customer + machine info → digital record; carry-in and on-site.'},
+        {t:'Barcode label generation + scanner logging', o:'Forma · QCS', s:'todo', n:'Label printed for the machine (water tank), scanned to log work; hardware confirmation pending.'},
+        {t:'Auto emails: confirmation, quote approval, pickup', o:'Forma', s:'todo', n:'Triggered across the intake lifecycle once email is connected.'}
+      ]}
+    ]},
+  { id:'s3', label:'Sprint 3', win:'Weeks 6–8 · CRM & Web', title:'CRM, Portals & Website',
+    sub:'Quote-to-pipeline with imagery, the brand document database, tiered client portals, lead intake with AI prospecting, WooCommerce and the booking replacement.',
+    flags:[
+      '<b>Connect Alissa</b> to spec the built-in booking replacement.',
+      '<b>WooCommerce keys</b> (shared with Sprint 1) for order + catalogue sync.'
+    ],
+    groups:[
+      { title:'CRM & Quoting', tasks:[
+        {t:'Sales pipeline per rep', o:'Forma', s:'done', n:'Pipeline stages + follow-ups live since Week 1 — ahead of schedule.'},
+        {t:'Quote builder with product images + attachments', o:'Forma', s:'todo', n:'Quotes auto-populate the rep’s pipeline; spec/installation sheets attached.'},
+        {t:'Brand document database', o:'Forma', s:'todo', n:'Brochures, flyers, price lists, catalogs — feeding quotes & portals.'},
+        {t:'Single lead intake + AI prospecting', o:'Forma', s:'todo', n:'One queue, manual routing, dedupe; AI discovery tuned to QCS’s customers.'},
+        {t:'Chat & approvals between users', o:'Forma', s:'todo', n:'Cross-user chat with inline approval cards (e.g. approve a PO) + request workflow.'}
+      ]},
+      { title:'Portals & Website', tasks:[
+        {t:'Tiered client portals (offices / retailers / operators)', o:'Forma', s:'todo', n:'Per-tier price lists and discounts.'},
+        {t:'WooCommerce order + catalogue sync', o:'QCS · Forma', s:'wait', n:'API keys from the intake unlock this.'},
+        {t:'Built-in booking (replace the paid plugin)', o:'Forma · QCS', s:'todo', n:'Scoped with Alissa; retires the WordPress plugin.'}
+      ]}
+    ]},
+  { id:'s4', label:'Sprint 4', win:'Weeks 8–10 · Go-live', title:'Payments, HR, Accounting & docs',
+    sub:'Payment rails, lightweight HR, the QuickBooks migration with Marie, shared-drive documents — and full go-live with training.',
+    flags:[
+      '<b>Cards-on-file decision</b> — QCS management to decide before the payments flow is scoped.',
+      '<b>Accounting deep-dive with Marie</b> — out-of-the-box vs custom + QuickBooks migration volume.',
+      '<b>Outlook webhook validation</b> — de-risk the mail/calendar sync early.'
+    ],
+    groups:[
+      { title:'Payments & Accounting', tasks:[
+        {t:'Payment links, cards on file, EFT, PayPal', o:'Forma · QCS', s:'wait', n:'Pending the internal cards-on-file decision.'},
+        {t:'Multi-currency supplier POs (CAD/USD/CHF/EUR)', o:'Forma', s:'todo', n:'Currency per PO with FX-aware totals.'},
+        {t:'Accounting configuration + QuickBooks migration', o:'Forma · Marie', s:'wait', n:'Scoped in the meeting with Marie; QB stays book of record until cutover.'}
+      ]},
+      { title:'HR, Docs & Go-Live', tasks:[
+        {t:'HR: WHMIS records, private pay stubs, vacation calendar', o:'Forma', s:'todo', n:'Vacation forms + shared calendar with conflict restrictions.'},
+        {t:'Shared-drive document integration', o:'Forma', s:'todo', n:'OneDrive/Google Drive feeding the ERP.'},
+        {t:'Outlook mail + calendar (two-way)', o:'Forma', s:'later', n:'Admin consent + webhook validation; comms sprint.'},
+        {t:'Full go-live + training', o:'Forma · QCS', s:'todo', n:'The finish line: every module on real data, team trained.'}
+      ]}
+    ]}
+];
+
+var CHK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2"><path d="M20 6L9 17l-5-5"/></svg>';
+var SLABEL = {done:"Done",prog:"In progress",blocked:"Blocked",wait:"Waiting on QCS",todo:"Not started",later:"Deferred"};
+var SCLASS = {done:"s-done",prog:"s-prog",blocked:"s-blocked",wait:"s-wait",todo:"s-todo",later:"s-later"};
+var active = 0;
+
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+
+function stats(d){
+  var all=[]; d.groups.forEach(function(g){g.tasks.forEach(function(t){all.push(t);});});
+  var act=all.filter(function(t){return t.s!=='later';});
+  var c={done:0,prog:0,wait:0,blocked:0,todo:0};
+  act.forEach(function(t){ if(c[t.s]!==undefined) c[t.s]++; });
+  var total=act.length||1;
+  return {c:c,total:total,pct:Math.round((c.done+c.prog*0.5)/total*100),
+    dPct:Math.round(c.done/total*100),pPct:Math.round(c.prog*0.5/total*100)};
+}
+
+function renderTabs(){
+  document.getElementById('tabs').innerHTML = DELIVERIES.map(function(d,i){
+    var s=stats(d);
+    return '<div class="tab'+(i===active?' active':'')+'" data-i="'+i+'">'+
+      '<div class="tl">'+esc(d.label)+'</div><div class="tw">'+esc(d.win)+'</div>'+
+      '<div class="tp"><i class="d" style="width:'+s.dPct+'%"></i><i class="p" style="width:'+s.pPct+'%"></i></div>'+
+      '<div class="tpct">'+s.pct+'%</div></div>';
+  }).join('');
+  var tabs=document.querySelectorAll('.tab');
+  for(var i=0;i<tabs.length;i++){
+    tabs[i].addEventListener('click',function(){ active=+this.getAttribute('data-i'); render(); window.scrollTo({top:0}); });
+  }
+}
+
+function render(){
+  renderTabs();
+  var d=DELIVERIES[active], s=stats(d);
+  var h='<div class="dhead"><h2>'+esc(d.title)+'</h2><span class="win">'+esc(d.win)+'</span><span class="pct">'+s.pct+'%</span></div>'+
+    '<div class="dsub">'+esc(d.sub)+'</div>'+
+    '<div class="track"><div class="seg done" style="width:'+s.dPct+'%"></div><div class="seg prog" style="width:'+s.pPct+'%"></div></div>'+
+    '<div class="tiles">'+
+      '<div class="tile" style="--tc:var(--done)"><div class="n">'+s.c.done+'</div><div class="l">Done</div></div>'+
+      '<div class="tile" style="--tc:var(--prog)"><div class="n">'+s.c.prog+'</div><div class="l">In progress</div></div>'+
+      '<div class="tile" style="--tc:var(--wait)"><div class="n">'+s.c.wait+'</div><div class="l">Waiting on QCS</div></div>'+
+      '<div class="tile" style="--tc:var(--blocked)"><div class="n">'+s.c.blocked+'</div><div class="l">Blocked</div></div>'+
+      '<div class="tile" style="--tc:var(--todo)"><div class="n">'+s.c.todo+'</div><div class="l">Not started</div></div>'+
+    '</div>';
+  if(d.flags && d.flags.length){
+    h+='<div class="callout"><h3>⚑ Keep this delivery moving</h3><ul>'+d.flags.map(function(f){return '<li>'+f+'</li>';}).join('')+'</ul></div>';
+  }
+  h+=d.groups.map(function(g,gi){
+    var done=g.tasks.filter(function(t){return t.s==='done';}).length;
+    var rows=g.tasks.map(function(t){
+      return '<div class="row" data-status="'+t.s+'">'+
+        '<div class="box">'+CHK+'</div>'+
+        '<div class="main"><div class="task"><b>'+esc(t.t)+'</b></div>'+
+        (t.n?'<div class="note">'+esc(t.n)+'</div>':'')+'</div>'+
+        '<div class="meta"><span class="status '+SCLASS[t.s]+'">'+SLABEL[t.s]+'</span>'+
+        '<span class="owner">'+esc(t.o)+'</span></div></div>';
+    }).join('');
+    return '<div class="group"><div class="group-h"><span class="idx">'+(gi+1)+'</span><h2>'+esc(g.title)+'</h2>'+
+      '<span class="gcount">'+done+' / '+g.tasks.length+' done</span></div><div class="list">'+rows+'</div></div>';
+  }).join('');
+  document.getElementById('content').innerHTML=h;
+}
+
+render();
+</script>
+</body>
+</html>
