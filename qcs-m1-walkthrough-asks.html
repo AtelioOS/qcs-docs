@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QCS × Atelio — M1 Walkthrough: what we need from you</title>
+<style>
+  :root{
+    --ink:#1f1a17; --maroon:#6b1f2a; --red:#b3372e; --paper:#faf8f6;
+    --line:#e6ded9; --muted:#8a7f78; --soft:#f3ece8; --green:#3f8c6e; --green-soft:#e8f3ee;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',-apple-system,'Segoe UI',sans-serif;background:var(--paper);color:var(--ink);padding:36px 28px;line-height:1.45}
+  .sheet{max-width:980px;margin:0 auto}
+  h1,h2{font-family:'Space Grotesk','Inter',sans-serif}
+  header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;border-bottom:3px solid var(--maroon);padding-bottom:14px;margin-bottom:10px;flex-wrap:wrap}
+  h1{font-size:24px;letter-spacing:-.01em}
+  h1 .qcs{color:var(--maroon)}
+  .when{font-size:13px;color:var(--muted);font-weight:600}
+  .thanks{background:var(--green-soft);border:1px solid var(--green);border-radius:12px;padding:12px 16px;margin:16px 0 22px;font-size:13.5px}
+  .thanks b{color:var(--green)}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:800px){.cols{grid-template-columns:1fr}}
+  h2{font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--maroon);margin-bottom:4px}
+  .sub{font-size:12.5px;color:var(--muted);margin-bottom:12px}
+  ol{list-style:none;counter-reset:n}
+  ol li{counter-increment:n;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px 46px;margin-bottom:10px;position:relative;font-size:13.5px}
+  ol li::before{content:counter(n);position:absolute;left:14px;top:12px;width:22px;height:22px;border-radius:50%;background:var(--maroon);color:#fff;font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+  li b{display:block;font-size:13.5px;margin-bottom:2px}
+  li .n{color:var(--muted);font-size:12.5px}
+  .chip{display:inline-block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;border-radius:999px;padding:2px 9px;margin-left:6px;vertical-align:1px}
+  .chip.qcs{background:var(--soft);color:var(--maroon);border:1px solid var(--maroon)}
+  .chip.mins{background:#eef3f7;color:#3c6e9e;border:1px solid #3c6e9e}
+  .foot{margin-top:20px;padding-top:12px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  a{color:var(--red)}
+  @media print{body{padding:12px;background:#fff}.sheet{max-width:none}}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header>
+    <h1><span class="qcs">Quality Coffee Systems</span> × Atelio — M1 walkthrough</h1>
+    <span class="when">Fri Jul 31, 2:30 PM · what we need from your team</span>
+  </header>
+
+  <div class="thanks">
+    <b>Received today — and already live!</b> Your brand package is now on the OS itself: real logo, Open Sans, and your red/black/white palette across every screen. And the WooCommerce key is wired into a live sync — store orders now flow into the ERP automatically every 15 minutes (50 orders already in, including today's). We'll rotate the key together now that it's configured.
+  </div>
+
+  <div class="cols">
+    <div>
+      <h2>To close M1 — this week</h2>
+      <div class="sub">Five things, and Milestone 1 is signed off. Items 3–5 also retire the last "DEMO" records.</div>
+      <ol>
+        <li><b>Walk the 8-point checklist &amp; sign off <span class="chip mins">today, in-meeting</span></b>
+          <span class="n">We drive the demo; you confirm each point as we go.</span></li>
+        <li><b>Confirm access checkpoints — invites in progress <span class="chip mins">in meeting</span></b>
+          <span class="n">All 18 accounts are set up as requested (Marie: master access; Mazda: Service, Operations &amp; Jura; technicians added). Together we'll confirm who gets access at each checkpoint. One gap: a Microsoft-capable email for Raffi.</span></li>
+        <li><b>Customer list <span class="chip qcs">QCS</span></b>
+          <span class="n">QuickBooks customer export or the template in your OS Database folder — replaces the 3 DEMO clients and their orders with your real accounts.</span></li>
+        <li><b>Machine fleet &amp; serials <span class="chip qcs">QCS</span></b>
+          <span class="n">Template ready in OS Database — real machines replace the DEMO units and power the serial → service-history registry.</span></li>
+        <li><b>Open work orders <span class="chip qcs">QCS</span></b>
+          <span class="n">Your current queue (any format) — the Service desk opens on day one with real jobs, not samples.</span></li>
+      </ol>
+    </div>
+    <div>
+      <h2>For the next batch — Service, Work Orders &amp; Jura</h2>
+      <div class="sub">Sprint 2 (weeks 3–6) is the big service build. These unlock it — none are heavy.</div>
+      <ol>
+        <li><b>30 minutes with Roya <span class="chip mins">~30 min</span></b>
+          <span class="n">Review the four-tab work-order screens against their spec (columns, buttons, sort) so we lock the layout they designed.</span></li>
+        <li><b>Email provider key <span class="chip mins">~3 min with us</span></b>
+          <span class="n">Unlocks the automated quote-approval, pick-up and PM-reminder emails.</span></li>
+        <li><b>Jura intake hardware <span class="chip qcs">QCS</span></b>
+          <span class="n">Confirm the label-printer model, the two barcode scanners and label size — then the tablet intake + barcode flow is built to your counter.</span></li>
+        <li><b>Any parts data outside QuickBooks <span class="chip qcs">QCS</span></b>
+          <span class="n">The QB catalogue is in (8,700+ items). If more part lists live elsewhere, send them and bins/back-orders get full depth.</span></li>
+        <li><b>Start thinking: Sprint 3 <span class="chip qcs">no action yet</span></b>
+          <span class="n">Portal tiers &amp; per-tier pricing, which brand documents go in the portal library, and Outlook calendar consent for the shared calendar.</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div style="margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px">
+    <h2 style="margin-bottom:4px">Preview what's coming — your staging environment</h2>
+    <div class="sub" style="margin-bottom:10px">A second copy of the OS where new functionality lands first. As Sprint-2 work builds (work-order screens, Jura intake, dispatch), you'll see it here <i>before</i> it ships to your live OS — same sign-in, same roster gate, switching on for your team today.</div>
+    <div style="font-size:12.5px;line-height:1.8">
+      <b>Hub:</b> <a href="https://atelio-qcs-git-staging-formatablewares-projects.vercel.app">atelio-qcs-git-staging-formatablewares-projects.vercel.app</a><br>
+      <b>ERP:</b> <a href="https://atelio-qcs-erp-git-staging-formatablewares-projects.vercel.app">atelio-qcs-erp-git-staging-formatablewares-projects.vercel.app</a><br>
+      <b>Service:</b> <a href="https://atelio-service-git-staging-formatablewares-projects.vercel.app">atelio-service-git-staging-formatablewares-projects.vercel.app</a>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Live tracker: <a href="https://atelioos.github.io/qcs-docs/qcs-delivery-trackers.html">atelioos.github.io/qcs-docs/qcs-delivery-trackers.html</a></span>
+    <span>Atelio · Forma — Jul 31, 2026</span>
+  </div>
+</div>
+</body>
+</html>
