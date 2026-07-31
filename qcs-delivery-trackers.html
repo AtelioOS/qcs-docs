@@ -147,7 +147,7 @@ var DELIVERIES = [
     ],
     groups:[
       { title:'Platform & Access', tasks:[
-        {t:'QCS tenant + branding across the whole OS', o:'Forma', s:'done', n:'White + maroon + red, Space Grotesk/Inter — every screen themed, verified live. Jul 29: coffee-cup brand mark added as the browser-tab favicon and the back-to-Control-Centre button on every app.'},
+        {t:'QCS tenant + branding across the whole OS', o:'Forma', s:'done', n:'Jul 31: the real QCS brand is live per your brand guidelines — digitized logo in the rail, favicon and sign-in screen, Open Sans throughout, and the red/black/white palette (D62121 / A91B0D / C8C8C8) across every screen. Verified live on the hub and ERP.'},
         {t:'Microsoft sign-in, verified end-to-end', o:'Forma', s:'done', n:'Including module-to-module hand-off and deep links.'},
         {t:'All 6 ready modules switched on', o:'Forma', s:'done', n:'Control Centre, ERP core, Machines, Booking/CRM, Service & Dispatch, Reports.'},
         {t:'ERP Core split into its own app + launcher matches the build plan', o:'Forma', s:'done', n:'Jul 29, per the scope doc + Project Plan: ERP Core now has its own page (atelio-qcs-erp) — no more landing in Sales — and the Control Centre launcher mirrors the agreed workstreams, with upcoming modules shown as labelled tiles: Jura Intake (Sprint 2), Calendar + Portals & Website (Sprint 3), Payments, HR, Accounting (Sprint 4). Tiles flip to Open as each sprint lands.'},
@@ -167,14 +167,14 @@ var DELIVERIES = [
         {t:'Users & roles confirmed', o:'QCS', s:'prog', n:'Jul 30: Mike, Tom and Farzan’s emails received and their accounts are live (18 total). Jul 31: Marie upgraded to master (full) access; Mazda scoped to Service & Dispatch, Operations (dispatch + preventative maintenance) and Jura Intake — the OS now supports per-user module access. Only Raffi’s Microsoft-capable address still outstanding.'},
         {t:'Load real data + swap demo records', o:'Forma', s:'prog', n:'~70% real: catalogue (8,609), stock ($1.83M), suppliers (746), open POs (19) and 187 product photos are live QCS data. Remaining sample records (3 clients + their orders, projects, work orders, machines) are clearly tagged “DEMO” in the UI and get swapped the day the customer list, machine serials and open work orders arrive — the two templates for those are waiting in the OS Database folder.'},
         {t:'Internal QA against source files', o:'Forma', s:'done', n:'Jul 29 full pass on the live apps: Control Centre KPIs + alerts, all 14 Sales/ERP views (catalog 8,609 items, inventory, 19 POs, 746 suppliers, orders, projects, back-orders, reports), Import templates download clean, hub links verified. QB numbers previously reconciled exact against source.'},
-        {t:'Team access invites + technician hand-off', o:'Forma', s:'todo', n:'Sign-in flow tested; invites follow the data load. Hand-off plan for the full-team rollout: Microsoft accounts (@qualitycoffeesystems.ca) use “Sign in with Microsoft”; technicians on personal Gmail (Mike, Tom) use “Sign in with Google”; Farzan (Yahoo) signs in with email + a temporary password shared privately at hand-off and should change it on first sign-in (password self-service lands with the invites). Access stays roster-gated — only listed emails can get in.'},
+        {t:'Team access invites + technician hand-off', o:'Forma · QCS', s:'prog', n:'In progress as of Jul 31: all 18 accounts sent so far are configured exactly as requested (Marie: master access; Mazda: Service, Operations & Jura Intake; Mike/Tom/Farzan added as technicians). Next: walk the checkpoint plan with the team — who gets access at which milestone — then invites go out per that plan. Hand-off mechanics: Microsoft accounts use “Sign in with Microsoft”; Gmail technicians use “Sign in with Google”; Farzan signs in with email + a temporary password shared privately (change on first sign-in). Access stays roster-gated.'},
         {t:'Live walkthrough + M1 acceptance + sign-off', o:'QCS · Forma', s:'todo', n:'Fri Jul 31 target against the 8-point checklist.'}
       ]}
     ]},
   { id:'s1', label:'Sprint 1', win:'Weeks 2–3 · ERP core', title:'ERP core, hardened to your ops',
     sub:'Inventory with locations and cross-reference, vendor POs with ETAs, projects, orders and shipping. Much of this landed early — during Week 1.',
     flags:[
-      '<b>WooCommerce API key received Jul 31</b> — verified against the live store; online-order sync build can proceed.',
+      '<b>WooCommerce sync is LIVE (Jul 31)</b> — store orders flow into the ERP every 15 minutes; 50 orders already imported.',
       '<b>Parts export</b> (5–10K SKUs) needed to load the real parts catalogue behind bins & back-orders.'
     ],
     groups:[
@@ -193,7 +193,7 @@ var DELIVERIES = [
       { title:'Orders & Shipping', tasks:[
         {t:'Unified orders (showroom, phone, rep, online)', o:'Forma', s:'done', n:'Order register with source tags, confirm → fulfill → invoice flow.'},
         {t:'Outbound shipping: record + create', o:'Forma', s:'done', n:'Inbound freight and outbound deliveries with carrier/tracking.'},
-        {t:'WooCommerce online-order sync', o:'QCS · Forma', s:'prog', n:'Jul 31: REST key received, verified against the live store (222 published products) and stored encrypted. Sync build proceeds; key gets rotated once configured.'}
+        {t:'WooCommerce online-order sync', o:'QCS · Forma', s:'done', n:'Live as of Jul 31: the store syncs into the ERP every 15 minutes — online orders land in Orders with source “Online”, matched to catalogue products by SKU, idempotent re-runs, and orders your team has invoiced are never overwritten by the store. First sync brought in 50 orders (Jun 9 – today, $11.5K), visible on the Control Centre (“15 new online”). Key rotation scheduled now that it’s configured.'}
       ]}
     ]},
   { id:'s2', label:'Sprint 2', win:'Weeks 3–6 · Service & Jura', title:'Service, Work Orders, Dispatch & Jura',
