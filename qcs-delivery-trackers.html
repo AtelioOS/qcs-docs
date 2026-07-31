@@ -141,7 +141,7 @@ var DELIVERIES = [
   { id:'d1', label:'Delivery 1', win:'Week 1 · Jul 27–31', title:'Live on what’s already built',
     sub:'Tenant, brand, sign-in, the six ready modules, and the team’s first logins — the platform your team starts using in week one.',
     flags:[
-      '<b>Real data is in</b> — 8,609-product catalogue, $1.83M inventory, 746 suppliers and 19 open POs live from QuickBooks. Remaining intake: customer list, Woo keys, vector logo.',
+      '<b>Real data is in</b> — 8,773-product catalogue, $1.83M inventory, 746 suppliers and 19 open POs live from QuickBooks. Jul 31: brand package (vector logo + palette + 24 supplier logos) and the WooCommerce REST key received — key verified against the live store. Remaining intake: customer list, machine serials, open work orders.',
       '<b>Roster complete (18 accounts)</b> — Mike, Tom and Farzan added Jul 30 with Google + email sign-in enabled; only Raffi’s Microsoft-capable address still outstanding.',
       '<b>Fri Jul 31 walkthrough</b> — QA pass done Jul 29; access invites are the last pre-demo step.'
     ],
@@ -163,8 +163,8 @@ var DELIVERIES = [
         {t:'QCS operational data received & pulled in', o:'QCS', s:'done', n:'Jul 29 upload harvested from OneDrive: QuickBooks item export (8,678 rows — full parts catalogue with cost/price/on-hand!), 740-vendor list, 63 open PO lines, WMF 2026 price list, Roya’s 81-page operations manual, plus WMF/Schaerer/Zumex/Conti/Compak product sheets and 17 customer-segment sales sheets.'},
         {t:'QuickBooks data loaded into the ERP', o:'Forma', s:'done', n:'8,547 QB items merged into the catalogue (now 8,609 products across 9 divisions), real on-hand counts on 4,109 items — $1.83M inventory at cost — 74 items matched to existing records instead of duplicating, 738 vendors added (746 suppliers total), and all 19 open POs (63 lines) live in Purchasing. Spot-checked against source: exact.'},
         {t:'"OS Database" folder on OneDrive', o:'Forma', s:'done', n:'Folder live in QCS x Atelio (red) with all five intake templates as online Excel sheets — QCS edits them in the browser, then uploads via the ERP Import screen (or we ingest directly).'},
-        {t:'QCS intake: catalogue, counts, suppliers, POs, Woo keys, logo', o:'QCS', s:'prog', n:'Jul 29: QuickBooks export, vendors, open POs, price lists, product sheets + 72 commercial pics — all ingested. Jul 30 drop ingested same day: the website product export (301 items → 164 web-store products added with retail pricing, brands and divisions; 61 existing products enriched with web SKUs for the Sprint-3 WooCommerce sync) and “ATELIO - Residential Pics” (75 photos — JURA, Olympia, Profitec, Comandante, Rocket, Mahlkönig lines). 282 products now photographed. “Our team” photos wait for HR (Sprint 4). Still outstanding: customer list, Woo keys, vector logo.'},
-        {t:'Users & roles confirmed', o:'QCS', s:'prog', n:'Jul 30: Mike, Tom and Farzan’s emails received and their accounts are live (18 total). Only Raffi’s Microsoft-capable address still outstanding.'},
+        {t:'QCS intake: catalogue, counts, suppliers, POs, Woo keys, logo', o:'QCS', s:'prog', n:'Jul 29: QuickBooks export, vendors, open POs, price lists, product sheets + 72 commercial pics — all ingested. Jul 30 drop ingested same day: the website product export (301 items → 164 web-store products added with retail pricing, brands and divisions; 61 existing products enriched with web SKUs for the Sprint-3 WooCommerce sync) and “ATELIO - Residential Pics” (75 photos — JURA, Olympia, Profitec, Comandante, Rocket, Mahlkönig lines). 282 products now photographed. “Our team” photos wait for HR (Sprint 4). Jul 31: Brand Guidelines folder ingested (digitized vector logo, colour palette, 24 supplier brand logos, storefront photos — staged into the platform) and the WooCommerce REST key received, verified against the live store (222 products visible) and stored encrypted; rotation planned once the Sprint-3 sync is configured. Still outstanding: customer list, machine serials, open work orders.'},
+        {t:'Users & roles confirmed', o:'QCS', s:'prog', n:'Jul 30: Mike, Tom and Farzan’s emails received and their accounts are live (18 total). Jul 31: Marie upgraded to master (full) access; Mazda scoped to Service & Dispatch, Operations (dispatch + preventative maintenance) and Jura Intake — the OS now supports per-user module access. Only Raffi’s Microsoft-capable address still outstanding.'},
         {t:'Load real data + swap demo records', o:'Forma', s:'prog', n:'~70% real: catalogue (8,609), stock ($1.83M), suppliers (746), open POs (19) and 187 product photos are live QCS data. Remaining sample records (3 clients + their orders, projects, work orders, machines) are clearly tagged “DEMO” in the UI and get swapped the day the customer list, machine serials and open work orders arrive — the two templates for those are waiting in the OS Database folder.'},
         {t:'Internal QA against source files', o:'Forma', s:'done', n:'Jul 29 full pass on the live apps: Control Centre KPIs + alerts, all 14 Sales/ERP views (catalog 8,609 items, inventory, 19 POs, 746 suppliers, orders, projects, back-orders, reports), Import templates download clean, hub links verified. QB numbers previously reconciled exact against source.'},
         {t:'Team access invites + technician hand-off', o:'Forma', s:'todo', n:'Sign-in flow tested; invites follow the data load. Hand-off plan for the full-team rollout: Microsoft accounts (@qualitycoffeesystems.ca) use “Sign in with Microsoft”; technicians on personal Gmail (Mike, Tom) use “Sign in with Google”; Farzan (Yahoo) signs in with email + a temporary password shared privately at hand-off and should change it on first sign-in (password self-service lands with the invites). Access stays roster-gated — only listed emails can get in.'},
@@ -174,7 +174,7 @@ var DELIVERIES = [
   { id:'s1', label:'Sprint 1', win:'Weeks 2–3 · ERP core', title:'ERP core, hardened to your ops',
     sub:'Inventory with locations and cross-reference, vendor POs with ETAs, projects, orders and shipping. Much of this landed early — during Week 1.',
     flags:[
-      '<b>WooCommerce API keys</b> unlock live online-order sync (intake item).',
+      '<b>WooCommerce API key received Jul 31</b> — verified against the live store; online-order sync build can proceed.',
       '<b>Parts export</b> (5–10K SKUs) needed to load the real parts catalogue behind bins & back-orders.'
     ],
     groups:[
@@ -193,7 +193,7 @@ var DELIVERIES = [
       { title:'Orders & Shipping', tasks:[
         {t:'Unified orders (showroom, phone, rep, online)', o:'Forma', s:'done', n:'Order register with source tags, confirm → fulfill → invoice flow.'},
         {t:'Outbound shipping: record + create', o:'Forma', s:'done', n:'Inbound freight and outbound deliveries with carrier/tracking.'},
-        {t:'WooCommerce online-order sync', o:'QCS · Forma', s:'wait', n:'Register already handles online orders; live sync flips on when API keys arrive.'}
+        {t:'WooCommerce online-order sync', o:'QCS · Forma', s:'prog', n:'Jul 31: REST key received, verified against the live store (222 published products) and stored encrypted. Sync build proceeds; key gets rotated once configured.'}
       ]}
     ]},
   { id:'s2', label:'Sprint 2', win:'Weeks 3–6 · Service & Jura', title:'Service, Work Orders, Dispatch & Jura',
