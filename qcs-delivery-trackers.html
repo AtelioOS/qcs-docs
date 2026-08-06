@@ -262,8 +262,8 @@ var DELIVERIES = [
         {t:'Map view + drag-to-reorder routes', o:'Forma', s:'todo', n:'Route visualisation and optimisation for ops.'}
       ]},
       { title:'Jura Service & Tablet Intake', tasks:[
-        {t:'Client-facing tablet intake', o:'Forma', s:'todo', n:'Customer + machine info → digital record; carry-in and on-site. Aug 6: hardware confirmed (iPad, A16 / iPadOS 26) — the intake runs as a web app in Safari, camera-enabled for condition photos. Build unblocked.'},
-        {t:'Barcode label generation + scanner logging', o:'Forma · QCS', s:'todo', n:'Aug 6: hardware confirmed — MUNBYN RW402B (AirPrint thermal) with 2.25×1.25″ labels, printed straight from the iPad; Adesso NuScan 2700R wireless scanners are keyboard-wedge, so scanning a WO barcode anywhere in the service desk jumps to that work order. Label template will be built to the exact 2.25×1.25″ size.'},
+        {t:'Client-facing tablet intake', o:'Forma', s:'prog', n:'Aug 6 evening: ON STAGING, built same-day as the hardware confirmation — a “Machine Check-in” tab in the service desk, iPad-first: find or create the customer, pick or register the machine by serial, describe the issue, done. Carry-in (RI) by default, the on-hold/owing guard included, and it ends on the printable barcode label with a “Next customer” reset for counter use.'},
+        {t:'Barcode label generation + scanner logging', o:'Forma · QCS', s:'prog', n:'Aug 6 evening: ON STAGING — labels render at exactly 2.25×1.25″ for the MUNBYN RW402B and print from the iPad via AirPrint: Code 39 barcode (the Adesso scanners read it out of the box), WO number, customer, serial and date. And the other half: scanning any label anywhere in the service desk pops that work order open instantly — the scanners type like a keyboard, so there is nothing to install. Ready to test the day the hardware arrives.'},
         {t:'Auto emails: confirmation, quote approval, pickup', o:'Forma', s:'todo', n:'Triggered across the intake lifecycle once email is connected.'}
       ]}
     ]},
