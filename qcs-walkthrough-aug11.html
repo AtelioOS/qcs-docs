@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCS OS — team walkthrough agenda</title>
+<style>
+  :root { --red: #D62121; --dark-red: #A91B0D; --ink: #141414; --grey: #C8C8C8; --soft: #f8f7f6; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Open Sans', 'Segoe UI', -apple-system, Roboto, sans-serif; color: var(--ink); background: #fff; max-width: 900px; margin: 0 auto; padding: 38px 26px 60px; line-height: 1.55; }
+  .band { height: 6px; background: var(--red); margin: -38px -26px 24px; }
+  h1 { font-size: 1.55rem; letter-spacing: -0.01em; }
+  .sub { color: #777; font-size: .93rem; margin: 6px 0 4px; }
+  .pill { display: inline-block; background: #e8f4ea; color: #1c7a34; font-weight: 700; font-size: .78rem; padding: 4px 12px; border-radius: 999px; margin: 12px 8px 0 0; }
+  .pill.grey { background: #f1f1f1; color: #666; }
+  .lead { background: var(--soft); border-left: 4px solid var(--red); padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 24px 0 8px; font-size: .96rem; }
+  h2.sec { font-size: .8rem; text-transform: uppercase; letter-spacing: .09em; color: #999; margin: 34px 0 10px; font-weight: 800; }
+  .row { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid #eee; }
+  .row:last-child { border-bottom: 0; }
+  .num { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--red); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .93rem; font-weight: 800; margin-top: 2px; }
+  .body { flex: 1; min-width: 0; }
+  .body h3 { font-size: 1.02rem; margin-bottom: 3px; }
+  .meta { font-size: .78rem; color: #999; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+  .body p { font-size: .93rem; margin-bottom: 6px; }
+  .body ul { margin: 4px 0 6px 20px; font-size: .92rem; }
+  .body li { margin: 3px 0; }
+  .say { background: #fffdf5; border: 1px solid #f0e3bd; border-radius: 7px; padding: 8px 12px; font-size: .9rem; margin-top: 8px; }
+  .say b { color: var(--dark-red); }
+  .hand { display: inline-block; background: #eef4fb; color: #1a5a94; font-size: .76rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; margin-left: 6px; }
+  .ask { border: 1px solid var(--grey); border-radius: 10px; padding: 14px 18px; margin: 10px 0; font-size: .93rem; }
+  .ask b { color: var(--dark-red); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .num-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 8px 0 4px; }
+  .num-strip div { border: 1px solid var(--grey); border-radius: 10px; padding: 12px 14px; text-align: center; }
+  .num-strip b { display: block; font-size: 1.35rem; font-family: 'Open Sans'; color: var(--dark-red); }
+  .num-strip span { font-size: .8rem; color: #777; }
+  .note { font-size: .84rem; color: #777; margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--grey); }
+  a { color: #0967d2; }
+  @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+  @media print { body { padding: 0 10px; } .band { margin: 0 -10px 18px; } .row { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="band"></div>
+<h1>QCS OS — team walkthrough</h1>
+<p class="sub">Tuesday, August 11 · everything below is live on your real system, with your real data.</p>
+<span class="pill">⏱ ~45 minutes</span><span class="pill grey">Live OS · atelio-qcs.vercel.app</span><span class="pill grey">Hands on keyboards</span>
+
+<div class="lead"><b>The story of last week:</b> the OS stopped being an empty system and became <i>your</i> system — 2,716 customers, 26 years of invoice history, 9,268 machine serials, and the Jura counter hardware working end to end. Don't demo features. Walk one machine through the building and let each person meet their own tool on the way.</div>
+
+<div class="num-strip">
+  <div><b>9,268</b><span>machines in the registry<br>(was 3)</span></div>
+  <div><b>94,406</b><span>invoices imported<br>2000 → 2026</span></div>
+  <div><b>$75.1M</b><span>of history<br>now searchable</span></div>
+  <div><b>31</b><span>features promoted<br>to live last week</span></div>
+</div>
+
+<h2 class="sec">The flow</h2>
+
+<div class="row">
+  <div class="num">1</div>
+  <div class="body">
+    <div class="meta">2 min · Control Centre · everyone</div>
+    <h3>Open on the home page and say nothing</h3>
+    <p>Let it sit on screen: outstanding balances, credit holds, needs-attention, today's schedule. Give it a beat before you talk.</p>
+    <div class="say"><b>Say:</b> "This is the page you all open in the morning now. Everything below it is one click away."</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="num">2</div>
+  <div class="body">
+    <div class="meta">10 min · Jura counter station <span class="hand">hardware in the room</span></div>
+    <h3>Check a machine in — on the iPad, for real</h3>
+    <p>Best opener you have, because it's physical. Play the customer:</p>
+    <ul>
+      <li>Tap through the four check-in screens on the iPad.</li>
+      <li>The label prints on the MUNBYN while everyone watches.</li>
+      <li>Hand a scanner to a tech — have <b>them</b> scan the label from a computer across the room. The work order opens.</li>
+    </ul>
+    <div class="say"><b>Say:</b> "Nobody typed that work order. It was in the system before the customer left the counter."</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="num">3</div>
+  <div class="body">
+    <div class="meta">8 min · Service &amp; Dispatch · Mazda + techs</div>
+    <h3>Follow that same work order through</h3>
+    <ul>
+      <li>Open the WO you just created — call type, technician, scheduling.</li>
+      <li><b>Billing tab</b>: line items with your real GST/PST tax codes computing live.</li>
+      <li><b>Print WO</b> and <b>Email WO</b> from the popup.</li>
+      <li><b>Calendar</b>: the month view — and point at a PM work order <i>the system created by itself</i> overnight.</li>
+    </ul>
+    <div class="say"><b>Say:</b> "Preventative maintenance now books itself. Nobody has to remember."</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="num">4</div>
+  <div class="body">
+    <div class="meta">10 min · Sales CRM · the emotional peak</div>
+    <h3>Customer 360 — the reveal</h3>
+    <p>Global search a name everyone knows: <b>Tim Hortons</b> or <b>The Keg</b>. One click opens everything:</p>
+    <ul>
+      <li>Account number, payment terms, balance owing, credit hold.</li>
+      <li>Their machines — the registry went from 3 to <b>9,268</b> last week.</li>
+      <li>Service history, quotes, orders.</li>
+      <li><b>QuickBooks history</b> — invoices going back to 2009, lifetime invoiced.</li>
+    </ul>
+    <p>Then open one machine's serial → its invoice history includes invoices from <i>before the OS existed</i>.</p>
+    <div class="say"><b>Say the number out loud:</b> "Twenty-six years. 94,406 invoices. $75.1 million. One click."</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="num">5</div>
+  <div class="body">
+    <div class="meta">8 min · ERP · Marie + Roya <span class="hand">their hands, not yours</span></div>
+    <h3>Money and purchasing</h3>
+    <ul>
+      <li><b>Marie:</b> open Reports → Money. Receivables aging, open invoices. Then let <b>her</b> click the CSV export.</li>
+      <li><b>Roya:</b> create a PO live — it numbers itself <b>4247</b>, continuing the QuickBooks sequence.</li>
+      <li>Hit <b>Print PO</b> and hold the printout next to the old QuickBooks template. Identical is the point.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="num">6</div>
+  <div class="body">
+    <div class="meta">4 min · Quote builder · Kazuto</div>
+    <h3>A quote, saved, on the pipeline</h3>
+    <p>Build a short quote with per-item dealer discounts, save it, watch it appear as an opportunity on the sales pipeline with a status you can move.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="num">7</div>
+  <div class="body">
+    <div class="meta">3 min · close</div>
+    <h3>Two asks, then let them play</h3>
+    <p>Leave the OS open on screen and let people click while you wrap up.</p>
+  </div>
+</div>
+
+<h2 class="sec">The two asks</h2>
+<div class="ask"><b>1 · Microsoft admin — one fresh client secret.</b> The keys they sent were right except the secret, where the <i>Secret ID</i> got copied instead of the secret <i>Value</i>. One new secret in Entra (2 minutes) and outbound email switches on — emailed quotes, invoices, POs and PM reminders from your own mailbox. <b>If the admin is in the building, grab them straight after and do it live in the Control Centre panel.</b></div>
+<div class="ask"><b>2 · Roya — 30 minutes for the cost sanity check.</b> Now that 26 years of invoices are in, we can check cost / wholesale / retail against real history and spot-check two or three accounts plus the credit-hold flags.</div>
+
+<h2 class="sec">If you have time / if asked</h2>
+<div class="grid2">
+  <div>
+    <p style="font-size:.92rem"><b>What's coming next</b></p>
+    <ul style="font-size:.9rem;margin-left:18px">
+      <li>Client portals with per-tier pricing</li>
+      <li>Catalogue sync back out to the website</li>
+      <li>Payments — pending the cards-on-file decision</li>
+      <li>HR: WHMIS, pay stubs, vacation calendar</li>
+    </ul>
+  </div>
+  <div>
+    <p style="font-size:.92rem"><b>Handy links</b></p>
+    <ul style="font-size:.9rem;margin-left:18px">
+      <li>Live OS — atelio-qcs.vercel.app</li>
+      <li>Live tracker — atelioos.github.io/qcs-docs/qcs-delivery-trackers.html</li>
+      <li>Jura counter setup guide — atelioos.github.io/qcs-docs/jura-tablet-guide.html</li>
+      <li>Microsoft setup guide — qcs-ms365-guide.vercel.app</li>
+    </ul>
+  </div>
+</div>
+
+<p class="note"><b>One rule for the room:</b> every section should end with somebody else's hands on the keyboard. People believe a system they've touched; they forget one they watched.</p>
+</body>
+</html>

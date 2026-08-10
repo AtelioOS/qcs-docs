@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCS OS — Jura counter station setup guide</title>
+<style>
+  :root { --red: #D62121; --dark-red: #A91B0D; --ink: #141414; --grey: #C8C8C8; --soft: #f7f7f7; --blue: #0967d2; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Open Sans', 'Segoe UI', -apple-system, Roboto, sans-serif; color: var(--ink); background: #fff; max-width: 820px; margin: 0 auto; padding: 40px 26px 70px; line-height: 1.6; }
+  .band { height: 6px; background: var(--red); margin: -40px -26px 26px; }
+  h1 { font-size: 1.5rem; letter-spacing: -0.01em; }
+  .sub { color: #777; font-size: .93rem; margin: 6px 0 8px; }
+  .est { display: inline-block; background: #e8f4ea; color: #1c7a34; font-weight: 700; font-size: .78rem; padding: 4px 12px; border-radius: 999px; margin-bottom: 22px; }
+  h2.sec { font-size: .82rem; text-transform: uppercase; letter-spacing: .09em; color: #999; margin: 40px 0 4px; font-weight: 800; }
+  .step { margin: 30px 0; }
+  .step h2 { font-size: 1.05rem; display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .n { flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--red); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: .95rem; font-weight: 800; }
+  .step p, .step li { font-size: .95rem; }
+  .step ul, .step ol { margin: 8px 0 8px 22px; }
+  .step li { margin: 5px 0; }
+  .fig { border: 1px solid var(--grey); border-radius: 10px; margin: 14px 0 6px; overflow: hidden; background: #fff; }
+  .fig svg { display: block; width: 100%; height: auto; }
+  .cap { font-size: .8rem; color: #888; margin-bottom: 4px; font-style: italic; }
+  code, .mono { font-family: 'Consolas', 'SF Mono', Menlo, monospace; font-size: .87em; background: var(--soft); border: 1px solid #e5e5e5; border-radius: 4px; padding: 1px 6px; }
+  .warn { background: #fdf3e7; border-left: 4px solid #e8930c; padding: 10px 14px; border-radius: 6px; font-size: .9rem; margin: 12px 0; }
+  .good { background: #e8f4ea; border-left: 4px solid #1c7a34; padding: 10px 14px; border-radius: 6px; font-size: .9rem; margin: 12px 0; }
+  .kit { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 18px 0 6px; }
+  .kit div { border: 1px solid var(--grey); border-radius: 10px; padding: 12px 14px; font-size: .87rem; }
+  .kit b { display: block; font-size: .93rem; margin-bottom: 2px; }
+  .kit span { color: #777; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: .9rem; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+  th { font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; color: #888; }
+  .note { font-size: .85rem; color: #777; margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--grey); }
+  a { color: var(--blue); }
+</style>
+</head>
+<body>
+<div class="band"></div>
+<h1>Setting up the Jura counter station</h1>
+<p class="sub">The iPad check-in desk at Quality Coffee Systems — customer signs their machine in, the work order creates itself, and the barcode label prints on the spot.</p>
+<span class="est">⏱ About 30 minutes, once · then it just runs</span>
+
+<div class="good"><b>What you're building:</b> a small station on the front counter. A customer walks in with a machine, taps through four short screens on the iPad, and a label prints. The work order is already in the OS before they've left the shop — no paperwork, no re-typing, and every tech can find that machine later by scanning its label.</div>
+
+<h2 class="sec">Before you start</h2>
+<div class="kit">
+  <div><b>iPad (A16)</b><span>Model MD3Y4CL/A · iPadOS 26</span></div>
+  <div><b>MUNBYN RW402B</b><span>Thermal label printer (AirPrint)</span></div>
+  <div><b>Labels 2.25 × 1.25″</b><span>MUNBYN thermal, direct — no ink</span></div>
+  <div><b>Adesso NuScan 2700R</b><span>Wireless barcode scanner ×2</span></div>
+</div>
+<p style="font-size:.9rem;color:#777;margin-top:10px">You'll also need: the shop Wi-Fi password, and a QCS sign-in (the same Microsoft account you use for the OS).</p>
+
+<h2 class="sec">Part 1 — The label printer</h2>
+
+<div class="step">
+  <h2><span class="n">1</span> Load the labels and power up</h2>
+  <ol>
+    <li>Press the latch on the side and lift the lid.</li>
+    <li>Drop the label roll in so the labels feed off the <b>top</b> of the roll, printable side up.</li>
+    <li>Pull about 10&nbsp;cm of label out past the tear bar, then close the lid until it clicks.</li>
+    <li>Hold the power button until the light comes on. Then press <b>Feed</b> once — one blank label should come out and stop cleanly at the gap. If it spits out several or stops mid-label, hold <b>Feed</b> for ~3 seconds to run the auto-calibration.</li>
+  </ol>
+  <div class="cap">Label roll orientation — labels come off the top:</div>
+  <div class="fig"><svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+    <rect width="760" height="210" fill="#faf9f8"/>
+    <rect x="180" y="40" width="400" height="130" rx="14" fill="#fff" stroke="#bbb" stroke-width="2"/>
+    <path d="M180 76 Q380 20 580 76" fill="none" stroke="#bbb" stroke-width="2"/>
+    <circle cx="330" cy="120" r="42" fill="#eee" stroke="#aaa" stroke-width="2"/>
+    <circle cx="330" cy="120" r="13" fill="#fff" stroke="#aaa" stroke-width="2"/>
+    <path d="M330 78 L500 78 L500 62" stroke="var(--red)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <polygon points="500,52 495,66 505,66" fill="#D62121"/>
+    <rect x="470" y="78" width="72" height="26" rx="3" fill="#fff" stroke="#888"/>
+    <text x="560" y="70" font-size="12" fill="#D62121" font-weight="700">off the top</text>
+    <text x="196" y="196" font-size="12" fill="#777">Roll sits in the well · labels feed forward over the tear bar</text>
+    <rect x="560" y="104" width="24" height="46" rx="3" fill="#ddd"/>
+    <text x="596" y="132" font-size="12" fill="#777">tear bar</text>
+  </svg></div>
+</div>
+
+<div class="step">
+  <h2><span class="n">2</span> Put the printer on the shop Wi-Fi</h2>
+  <p>This is the one fiddly part, and you only do it once. The printer needs to be on the <b>same Wi-Fi network as the iPad</b> — if your shop has a separate guest network, put both on the main one.</p>
+  <ol>
+    <li>Install <b>MUNBYN Print</b> from the App Store on the iPad (free).</li>
+    <li>Turn the printer on and hold its Wi-Fi/pair button until the indicator blinks.</li>
+    <li>Open the app → <b>Add printer</b> → pick the RW402B when it appears → choose your shop Wi-Fi network and enter the password.</li>
+    <li>Wait for the light to go solid. The printer now has its own address on your network and will reconnect on its own after a power cut.</li>
+  </ol>
+  <div class="warn"><b>Check this before moving on:</b> on the iPad, open any photo → Share → <b>Print</b>. The RW402B should be listed as a printer. If it is, AirPrint is working and the OS will be able to print to it. If it isn't, the printer is on a different network than the iPad — redo this step.</div>
+</div>
+
+<h2 class="sec">Part 2 — The iPad</h2>
+
+<div class="step">
+  <h2><span class="n">3</span> Sign in and open Machine Check-in</h2>
+  <ol>
+    <li>Connect the iPad to the shop Wi-Fi.</li>
+    <li>Open <b>Safari</b> and go to <span class="mono">atelio-qcs.vercel.app</span></li>
+    <li>Sign in with your QCS Microsoft account, exactly like on a computer.</li>
+    <li>On the Control Centre, tap the <b>Jura Intake</b> tile. (You can also go straight there: <span class="mono">atelio-service.vercel.app/#/intake</span>)</li>
+  </ol>
+  <div class="cap">What the check-in screen looks like — this is what the customer sees:</div>
+  <div class="fig"><svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+    <rect width="760" height="300" fill="#faf9f8"/>
+    <rect x="30" y="20" width="700" height="260" rx="16" fill="#fff" stroke="#ccc" stroke-width="2"/>
+    <rect x="30" y="20" width="700" height="46" rx="16" fill="#141414"/>
+    <rect x="30" y="52" width="700" height="14" fill="#141414"/>
+    <text x="52" y="50" fill="#fff" font-size="15" font-weight="700">Machine Check-in</text>
+    <circle cx="690" cy="43" r="11" fill="#D62121"/>
+    <text x="60" y="106" font-size="15" font-weight="700" fill="#141414">Welcome — let's get your machine checked in</text>
+    <text x="60" y="130" font-size="12.5" fill="#777">Step 1 of 4 · Find your account</text>
+    <rect x="60" y="146" width="470" height="40" rx="8" fill="#fff" stroke="#bbb"/>
+    <text x="76" y="171" font-size="13" fill="#aaa">Search your name or company…</text>
+    <rect x="546" y="146" width="130" height="40" rx="8" fill="#D62121"/>
+    <text x="580" y="171" font-size="13" fill="#fff" font-weight="700">Search</text>
+    <rect x="60" y="204" width="616" height="1" fill="#eee"/>
+    <text x="60" y="232" font-size="12.5" fill="#777">New customer? Tap</text>
+    <rect x="176" y="216" width="120" height="26" rx="6" fill="#f2f2f2" stroke="#ccc"/>
+    <text x="192" y="234" font-size="12" fill="#444" font-weight="600">＋ Add me</text>
+    <circle cx="94" cy="266" r="6" fill="#D62121"/><circle cx="116" cy="266" r="6" fill="#ddd"/>
+    <circle cx="138" cy="266" r="6" fill="#ddd"/><circle cx="160" cy="266" r="6" fill="#ddd"/>
+  </svg></div>
+</div>
+
+<div class="step">
+  <h2><span class="n">4</span> Add it to the Home Screen</h2>
+  <p>This gives you a proper app icon and hides Safari's address bar — so it looks like a purpose-built kiosk, not a web page a customer might wander off from.</p>
+  <ol>
+    <li>With the check-in page open, tap the <b>Share</b> icon (the square with the arrow, top of Safari).</li>
+    <li>Scroll down → <b>Add to Home Screen</b> → name it <b>Check-in</b> → <b>Add</b>.</li>
+    <li>Close Safari. From now on, open the station from that icon.</li>
+  </ol>
+</div>
+
+<div class="step">
+  <h2><span class="n">5</span> Lock it to that one screen (Guided Access)</h2>
+  <p>Optional but strongly recommended for a counter that customers touch. It pins the iPad to the check-in app — nobody can wander into email, settings or the App Store, and it takes a passcode to get out.</p>
+  <ol>
+    <li><b>Settings → Accessibility → Guided Access</b> → turn it <b>on</b>.</li>
+    <li>Tap <b>Passcode Settings → Set Guided Access Passcode</b> and choose a code the counter staff know. Write it somewhere the team can find it.</li>
+    <li>Open the Check-in app, then <b>triple-click the top button</b> → <b>Start</b>.</li>
+    <li>To unlock at end of day: triple-click again and enter the passcode.</li>
+  </ol>
+  <div class="good"><b>Also worth setting:</b> <b>Settings → Display &amp; Brightness → Auto-Lock → Never</b> while the iPad is plugged in at the counter, so the screen is always awake and ready.</div>
+</div>
+
+<h2 class="sec">Part 3 — First real test</h2>
+
+<div class="step">
+  <h2><span class="n">6</span> Run one machine through, start to finish</h2>
+  <p>Do this before the first customer — with a real machine on the bench, or with your own name as a test.</p>
+  <ol>
+    <li>On the iPad, search a customer (or add a new one) and tap them.</li>
+    <li>Pick the machine, or register a new one with its serial number.</li>
+    <li>Type the issue in plain words — "not heating", "grinder jammed" — and choose <b>Repair In (bench)</b> for a drop-off.</li>
+    <li>Tap through to the finish. You'll see the label preview on the last screen.</li>
+    <li>Tap <b>Print label</b> → pick the <b>RW402B</b> → <b>Print</b>.</li>
+  </ol>
+  <div class="cap">What comes out — 2.25 × 1.25″, customer, date, barcode, and the work-order code:</div>
+  <div class="fig" style="max-width:340px"><svg viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, sans-serif">
+    <rect width="300" height="170" fill="#f4f4f4"/>
+    <rect x="22" y="14" width="256" height="142" rx="7" fill="#fff" stroke="#999"/>
+    <text x="38" y="42" font-size="13" font-weight="700" fill="#141414">The Keg — Burnaby</text>
+    <text x="38" y="60" font-size="11" fill="#666">Received Aug 11, 2026</text>
+    <g fill="#141414">
+      <rect x="38" y="72" width="3" height="42"/><rect x="45" y="72" width="6" height="42"/>
+      <rect x="56" y="72" width="3" height="42"/><rect x="63" y="72" width="3" height="42"/>
+      <rect x="70" y="72" width="6" height="42"/><rect x="81" y="72" width="3" height="42"/>
+      <rect x="88" y="72" width="6" height="42"/><rect x="99" y="72" width="3" height="42"/>
+      <rect x="106" y="72" width="3" height="42"/><rect x="113" y="72" width="6" height="42"/>
+      <rect x="124" y="72" width="3" height="42"/><rect x="131" y="72" width="6" height="42"/>
+      <rect x="142" y="72" width="3" height="42"/><rect x="149" y="72" width="3" height="42"/>
+      <rect x="156" y="72" width="6" height="42"/><rect x="167" y="72" width="3" height="42"/>
+      <rect x="174" y="72" width="3" height="42"/><rect x="181" y="72" width="6" height="42"/>
+      <rect x="192" y="72" width="3" height="42"/><rect x="199" y="72" width="6" height="42"/>
+      <rect x="210" y="72" width="3" height="42"/><rect x="217" y="72" width="3" height="42"/>
+      <rect x="224" y="72" width="6" height="42"/><rect x="235" y="72" width="3" height="42"/>
+    </g>
+    <text x="38" y="132" font-size="13" font-family="Consolas, monospace" font-weight="700">WO-7K2M4X</text>
+    <text x="150" y="132" font-size="10.5" fill="#666">S/N 20180219044755</text>
+    <text x="38" y="150" font-size="9" fill="#aaa">2.25 × 1.25 in</text>
+  </svg></div>
+  <ol start="6">
+    <li>Stick the label on the machine (or on the tag you hang off it).</li>
+    <li>On any computer in the shop, open <b>Service &amp; Dispatch → Pending WO</b> — your new work order is already sitting there.</li>
+  </ol>
+  <div class="warn"><b>If the label prints tiny, cut off, or on two labels:</b> in the iPad print dialog, check the paper size is the 2.25 × 1.25″ label stock and scaling is <b>100%</b> (not "Fit to page"). Set it once and iPadOS remembers it.</div>
+</div>
+
+<h2 class="sec">Part 4 — The barcode scanners</h2>
+
+<div class="step">
+  <h2><span class="n">7</span> Pair each Adesso NuScan 2700R</h2>
+  <p>These are wireless scanners with a small USB receiver. They behave exactly like a keyboard — no drivers, no software to install.</p>
+  <ol>
+    <li>Plug the USB receiver into the computer where techs look up jobs (the bench PC and the parts desk are the two obvious spots — you have two scanners).</li>
+    <li>Turn the scanner on. It should pair with its own receiver automatically; if not, scan the pairing barcode printed in the scanner's quick-start card.</li>
+    <li><b>Test it:</b> open a blank Notepad/TextEdit window and scan any barcode — the numbers should type themselves out. That's all the OS needs.</li>
+  </ol>
+</div>
+
+<div class="step">
+  <h2><span class="n">8</span> Scan a work order open</h2>
+  <p>This is the part techs will use fifty times a day, and there's nothing to learn.</p>
+  <ol>
+    <li>On the computer, open the OS anywhere in <b>Service &amp; Dispatch</b> — dashboard, work-order list, anywhere.</li>
+    <li>Scan the label on a machine.</li>
+    <li>That machine's work order opens on screen. No clicking, no searching.</li>
+  </ol>
+  <div class="good"><b>It works from any screen in the service desk</b> — you don't have to be in a search box or on a particular page. Scan and the job appears.</div>
+</div>
+
+<h2 class="sec">Everyday use, once it's set up</h2>
+<table>
+  <tr><th>Situation</th><th>What to do</th></tr>
+  <tr><td>Customer drops a machine off</td><td>Hand them the iPad. Four screens, label prints, done. Stick the label on the machine.</td></tr>
+  <tr><td>Customer isn't sure of their details</td><td>Any staff member can run the check-in for them — it's the same screens.</td></tr>
+  <tr><td>Something looks off mid-check-in</td><td>The iPad shows a "Please see a team member" screen. A staff member approves it or voids it — nothing broken gets created.</td></tr>
+  <tr><td>Tech picks up a machine from the bench</td><td>Scan the label. The work order opens. Update status, add notes, log parts.</td></tr>
+  <tr><td>Machine goes back to the customer</td><td>Complete the work order and issue the invoice as normal — the label stays on it as its ID.</td></tr>
+</table>
+
+<h2 class="sec">If something goes wrong</h2>
+<table>
+  <tr><th>Problem</th><th>Fix</th></tr>
+  <tr><td>Printer doesn't appear when printing</td><td>Printer and iPad are on different Wi-Fi networks. Put both on the main shop network (step 2).</td></tr>
+  <tr><td>Labels come out blank</td><td>The roll is in upside down — thermal labels only print on one side. Flip the roll.</td></tr>
+  <tr><td>Printing skips or cuts labels in half</td><td>Hold <b>Feed</b> ~3 seconds to re-calibrate to the label gap.</td></tr>
+  <tr><td>Scanning does nothing</td><td>Test in Notepad first. If nothing types, it's the scanner/receiver pairing, not the OS. If it types, make sure the OS window is the one in focus.</td></tr>
+  <tr><td>iPad asks to sign in again</td><td>Normal after a long idle period. Sign in once; it stays signed in.</td></tr>
+  <tr><td>Customer taps out of the app</td><td>Turn on Guided Access (step 5) — it stops that happening at all.</td></tr>
+</table>
+
+<p class="note">Questions or anything behaving oddly — send it over and we'll sort it out. This guide covers the QCS counter station: iPad (A16), MUNBYN RW402B, 2.25 × 1.25″ thermal labels, Adesso NuScan 2700R.</p>
+</body>
+</html>
