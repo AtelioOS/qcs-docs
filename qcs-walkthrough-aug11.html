@@ -36,15 +36,26 @@
   .num-strip span { font-size: .8rem; color: #777; }
   .note { font-size: .84rem; color: #777; margin-top: 32px; padding-top: 12px; border-top: 1px solid var(--grey); }
   a { color: #0967d2; }
+  .qgroup { margin: 18px 0 22px; }
+  .qgroup > h3 { font-size: .95rem; margin-bottom: 2px; }
+  .qgroup > .who { font-size: .8rem; color: #999; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 10px; }
+  .q { display: flex; gap: 12px; padding: 11px 0; border-bottom: 1px dashed #e2e2e2; break-inside: avoid; }
+  .q:last-child { border-bottom: 0; }
+  .box { flex-shrink: 0; width: 15px; height: 15px; border: 2px solid var(--grey); border-radius: 3px; margin-top: 4px; }
+  .qt { flex: 1; min-width: 0; }
+  .qt p { font-size: .93rem; margin: 0; }
+  .qt .why { font-size: .82rem; color: #999; margin-top: 2px; }
+  .ans { border-bottom: 1px solid #e8e8e8; height: 20px; margin-top: 9px; }
+  .blocker { background: #fdf3e7; border-left: 4px solid #e8930c; padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 16px 0; font-size: .94rem; }
   @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
-  @media print { body { padding: 0 10px; } .band { margin: 0 -10px 18px; } .row { break-inside: avoid; } }
+  @media print { body { padding: 0 10px; } .band { margin: 0 -10px 18px; } .row, .qgroup { break-inside: avoid; } .pagebreak { page-break-before: always; } }
 </style>
 </head>
 <body>
 <div class="band"></div>
 <h1>QCS OS — team walkthrough</h1>
 <p class="sub">Tuesday, August 11 · everything below is live on your real system, with your real data.</p>
-<span class="pill">⏱ ~45 minutes</span><span class="pill grey">Live OS · atelio-qcs.vercel.app</span><span class="pill grey">Hands on keyboards</span>
+<span class="pill">⏱ ~45 minutes</span><span class="pill grey">Live OS · atelio-qcs.vercel.app</span><span class="pill grey">Hands on keyboards</span><span class="pill grey">Questions to close Sprint 2 → page 2</span>
 
 <div class="lead"><b>The story of last week:</b> the OS stopped being an empty system and became <i>your</i> system — 2,716 customers, 26 years of invoice history, 9,268 machine serials, and the Jura counter hardware working end to end. Don't demo features. Walk one machine through the building and let each person meet their own tool on the way.</div>
 
@@ -169,6 +180,93 @@
       <li>Microsoft setup guide — qcs-ms365-guide.vercel.app</li>
     </ul>
   </div>
+</div>
+
+<div class="pagebreak"></div>
+<h2 class="sec" style="margin-top:38px">Questions to work through — to close Sprint 2</h2>
+<p style="font-size:.93rem;color:#555;margin-bottom:4px">Sprint 2 is <b>44 of 51 done</b>. Five of the seven open items are waiting on one thing; the rest are answers only QCS can give. Tick them off as you go.</p>
+
+<div class="blocker"><b>The one blocker:</b> a fresh Microsoft client secret <i>Value</i>. That single item closes invoice auto-emailing, PM client reminders, email/push reminders, and the intake confirmation / quote-approval / pickup emails. All four are built and idle. <b>If the admin is in the building, do it live after the meeting.</b></div>
+
+<div class="qgroup">
+  <h3>The moment email switches on</h3>
+  <div class="who">Kazuto / Roger / whoever owns customer comms</div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p>Which mailbox do customer emails come <b>from</b>, and who watches the replies?</p>
+    <p class="why">Customers will hit Reply — it needs to land somewhere staffed.</p>
+    <div class="ans"></div></div></div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p>Should replies go to that shared mailbox, or bounce to the tech / rep on the job?</p>
+    <div class="ans"></div></div></div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p>PM reminders: how many days before the due date? And every customer, or contract accounts only?</p>
+    <p class="why">The window is configurable — we just need their number. 7 / 14 / 30?</p>
+    <div class="ans"></div></div></div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p>Who receives the internal daily "PM work orders created" summary?</p>
+    <p class="why">Defaults to the sending mailbox today — Mazda or Roya is probably righter.</p>
+    <div class="ans"></div></div></div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p>At the counter: does the customer get an automatic "we've received your machine" email? And a "ready for pickup" one — or does someone still phone?</p>
+    <div class="ans"></div></div></div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p>Quotes: does the customer approve by clicking a link, or does a person still call to confirm?</p>
+    <div class="ans"></div></div></div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p>What footer goes on every OS-sent email — address, phone, any disclaimer?</p>
+    <div class="ans"></div></div></div>
+</div>
+
+<div class="qgroup">
+  <h3>Before the cost sanity check</h3>
+  <div class="who">Roya · needed to make the numbers mean anything</div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p>What counts as "cost" — the supplier invoice figure, or landed cost with freight, duty and exchange?</p>
+    <div class="ans"></div></div></div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p>Where does the dealer / wholesale price come from — one price list, or a per-customer discount off retail?</p>
+    <div class="ans"></div></div></div>
+</div>
+
+<div class="qgroup">
+  <h3>Two decisions the QuickBooks import surfaced</h3>
+  <div class="who">Roya / Marie · data shape, not technical</div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p><b>"Z Residental Customer"</b> is now the largest account in the system — 14,362 invoices, $8.8M, 1,063 machines. Split it into real customers, or leave the bucket?</p>
+    <p class="why">Decides whether Customer 360 is useful at all on the residential side.</p>
+    <div class="ans"></div></div></div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p>835 backfilled machines have very short serials ("8072", "0073") — real serials, or internal reference numbers?</p>
+    <div class="ans"></div></div></div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p>5,589 of the 9,268 machines came through without a make/model. Worth a cleanup pass, or is serial + customer + history enough to work with?</p>
+    <div class="ans"></div></div></div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p>835 old invoices across 67 customer names didn't match anyone in the CRM — likely renamed or closed accounts. Map them, or leave them?</p>
+    <div class="ans"></div></div></div>
+</div>
+
+<div class="qgroup">
+  <h3>One scope call</h3>
+  <div class="who">The room</div>
+
+  <div class="q"><div class="box"></div><div class="qt">
+    <p><b>Map view + drag-to-reorder routes</b> is the last non-email item in Sprint 2. Wanted now, or moved to Sprint 3?</p>
+    <p class="why">Only earns its keep if techs run multi-stop days. If it moves, Sprint 2 closes the moment email connects.</p>
+    <div class="ans"></div></div></div>
 </div>
 
 <p class="note"><b>One rule for the room:</b> every section should end with somebody else's hands on the keyboard. People believe a system they've touched; they forget one they watched.</p>
