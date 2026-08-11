@@ -3,42 +3,403 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Quality Coffee Systems × Atelio — Documents</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>QCS × Atelio — Delivery Trackers</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{--espresso:#241811;--red:#C33A2B;--copper:#B27A45;--page:#F5F1EB;--paper:#fff;--border:#E7DECF;--text:#241811;--muted:#5C5148;}
+  :root{
+    --espresso:#241811;--espresso2:#2E211A;--ink:#211915;
+    --red:#C33A2B;--red-light:#DB574A;--red-deep:#9E2C20;
+    --copper:#B27A45;--copper-deep:#8A5C31;--copper-tint:#F0E4D4;
+    --page:#F5F1EB;--paper:#FFFFFF;--linen:#FBF7F1;--bone:#F1EADF;
+    --border:#E7DECF;--border-strong:#D8CCB8;
+    --text:#241811;--text2:#5C5148;--muted:#8C8074;
+    --done:#3F8C6E;--done-bg:#DDEFE7;
+    --prog:#C9852E;--prog-bg:#F6E9D2;
+    --blocked:#C33A2B;--blocked-bg:#FBE0DC;
+    --wait:#3C6E9E;--wait-bg:#DEEAF3;
+    --todo:#6A7580;--todo-bg:#EAE7E1;
+    --later:#9A8F82;--later-bg:#EFEAE2;
+    --fd:'Space Grotesk',sans-serif;--fs:'Inter',sans-serif;--fm:'IBM Plex Mono',monospace;
+    --sh:0 1px 3px rgba(36,24,17,.05),0 6px 20px rgba(36,24,17,.05);
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--page);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.6}
-  .bar{background:#1B120D;color:var(--copper);font-weight:600;font-size:13px;padding:12px 22px;letter-spacing:.03em}
-  .hero{background:var(--espresso);color:#F5F1EB;border-bottom:5px solid var(--red);padding:64px 24px 48px}
-  .wrap{max-width:820px;margin:0 auto;padding:0 24px}
+  body{background:var(--page);color:var(--text);font-family:var(--fs);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .bar{background:#1B120D;color:var(--copper);font-weight:600;font-size:13px;letter-spacing:.03em;padding:11px 24px;display:flex;align-items:center;gap:10px}
+  .hero{background:var(--espresso);color:var(--page);border-bottom:5px solid var(--red);padding:34px 24px 0}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
   .kick{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--copper)}
-  h1{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(1.9rem,4vw,2.6rem);letter-spacing:-.02em;margin:12px 0}
-  .lede{color:rgba(245,241,235,.7);font-size:17px;max-width:560px}
-  .cards{display:grid;gap:16px;padding:40px 0}
-  a.card{display:block;background:var(--paper);border:1px solid var(--border);border-left:4px solid var(--red);border-radius:12px;padding:20px 24px;text-decoration:none;color:inherit;box-shadow:0 1px 3px rgba(36,24,17,.05);transition:.15s}
-  a.card:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(36,24,17,.12);border-left-color:var(--copper)}
-  a.card h2{font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;color:var(--espresso)}
-  a.card p{color:var(--muted);font-size:14px;margin-top:4px}
-  footer{color:#8C8074;font-size:12.5px;text-align:center;padding:0 0 48px}
+  h1{font-family:var(--fd);font-weight:600;font-size:clamp(1.5rem,3.2vw,2.1rem);letter-spacing:-.02em;margin:8px 0 4px}
+  .hero .sub{color:rgba(245,241,235,.66);font-size:14.5px;max-width:680px}
+
+  /* delivery tabs */
+  .tabs{display:flex;gap:6px;margin-top:24px;overflow-x:auto;padding-bottom:0}
+  .tab{flex-shrink:0;background:rgba(245,241,235,.07);border:1px solid rgba(245,241,235,.14);border-bottom:none;border-radius:10px 10px 0 0;padding:10px 16px 12px;cursor:pointer;min-width:150px;transition:.15s}
+  .tab:hover{background:rgba(245,241,235,.12)}
+  .tab.active{background:var(--page);border-color:var(--page)}
+  .tab .tl{font-family:var(--fd);font-weight:600;font-size:13.5px;color:var(--page)}
+  .tab.active .tl{color:var(--ink)}
+  .tab .tw{font-size:10.5px;font-family:var(--fm);color:rgba(245,241,235,.55);margin-top:1px}
+  .tab.active .tw{color:var(--muted)}
+  .tab .tp{margin-top:7px;height:5px;border-radius:99px;background:rgba(245,241,235,.15);overflow:hidden;display:flex}
+  .tab.active .tp{background:var(--bone)}
+  .tab .tp i{height:100%;display:block}
+  .tab .tp .d{background:var(--done)} .tab .tp .p{background:var(--prog)}
+  .tab .tpct{font-size:10px;font-family:var(--fm);color:rgba(245,241,235,.6);margin-top:4px}
+  .tab.active .tpct{color:var(--text2)}
+
+  .body{padding:26px 0 60px}
+  .dhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;margin-bottom:14px}
+  .dhead h2{font-family:var(--fd);font-weight:600;font-size:21px;color:var(--ink);letter-spacing:-.01em}
+  .dhead .win{font-family:var(--fm);font-size:12px;color:var(--muted)}
+  .dhead .pct{margin-left:auto;font-family:var(--fd);font-weight:600;font-size:19px;color:var(--copper-deep)}
+  .dsub{font-size:13.5px;color:var(--text2);max-width:760px;margin-bottom:16px}
+  .track{height:10px;background:var(--bone);border-radius:999px;overflow:hidden;display:flex;margin-bottom:18px}
+  .track .seg{height:100%}
+  .seg.done{background:var(--done)} .seg.prog{background:var(--prog)}
+
+  .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px}
+  @media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+  .tile{background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:12px 15px;box-shadow:var(--sh);border-top:3px solid var(--tc)}
+  .tile .n{font-family:var(--fd);font-weight:600;font-size:25px;line-height:1;color:var(--tc)}
+  .tile .l{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+  .callout{background:#FCEFEC;border:1px solid #F1C7C0;border-left:4px solid var(--red);border-radius:12px;padding:14px 18px;margin:16px 0 4px;box-shadow:var(--sh)}
+  .callout h3{font-family:var(--fd);font-size:14px;color:var(--red-deep)}
+  .callout ul{margin:8px 0 0;padding-left:20px}
+  .callout li{font-size:13px;color:var(--text2);margin:4px 0}
+  .callout li b{color:var(--ink)}
+
+  .group{margin-top:26px}
+  .group-h{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .group-h .idx{font-family:var(--fm);font-size:12px;font-weight:600;color:var(--copper-deep);background:var(--copper-tint);padding:3px 9px;border-radius:6px}
+  .group-h h2{font-family:var(--fd);font-weight:600;font-size:17px;color:var(--ink);letter-spacing:-.01em}
+  .group-h .gcount{margin-left:auto;font-size:12px;font-family:var(--fm);color:var(--muted)}
+  .list{background:var(--paper);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
+  .row{display:flex;align-items:flex-start;gap:13px;padding:12px 18px;border-top:1px solid var(--border)}
+  .row:first-child{border-top:0}
+  .row:hover{background:var(--linen)}
+  .box{flex-shrink:0;width:21px;height:21px;border-radius:6px;border:2px solid var(--border-strong);display:grid;place-items:center;margin-top:1px}
+  .row[data-status="done"] .box{background:var(--done);border-color:var(--done)}
+  .box svg{opacity:0}
+  .row[data-status="done"] .box svg{opacity:1}
+  .row[data-status="done"] .task{color:var(--muted)}
+  .row[data-status="done"] .task b{text-decoration:line-through;text-decoration-color:rgba(140,128,116,.5)}
+  .main{flex:1;min-width:0}
+  .task{font-size:14px;color:var(--text2)}
+  .task b{color:var(--ink);font-weight:600}
+  .note{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .meta{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:120px}
+  @media(max-width:680px){.meta{min-width:0}.owner{display:none}}
+  .status{font-size:10.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .s-done{background:var(--done-bg);color:var(--done)}
+  .s-prog{background:var(--prog-bg);color:var(--prog)}
+  .s-blocked{background:var(--blocked-bg);color:var(--blocked)}
+  .s-wait{background:var(--wait-bg);color:var(--wait)}
+  .s-todo{background:var(--todo-bg);color:var(--todo)}
+  .s-later{background:var(--later-bg);color:var(--later)}
+  .owner{font-size:10.5px;font-family:var(--fm);color:var(--muted);white-space:nowrap}
+  .foot{color:var(--muted);font-size:12px;text-align:center;padding:34px 24px 0;line-height:1.7}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:26px 0 6px}
+  .legend span{font-size:11.5px;color:var(--text2);display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
 </style>
 </head>
 <body>
-<div class="bar">Quality Coffee Systems × Atelio</div>
+<div class="bar">
+  <svg width="16" height="16" viewBox="0 0 48 48" fill="none"><path d="M12 20h20a2 2 0 0 1 2 2v3a11 11 0 0 1-11 11h-2A11 11 0 0 1 10 25v-3a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="3.2"/><path d="M34 22h4a5 5 0 0 1 0 10h-4" stroke="currentColor" stroke-width="3.2"/><path d="M18 8c-1.5 2-1.5 3.5 0 5.5M24 7c-1.5 2-1.5 3.5 0 5.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+  Quality Coffee Systems × Atelio — Delivery Trackers
+</div>
 <header class="hero">
   <div class="wrap">
-    <div class="kick">Client Documents · Prepared by Atelio</div>
-    <h1>Your onboarding &amp; delivery hub</h1>
-    <p class="lede">Everything for the QCS Operating System build, in one place. Open any document below.</p>
+    <div class="kick">Scope &amp; Build Plan · Live Status</div>
+    <h1>Every delivery, tracked</h1>
+    <p class="sub">One tracker per delivery, mirroring the Scope &amp; Build Plan: the Week-1 launch, then four sprints. Statuses are verified against the live system and updated as the build progresses.</p>
+    <div class="tabs" id="tabs"></div>
   </div>
 </header>
-<main class="wrap">
-  <div class="cards">
-    <a class="card" href="information-request.html"><h2>Onboarding — Information Request</h2><p>What we need from you to begin, tagged by Delivery 1 vs. later.</p></a>
-    <a class="card" href="delivery-1-plan.html"><h2>Delivery 1 Plan &amp; Runbook</h2><p>Week 1 scope, the day-by-day sequence, and the acceptance checklist.</p></a>
-    <a class="card" href="support-portal.html"><h2>Support &amp; Health Portal</h2><p>System status, module health, delivery log, and support requests.</p></a>
+
+<div class="body">
+  <div class="wrap" id="content"></div>
+  <div class="wrap">
+    <div class="legend">
+      <span><i style="background:var(--done)"></i>Done</span>
+      <span><i style="background:var(--prog)"></i>In progress</span>
+      <span><i style="background:var(--wait)"></i>Waiting on QCS</span>
+      <span><i style="background:var(--blocked)"></i>Blocked</span>
+      <span><i style="background:var(--todo)"></i>Not started</span>
+      <span><i style="background:var(--later)"></i>Deferred</span>
+    </div>
+    <div class="foot">
+      Status current as of <b>Thu Aug 6, 2026</b>. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
+      Quality Coffee Systems · Operating System · Prepared by Atelio — a Forma platform
+    </div>
   </div>
-  <footer>Quality Coffee Systems · Operating System · Prepared by Atelio — a Forma platform · July 2026</footer>
-</main>
+</div>
+
+<script>
+var DELIVERIES = [
+  { id:'d1', label:'Delivery 1', win:'Week 1 · Jul 27–31', title:'Live on what’s already built',
+    sub:'Tenant, brand, sign-in, the six ready modules, and the team’s first logins — the platform your team starts using in week one.',
+    flags:[
+      '<b>Real data is in</b> — 8,773-product catalogue, $1.83M inventory, 746 suppliers, 19 open POs and 2,716 QuickBooks customers with balances and credit holds. Aug 6 review resolved the rest: there are <b>no open work orders to backfill</b> (the OS starts the practice fresh — that’s why QCS wanted an ERP), customer sites stay inside customer names (team searches by name; global search will cover it), and machine serials + 26 years of invoice history are IN as of Aug 8 (1.66M ledger rows imported and verified). DEMO records retire with the serial-registry backfill, up next.',
+      '<b>Roster complete (18 accounts), no gaps</b> — Mike, Tom and Farzan added Jul 30; Raffi moved to a Microsoft-capable address Jul 31. Everyone can sign in.',
+      '<b>M1 walkthrough held Jul 31</b> — positive reception; same-day feedback fixes already live, remaining items tracked in “Walkthrough feedback” below. Next check-in after the long weekend.'
+    ],
+    groups:[
+      { title:'Platform & Access', tasks:[
+        {t:'QCS tenant + branding across the whole OS', o:'Forma', s:'done', n:'Jul 31: the real QCS brand is live per your brand guidelines — digitized logo in the rail, favicon and sign-in screen, Open Sans throughout, and the red/black/white palette (D62121 / A91B0D / C8C8C8) across every screen. Verified live on the hub and ERP.'},
+        {t:'Microsoft sign-in, verified end-to-end', o:'Forma', s:'done', n:'Including module-to-module hand-off and deep links.'},
+        {t:'Launcher tiles match what is actually built', o:'Forma', s:'done', n:'Aug 11: Machines, Jura Intake and Calendar were live inside the OS but the hub still showed them as \u201cSoon\u201d. Each is now its own app on its own address \u2014 atelio-qcs-machines / -intake / -calendar \u2014 opening straight into just its own screens rather than dropping you inside Service. Portals, Payments, HR and Accounting stay Soon because they genuinely are.'},
+        {t:'Jura counter station setup guide', o:'Forma', s:'done', n:'Aug 11: illustrated how-to for the counter station \u2014 loading the MUNBYN RW402B, putting it on the shop Wi-Fi for AirPrint, the iPad (home-screen icon + Guided Access kiosk lock), a first end-to-end test label, pairing both Adesso scanners, plus everyday-use and troubleshooting tables. Live at atelioos.github.io/qcs-docs/jura-tablet-guide.html.'},
+        {t:'All 6 ready modules switched on', o:'Forma', s:'done', n:'Control Centre, ERP core, Machines, Booking/CRM, Service & Dispatch, Reports.'},
+        {t:'ERP Core split into its own app + launcher matches the build plan', o:'Forma', s:'done', n:'Jul 29, per the scope doc + Project Plan: ERP Core now has its own page (atelio-qcs-erp) — no more landing in Sales — and the Control Centre launcher mirrors the agreed workstreams, with upcoming modules shown as labelled tiles: Jura Intake (Sprint 2), Calendar + Portals & Website (Sprint 3), Payments, HR, Accounting (Sprint 4). Tiles flip to Open as each sprint lands.'},
+        {t:'User-customizable dashboard (scope-doc ask)', o:'Forma', s:'done', n:'Jul 29: Customize button on the Control Centre — each user shows/hides and reorders the service-overview, ERP-overview and today’s-schedule widgets, saved per person. Per the QCS spec, “Needs attention” is mandatory and always on; the Calendar widget joins the set in Sprint 3. Cross-device sync of preferences follows in Sprint 1.'},
+        {t:'Performance + polish pass', o:'Forma', s:'done', n:'Jul 29: API moved to the same region as the database (queries no longer cross the continent) with a keep-warm ping — dashboard loads dropped from ~5s cold to sub-second; coffee-brewing loading animation + skeleton tiles so nothing looks broken while data syncs; instant page-name tooltips on every rail icon.'},
+        {t:'Team accounts provisioned (18)', o:'Forma', s:'done', n:'Roles per the org chart; Mike Apanasovs, Tom Zizak and Farzan Payravi added Jul 30. Sign-in now supports Microsoft, Google and email+password — and only emails on the user list can get in (unknown accounts are rejected server-side; there is no self-signup).'},
+        {t:'ERP navigation & usability batch (QCS feedback)', o:'Forma', s:'done', n:'Jul 31: type-to-search on every ERP page (suppliers, purchasing, orders, shipping, back-orders, projects); at-a-glance “Low Stock Alert” and “Out of Stock” buttons with live counts at the top of Inventory that double as filters; supplier type filters (equipment brands vs QuickBooks vendors); status + date-range filters on Orders, Shipping and Purchasing; drag-and-drop kanban on the Projects board; the catalogue now pages through the entire 8,700+-product database (20/50/100/200 per page with next/prev); a per-product “Missing info” flag the team can drop on anything needing details, with a filter to work the list down later; Reports moved to the top of the ERP rail and up the launcher for team visibility.'},
+        {t:'Automated deployments + staging environment', o:'Forma', s:'done', n:'Jul 29: upgraded to the native Vercel↔GitHub integration — every push builds on Vercel infra, all 22 apps re-linked to the AtelioOS organisation. Jul 31: staging opened to the QCS team — upcoming functionality lands there first, behind the same roster-gated sign-in as the live OS; link + instructions sent to the team.'},
+        {t:'Docs hub, support portal & Teams space', o:'Forma · QCS', s:'done', n:'M365 team live with intake checklist pinned; support tickets flow to the Atelio console.'}
+      ]},
+      { title:'Data & Go-Live', tasks:[
+        {t:'August light testing on the live OS (prefix everything \u201ctest\u201d)', o:'QCS', s:'prog', n:'Aug 11 agreed: the team starts hands-on testing of basic functions this month on the live OS \u2014 not full operational use yet. Every test record needs \u201ctest\u201d in its title so it can be cleaned out afterwards. Marie and Roya cover day to day while Viviana is away (back ~Aug 23) and can reach Forma on Teams.'},
+        {t:'Roya: spot-check the imported history on familiar accounts', o:'QCS', s:'todo', n:'Aug 11: with 94,406 invoices and 9,268 machines imported, check a few well-known accounts and confirm the figures and machine lists match reality.'},
+        {t:'Marie: test the Quote Builder and flag improvements', o:'QCS', s:'todo', n:'Aug 11: dollar-value discounts went to staging the same day; anything else Marie flags gets built in the same pass.'},
+        {t:'Product catalogues, spec sheets and magazines to OneDrive', o:'QCS', s:'wait', n:'Aug 11: Viviana to upload. These attach to catalogue items and then ride along automatically when a quote is emailed.'},
+        {t:'Residential customer history + intake form to OneDrive', o:'QCS', s:'wait', n:'Aug 11: the two inputs that unblock the residential split and the residential intake fields.'},
+        {t:'Coffee Addicts PO to OneDrive for reference', o:'QCS', s:'done', n:'Aug 10: both PDFs (4238 and 4239) landed on OneDrive and were checked against the backfilled records the next morning \u2014 totals, items and GST all match. The two POs in the OS were then upgraded with the real quantities, unit rates and part numbers from the PDFs.'},
+        {t:'Excel intake templates + self-serve Import', o:'Forma', s:'done', n:'Five prefilled templates (stock counts, suppliers, customers, machine fleet, open POs) + an Import screen in the ERP: download template → fill in Excel → upload → preview → apply. QCS can update their own data any time.'},
+        {t:'QCS operational data received & pulled in', o:'QCS', s:'done', n:'Jul 29 upload harvested from OneDrive: QuickBooks item export (8,678 rows — full parts catalogue with cost/price/on-hand!), 740-vendor list, 63 open PO lines, WMF 2026 price list, Roya’s 81-page operations manual, plus WMF/Schaerer/Zumex/Conti/Compak product sheets and 17 customer-segment sales sheets.'},
+        {t:'QuickBooks data loaded into the ERP', o:'Forma', s:'done', n:'8,547 QB items merged into the catalogue (now 8,609 products across 9 divisions), real on-hand counts on 4,109 items — $1.83M inventory at cost — 74 items matched to existing records instead of duplicating, 738 vendors added (746 suppliers total), and all 19 open POs (63 lines) live in Purchasing. Spot-checked against source: exact.'},
+        {t:'"OS Database" folder on OneDrive', o:'Forma', s:'done', n:'Folder live in QCS x Atelio (red) with all five intake templates as online Excel sheets — QCS edits them in the browser, then uploads via the ERP Import screen (or we ingest directly).'},
+        {t:'QCS intake: catalogue, counts, suppliers, POs, Woo keys, logo', o:'QCS', s:'done', n:'Jul 29: QuickBooks export, vendors, open POs, price lists, product sheets + 72 commercial pics — all ingested. Jul 30 drop ingested same day: the website product export (301 items → 164 web-store products added with retail pricing, brands and divisions; 61 existing products enriched with web SKUs for the Sprint-3 WooCommerce sync) and “ATELIO - Residential Pics” (75 photos — JURA, Olympia, Profitec, Comandante, Rocket, Mahlkönig lines). 282 products now photographed. “Our team” photos wait for HR (Sprint 4). Jul 31: Brand Guidelines folder ingested (digitized vector logo, colour palette, 24 supplier brand logos, storefront photos — staged into the platform) and the WooCommerce REST key received, verified against the live store (222 products visible) and stored encrypted; rotation planned once the Sprint-3 sync is configured. Walkthrough (Jul 31): customer QuickBooks export confirmed — being sent this afternoon; open work orders to follow; machine fleet + serials when ready; parts inventory entered at the next inventory cycle.'},
+        {t:'Users & roles confirmed', o:'QCS', s:'done', n:'Complete as of Jul 31: all 18 accounts live with no gaps — Mike, Tom and Farzan added Jul 30; Marie on master (full) access; Mazda scoped to Service & Dispatch, Operations and Jura Intake; Raffi on a Microsoft-ready address. The OS supports per-user module access, so who-sees-what stays an ongoing review at each delivery checkpoint — changes take effect immediately, no invites to reissue.'},
+        {t:'Load real data + swap demo records', o:'Forma', s:'prog', n:'Aug 6: the QuickBooks customer export arrived on OneDrive and is IN — 2,716 real customers now live in the OS (names, companies, contacts, addresses, payment terms, 123 outstanding balances totalling ~$636K, and 16 credit-hold accounts flagged ON HOLD). Catalogue (8,609), stock ($1.83M), suppliers (746) and open POs were already live. Still sample: the 3 DEMO clients + their work orders/machines — swapped once real open WOs and machine serials arrive so nothing the team is testing disappears mid-flight. Aug 8: the 26-year QuickBooks history is imported (1.66M ledger rows) — the DEMO swap is unblocked: serial-registry backfill and per-customer invoice history are the next build.'},
+        {t:'Internal QA against source files', o:'Forma', s:'done', n:'Jul 29 full pass on the live apps: Control Centre KPIs + alerts, all 14 Sales/ERP views (catalog 8,609 items, inventory, 19 POs, 746 suppliers, orders, projects, back-orders, reports), Import templates download clean, hub links verified. QB numbers previously reconciled exact against source.'},
+        {t:'Team access invites + technician hand-off', o:'Forma · QCS', s:'done', n:'Complete as of Jul 31: every account is configured as requested and the team has the staging link + sign-in instructions (Microsoft for @qualitycoffeesystems.ca, Google for Gmail technicians, email + temporary password for Farzan — change on first sign-in). Access stays roster-gated; per-module access for the broader team is an ongoing review as features stabilise, adjusted checkpoint by checkpoint.'},
+        {t:'Live walkthrough + M1 acceptance + sign-off', o:'QCS · Forma', s:'done', n:'Held Fri Jul 31 with Viviana, Marie, Roya and Alissa — feedback positive (“user-friendly and easy to work with”). Full feedback list captured and queued: same-day fixes shipped (tabs, supplier management, PO governance, order counts) with the rest tracked below and in Sprint 2.'}
+      ]}
+    ]},
+  { id:'s1', label:'Sprint 1', win:'Weeks 2–3 · ERP core', title:'ERP core, hardened to your ops',
+    sub:'Inventory with locations and cross-reference, vendor POs with ETAs, projects, orders and shipping. Much of this landed early — during Week 1.',
+    flags:[
+      '<b>WooCommerce sync is LIVE (Jul 31)</b> — store orders flow into the ERP every 15 minutes; 50 orders already imported.',
+      '<b>Sprint 1: 100% complete</b> — every planned item plus four same-day walkthrough fixes delivered. New feature requests from the walkthrough carry into Sprint 2; parts/bins data gets entered at QCS’s next inventory cycle.'
+    ],
+    groups:[
+      { title:'Inventory', tasks:[
+        {t:'Multi-type inventory with brand/model cross-reference', o:'Forma', s:'done', n:'Machines, grinders, service parts, accessories; search by brand & model; parts↔machine fitment live. Ahead of schedule.'},
+        {t:'Warehouse + van + showroom locations', o:'Forma', s:'done', n:'Per-location stock levels with low-stock flags; vans are mobile locations.'},
+        {t:'Bin system per warehouse, organised by brand', o:'Forma', s:'done', n:'Bin per stock line, click-to-edit right in Inventory; the deep hierarchy grows in as the real 5–10K-SKU parts catalogue loads.'},
+        {t:'Top-up-to-max: auto-draft PO on low stock', o:'Forma', s:'done', n:'"Draft top-up POs" builds draft vendor POs (grouped by supplier, to max level) and holds them in Purchasing for review — no duplicates on re-runs.'},
+        {t:'Back-order queue linked to customers', o:'Forma', s:'done', n:'Back-orders view: customer + product + needed-by, status flow open → ordered → received → fulfilled.'}
+      ]},
+      { title:'Projects & Vendor POs', tasks:[
+        {t:'Projects: PO → receive → install pipeline', o:'Forma', s:'done', n:'Stage board with client, machine and target dates. Ahead of schedule.'},
+        {t:'Vendor PO register: create, send, receive, track', o:'Forma', s:'done', n:'Supplier, lines, ETA, carrier + tracking number.'},
+        {t:'ETAs surfaced on Needs Attention', o:'Forma', s:'done', n:'Inbound POs and in-transit shipments feed the Control Centre.'}
+      ]},
+      { title:'Orders & Shipping', tasks:[
+        {t:'Unified orders (showroom, phone, rep, online)', o:'Forma', s:'done', n:'Order register with source tags, confirm → fulfill → invoice flow.'},
+        {t:'Outbound shipping: record + create', o:'Forma', s:'done', n:'Inbound freight and outbound deliveries with carrier/tracking.'},
+        {t:'WooCommerce online-order sync', o:'QCS · Forma', s:'done', n:'Live as of Jul 31: the store syncs into the ERP every 15 minutes — online orders land in Orders with source “Online”, matched to catalogue products by SKU, idempotent re-runs, and orders your team has invoiced are never overwritten by the store. First sync brought in 50 orders (Jun 9 – today, $11.5K), visible on the Control Centre (“15 new online”). Key rotation scheduled now that it’s configured.'}
+      ]},
+      { title:'Walkthrough feedback — shipped same day (Jul 31)', tasks:[
+        {t:'Purchasing: Open / Closed tabs + delete PO + master-only governance', o:'Forma', s:'done', n:'Same-day: register reorganised into Open POs / Closed POs / All tabs; Delete (with confirm) on draft and cancelled POs; sending, cancelling and deleting POs restricted to master users (Marie, Roya, Viviana) — enforced server-side, buttons hidden for everyone else.'},
+        {t:'Projects: tabs over the kanban board', o:'Forma', s:'done', n:'Same-day: In motion / Completed / All tabs above the drag-and-drop board.'},
+        {t:'Orders: counts that add up + cancelled visibility', o:'Forma', s:'done', n:'Same-day: stat strip now shows Open / Fulfilled / Invoiced / Cancelled (every order in exactly one bucket) alongside Online; cancelled filter pill already in place.'},
+        {t:'Suppliers: add / edit / remove + type categories', o:'Forma', s:'done', n:'Same-day: “Add supplier” button, per-row Edit and Remove (removal keeps PO history), and a free-form type field (equipment, coffee-roaster, water-filter, …) that drives the filter pills — categorisation can grow over time.'}
+      ]}
+    ]},
+  { id:'s2', label:'Sprint 2', win:'Weeks 3–6 · Service & Jura', title:'Service, Work Orders, Dispatch & Jura',
+    sub:'The full work-order system to Roya’s spec, PM + warranty reminders, dispatch with routes, and the Jura tablet intake with barcode labels. The biggest net-new build.',
+    flags:[
+      '<b>Fresh Microsoft client secret from Grant</b> — the email engine is live in the OS; the first secret pasted was the Secret ID, not the Value. One fresh secret Value + Connect in the Control Centre panel switches on emailed quotes, invoices and POs, PM reminders, and Outlook calendar sync. The single biggest unblock outstanding.'
+    ],
+    groups:[
+      { title:'Work-Order System (Roya’s spec)', tasks:[
+        {t:'Purchasing: July POs missing from the OS (incl. Coffee Addicts)', o:'Forma', s:'done', n:'Aug 11 investigation \u2014 ANSWERED: not a Purchasing bug. The Jul 29 intake loaded a snapshot of POs open at that moment, and there is no ongoing QuickBooks\u2192OS purchase-order sync, so anything raised in QuickBooks at or after that point never arrived. Coffee Addicts 4238 and 4239 are in QuickBooks but not the OS (the OS holds only 4216 for them). In total 14 of July\u2019s 27 QuickBooks POs are missing: 4206, 4218, 4224, 4225, 4226, 4231, 4233, 4237, 4238, 4239, 4240, 4241, 4242, 4243, 4244, 4245. FIXED Aug 11: all 16 backfilled from the imported history \u2014 Purchasing now holds 36 POs instead of 20, each with its real line items, supplier, date and pre-tax total, every one reconciling exactly to the QuickBooks figure (Coffee Addicts 4238 = \u00245,615.25 over 4 lines, 4239 = \u00242,460.00 over 3). They are marked as imported so they are easy to tell from POs raised in the OS. Aug 11: the two Coffee Addicts PDFs arrived on OneDrive and both check out line for line \u2014 4238 (3\u00d7 DF64 Black, 10\u00d7 DF54 Black, 5\u00d7 Silver, 5\u00d7 White = \u00245,615.25 + \u0024280.76 GST) and 4239 (4\u00d7 filter head, 8\u00d7 Bestprotec V, 6\u00d7 Bestprotect XL = \u00242,460.00 + \u0024123.00 GST). Both now carry the real quantities, unit rates and supplier part numbers from those PDFs rather than the summarised amounts the QuickBooks export gave. From here every new PO should be raised in the OS, where numbering continues at 4247 \u2014 anything still raised in QuickBooks will not appear.'},
+        {t:'ERP search: results sometimes vanished (reported as \u201cE8 vs e8\u201d)', o:'Forma', s:'done', n:'Aug 11: traced to the ERP search page and FIXED (live). It was never about capitals \u2014 the server always matched case-insensitively (verified: identical results for E8 and e8). The page itself was at fault: it applied search responses in whatever order they came back, so a slower earlier request could overwrite newer results, and editing a search down to a single character left the spinner running with every result hidden behind it. Both are fixed \u2014 each search now ignores its own outdated response and the spinner always clears.'},
+        {t:'Work orders: RI/RO, statuses, technician, scheduling', o:'Forma', s:'done', n:'Full status vocabulary (New WO → On Bench → Waiting on Parts → … → Approved → Finished PM) live.'},
+        {t:'On-site creation by techs (tablet/phone)', o:'Forma', s:'done', n:'The Field flow: find customer → pick machine → describe issue → create, with on-hold warnings. Ahead of schedule.'},
+        {t:'View / edit / duplicate / void / issue invoice', o:'Forma', s:'done', n:'All work-order actions from the pending list.'},
+        {t:'Four-tab layout aligned to the spec', o:'Forma', s:'done', n:'Aug 6: full audit against Roya’s spec document ahead of the review meeting — columns, buttons, statuses, sort options and the on-hold warning all matched; the four gaps found were built same-day and are LIVE on your OS (promoted Aug 8): Delete Customer (guarded — blocked when work orders or machines exist), Print WO and Email WO on the work-order popup (Email opens your mail app pre-filled, works before the email key), the call type at creation (New Service Call / Preventative Maintenance / Recall), and the invoice number + charges block on the printable invoice. Ready to walk through together.'},
+        {t:'Structured note/invoice template, auto-emailed', o:'Forma', s:'todo', n:'Call log + customer + machine + technician notes template attached to Issue Invoice; Aug 7: the Microsoft keys arrived and the send engine is live in the OS — invoice auto-emailing wires up once the fresh secret connects.'},
+        {t:'Quote templates received & analysed', o:'QCS · Forma', s:'done', n:'Aug 1: four example quotes ingested (Schaerer Coffee Art / Marriott, WMF espresso Next / St. Paul’s, Conti NG E + Compak / Foundry, Zumex Speed S / EARLs). Structure mapped for the quote builder: list price → dealer discount % → delivery/installation fee → net, 180-day validity, Net-30 terms, and the standard warranty / water-filtration / freight / ordering-process paragraphs with their variants. Quote generation gets built to this exact shape.'},
+        {t:'Quote builder shaped to your templates', o:'Forma', s:'done', n:'Aug 1: LIVE on your OS (promoted Aug 8) — a new Quote Builder page in the ERP produces quotes matching your four examples: To/Attn/Re header, machines picked straight from the catalogue (or freeform), list price → dealer discount % → delivery/installation → net price, 180-day validity, and the standard warranty / water-filtration / freight / payment-terms / ordering paragraphs pre-filled and editable per quote. Live preview with the QCS letterhead, one click to print or save as PDF.'},
+        {t:'Serial registry → customer → invoice history', o:'Forma', s:'done', n:'Aug 1: LIVE on your OS (promoted Aug 8) — invoice history per machine now shows invoice numbers, values and WO labels, with a per-machine “Export history” CSV. Serials tab, customer status and full-registry export were already live.'},
+        {t:'Photo attachments on work orders', o:'Forma', s:'done', n:'Aug 1: LIVE on your OS (promoted Aug 8) — a Photos tab on the work-order edit screen: on a phone or iPad “Add photo” opens the camera, photos upload immediately (10 MB cap) with optional labels (“Condition on pickup”), thumbnails, full-size view and delete. Stored in the platform’s secure file storage.'},
+        {t:'Billing & payment tabs on work orders', o:'Forma', s:'done', n:'Aug 1: LIVE on your OS (promoted Aug 8) — the work-order edit screen now has Details / Billing / Payments tabs. Billing: invoice line items (labour, parts) with a live total that falls back to the quote value. Payments: record cash / card / e-transfer receipts with references, a Paid / Partial / Unpaid chip and running balance. Invoices get a sequential number (SVC-YYYYMM-NNNN) on first issue. Field techs still never take payment on-site.'},
+        {t:'PM reminders to clients (configurable window)', o:'Forma', s:'todo', n:'Walkthrough ask: automatic client reminders ahead of scheduled preventative maintenance; window configurable. The in-OS half is done (PM auto-scheduling creates the work orders); Aug 7: Microsoft keys in — the send engine is on staging (internal PM-run summary emails first); client-facing reminders next, window per your preference.'}
+      ]},
+      { title:'Built ahead while awaiting QCS inputs (Aug 6 evening)', tasks:[
+        {t:'Saved quotes + Pipeline hookup', o:'Forma', s:'done', n:'LIVE on your OS (promoted Aug 8) — quotes from the builder now save with a sequential Q-number and a status (draft → sent → accepted/declined). Each save auto-creates an opportunity on the Sales Pipeline for the matched client, status changes move the deal stage (accepted = won), quotes list on the Customer 360, and any saved quote reopens in the builder. “Email this quote” bolts on the moment the Microsoft key lands.'},
+        {t:'Calendar (Sprint 3, pulled forward)', o:'Forma', s:'done', n:'LIVE on your OS (promoted Aug 8) — a Calendar tab in the service desk: one month view combining scheduled work orders (click to open), PM due dates and project meetings/trainings, color-coded. Outlook two-way sync switches on with the Microsoft 365 connection.'},
+        {t:'Money reports for accounting', o:'Forma', s:'done', n:'LIVE on your OS (promoted Aug 8) — a “Money” section on Reports: the imported QuickBooks receivables picture ($636K, on-hold counts, top balances) plus precise aging (current / 31–60 / 61–90 / 90+) for OS-issued service invoices, an open-invoice list, and two CSV exports (outstanding balances · invoices & payments) — reconciliation-ready for Marie.'},
+        {t:'Online orders linked to customers', o:'Forma', s:'done', n:'LIVE on your OS (promoted Aug 8) — store orders now attach to the CRM customer by billing email (or company) at sync time, so web purchases appear on the Customer 360. Existing orders back-linked where names matched; consumer guest checkouts stay unlinked by design.'},
+        {t:'CRM: Customer 360 profile', o:'Forma', s:'done', n:'LIVE on your OS (promoted Aug 8) — clicking any client in the Sales CRM now shows their whole story in one place: account # and terms, owing/on-hold badges, machines with warranty status, service history with invoice numbers, recent orders, and lifetime totals (order value, payments, open WOs). Fed entirely by data already in the OS.'},
+        {t:'CRM: Clients page scaled for 2,716 customers', o:'Forma', s:'done', n:'LIVE on your OS (promoted Aug 8) — server-side search (now also by account # and phone) and 50-per-page pagination, so the imported customer base browses instantly instead of loading all 2,716 rows.'},
+        {t:'PM auto-scheduling', o:'Forma', s:'done', n:'LIVE on your OS (promoted Aug 8) — when a preventative-maintenance plan comes due, the OS creates the PM work order itself (call type Preventative Maintenance, scheduled on the due date) every morning, skipping any machine that already has one open. A “Generate due work orders” button on the PM tab runs it on demand.'}
+      ]},
+      { title:'ERP asks from the Aug 6 staging review with Roya', tasks:[
+        {t:'Global search results open the record', o:'Forma', s:'done', n:'Aug 11 ask: results were display-only. LIVE on your OS \u2014 customer, order and purchase-order rows are now clickable and jump straight to the record (customers and POs open their detail, orders land filtered).'},
+        {t:'Cross-app search links (work orders, machines, shipments)', o:'Forma', s:'todo', n:'Aug 11 follow-on: clicking a work order or machine serial in ERP search should open it in the Service desk or Machines app, carrying the signed-in session across \u2014 the same hand-off the launcher tiles use.'},
+        {t:'Quote builder: per-item discounts', o:'Forma', s:'done', n:'Aug 6 evening: LIVE on your OS (promoted Aug 8) — every quote line now carries its own discount % (10% machine, 25% grinder…); the quote shows the per-line discount and one aggregated “Dealer discounts” total. The old field now just sets the default for new lines.'},
+        {t:'Work-order call types: dropdown with “Add New” (masters only)', o:'Forma', s:'done', n:'Aug 6 evening: LIVE on your OS (promoted Aug 8) — the call-type dropdown ends with “＋ Add new…”: masters type a label (Installation, Warranty, Training…) and it joins the list for everyone instantly; non-masters get a clean permission error. Starting set stays Service Call / PM / Recall.'},
+        {t:'Purchasing: PO numbers click through to full detail', o:'Forma', s:'done', n:'Aug 6 evening: LIVE on your OS (promoted Aug 8) — PO numbers are links; clicking opens the full PO: line items with quantities and costs, status, ETA, carrier/tracking and the total.'},
+        {t:'Purchasing: edit carrier & tracking number inline', o:'Forma', s:'done', n:'Aug 6 evening: LIVE on your OS (promoted Aug 8) — a pencil on the Carrier/Tracking column, same as the ETA one: set or fix carrier and tracking any time without touching the PO.'},
+        {t:'Global search (magnifying glass in the rail)', o:'Forma', s:'done', n:'Aug 6 evening: LIVE on your OS (promoted Aug 8) — a magnifying glass at the bottom of the ERP rail opens the Ctrl-F of the whole system: one box that searches customers, orders & invoices, POs, shipments, work orders and machine serials at once — by name, number or tracking — with owing/on-hold flags right in the results.'},
+        {t:'Project cards: meetings & training on click-in, calendar-linked', o:'Forma', s:'done', n:'Aug 6 evening: LIVE on your OS (promoted Aug 8) — a “Details” link on each project card opens the card without cluttering the board: add meetings and trainings with date/time; the next one shows as a small line on the card, and today’s events appear on the Control Centre schedule.'},
+        {t:'Supplier types: team fills in as they go', o:'QCS', s:'done', n:'Aug 6 review: the type field, editable per supplier, is already live — with a long list and many inactive vendors the team prefers to classify (equipment / shipping materials / …) as they touch each one, and remove the dead ones.'},
+        {t:'Online-order sync check (last order Aug 4)', o:'Forma', s:'done', n:'Aug 6: investigated same day — the WooCommerce sync is healthy (ran clean minutes before checking, no errors). There are simply no store orders since Aug 4 18:42; reception to confirm that matches reality.'},
+        {t:'Push everything to the live OS', o:'Forma', s:'done', n:'DONE — promoted Aug 8: the full 31-feature batch went to production in one merge. All builds verified green and the live OS spot-checked end to end (hub, ERP, Sales CRM, Service). Team announcement queued.'}
+      ]},
+      { title:'ERP enhancements from the Jul 31 walkthrough', tasks:[
+        {t:'Home page: “POs received” on the ERP overview', o:'Forma', s:'done', n:'Aug 1: LIVE on your OS (promoted Aug 8) — a POs-received tile plus a list of goods received in the last 30 days (PO #, supplier, date, value) on the Control Centre ERP overview. Promotes to the live OS on your go-ahead.'},
+        {t:'Catalog: sale / promotional price field', o:'Forma', s:'done', n:'Aug 1: LIVE on your OS (promoted Aug 8) — sale price + promo note per product; the sale price shows in red beside the struck-through retail with a SALE chip, and the promo note is ready to surface on the Sprint-3 client portal.'},
+        {t:'Catalog: detailed stock status popup', o:'Forma', s:'done', n:'Aug 1: LIVE on your OS (promoted Aug 8) — click any stock chip for the full picture: on hand / on hold / on order totals, the per-location breakdown with bins and reorder points, and open-PO lines with ETAs.'},
+        {t:'Catalog: spec sheets & brochures on commercial machines', o:'Forma', s:'done', n:'Aug 1: LIVE on your OS (promoted Aug 8) — every product can carry documents (spec sheets, brochures, manuals) managed right in the edit screen, with a 📄 marker in the catalogue. Pre-loaded: 19 supplier product sheets from your OneDrive intake linked to 67 machines and grinders (WMF, Schaerer, Conti, Compak, Curtis).'},
+        {t:'Catalog: machine categories (traditional vs super automatic)', o:'Forma', s:'done', n:'Aug 1: 88 of 89 espresso machines categorised Traditional vs Superautomatic × Commercial/Residential, matching the taxonomy in your website data (one machine with no brand recorded left for review).'},
+        {t:'Inventory: manage warehouse / van / showroom locations', o:'Forma', s:'done', n:'Aug 1: LIVE on your OS (promoted Aug 8) — “Manage locations” in Inventory: add Service Van 2/3, rename, change kind, deactivate (stock history kept).'},
+        {t:'Purchasing: edit a PO’s ETA after creation', o:'Forma', s:'done', n:'Aug 2: LIVE on your OS (promoted Aug 8) — team question (“how do I change the ETA of a PO?”) turned into a fix same-day: a pencil on the ETA column opens an inline date picker on any PO; save or clear it without touching the PO’s status or receiving flow.'},
+        {t:'Accounts receivable snapshot on the home page', o:'Forma', s:'done', n:'Aug 6: LIVE on your OS (promoted Aug 8) — with the QuickBooks balances now in, the Control Centre shows total outstanding (~$636K), accounts owing (123), credit holds (16) and the largest balances — a day-one collections picture for Marie. Shows/hides with Customize like other widgets.'},
+        {t:'Tax-aware billing (GST/PST) on invoices & quotes', o:'Forma', s:'done', n:'Aug 6: LIVE on your OS (promoted Aug 8) — your QuickBooks tax codes (Standard BC, GST-only, PST-only, HST-ON, Exempt) are wired in: the work-order Billing tab picks a code and computes GST 5% / PST 7% with a total incl. tax, payments track against the taxed total, and the quote builder can show the tax breakdown under the net price.'},
+        {t:'Build tracker inside the OS', o:'Forma', s:'done', n:'Aug 6: LIVE on your OS (promoted Aug 8) — this tracker now lives behind your sign-in: a “Build tracker” button on the Control Centre top bar opens the live tracker inside the OS, always current.'},
+        {t:'Mobile functionality & sanity pass (phone / iPad)', o:'Forma', s:'done', n:'Aug 2: LIVE on your OS (promoted Aug 8) — every app tested at phone width and fixed where needed: the hub top bar and launcher now fit small screens, ERP tables (catalogue, purchasing, orders, suppliers, shipping, back orders, inventory) scroll sideways instead of squishing, the quote builder stacks editor-over-preview, and in Service the action buttons drop below the list, work-order forms go single-column and the Photos tab’s “Add photo” opens the camera — ready for techs in the field.'},
+        {t:'Cost / wholesale / retail sanity check', o:'Forma', s:'prog', n:'Aug 8: the export landed AND the mining is done — 94,406 invoices summarized ($75.1M lifetime, 2000–2026, 99.1% auto-linked to CRM customers) and 9,265 machine serials extracted from invoice memos. The serial registry jumped from 3 to 9,268 machines, each linked to its customer with provenance. LIVE on your OS (promoted Aug 8): Customer 360 shows a QuickBooks-history column + lifetime-invoiced figure, and the invoice-history popup on every serial now includes the pre-OS QuickBooks invoices (CSV export included). Remaining: the cost sanity check + 2–3 account spot-check with Roya.'},
+        {t:'PO numbering aligned to QCS format', o:'Forma', s:'done', n:'Aug 7: LIVE on your OS (promoted Aug 8) — the PO template landed on OneDrive and new POs now continue your QuickBooks sequence: plain 4-digit numbers picking up right after 4246 (next PO is 4247). Auto-drafted POs follow the same sequence.'},
+        {t:'Printable PO matching your QuickBooks template', o:'Forma', s:'done', n:'Aug 7: LIVE on your OS (promoted Aug 8) — a “Print PO” button on any PO opens a print-ready document mirroring the template you sent: your logo, DATE / PO # box, VENDOR and SHIP TO blocks, item table, GST 5% / PST 7% on purchase and the CAD total.'},
+        {t:'Purchasing & project stage vocabulary', o:'QCS · Forma', s:'done', n:'Aug 6 review: confirmed as-built — PO stages stay Draft / Sent / Partial / Received / Cancelled, and project stages stay Planning → PO Placed → Goods Received → Install Scheduled → Installed → Closed. Open/Closed PO tabs preferred over extra columns.'}
+      ]},
+      { title:'PM, Warranty & Dispatch', tasks:[
+        {t:'PM scheduler with due/overdue computation', o:'Forma', s:'done', n:'Interval-driven due dates; due list on the Control Centre.'},
+        {t:'Warranty registry + expiry visibility', o:'Forma', s:'done', n:'60-day expiry window surfaces on Needs Attention.'},
+        {t:'Email/push reminders (PM + warranty)', o:'Forma', s:'todo', n:'In-app alerts live; Aug 7: the Microsoft keys arrived from the QCS admin — the outbound-email engine is live in the OS (PM runs email a daily summary automatically); it switches on the moment the fresh Microsoft secret connects.'},
+        {t:'Microsoft 365 outbound email connection', o:'Forma · QCS', s:'prog', n:'Aug 7: keys received from the QCS admin (thank you!). The Graph mail engine is LIVE on your OS (promoted Aug 8): work orders email straight from the company mailbox with one click, PM runs email a daily summary, and a send relay is ready for quotes, invoices and POs. Per-tenant key storage: keys are entered in the Control Centre\u2019s new \u201cEmail connection\u201d panel, checked with Microsoft before saving, and stored encrypted on the QCS tenant only \u2014 never in platform config. Aug 11: confirmed still blocked — Grant to issue a fresh client secret Value (the first paste was the Secret ID). Aug 11 (later): checked the connection after a reported “still says off” — nothing had been saved, because Microsoft rejected the keys again and the panel showed the reason only as small grey text at the bottom, which is easy to miss. Fixed on staging: the panel now puts a clear banner at the top of the form naming the exact problem in plain language (Secret ID vs Value, expired secret, wrong Client or Directory ID, disabled app, consent not granted) with the step to fix it, plus the Microsoft error code and the full message on demand. Awaiting a promote to go live. Connecting the fresh secret also unlocks Outlook calendar sync into the OS calendar.'},
+        {t:'Dispatch scheduling', o:'Forma', s:'done', n:'Tech assignment + scheduled visits live in the service desk.'},
+        {t:'Map view + drag-to-reorder routes', o:'Forma', s:'todo', n:'Route visualisation and optimisation for ops.'}
+      ]},
+      { title:'Jura Service & Tablet Intake', tasks:[
+        {t:'Intake: commercial vs residential split', o:'Forma', s:'todo', n:'Aug 11 ask: the check-in needs to branch commercial vs residential up front, since residential work behaves differently and every residential customer currently sits in one bucket. Depends on the residential history list and intake form Viviana is sending.'},
+        {t:'Intake: New customer / Existing customer choice first', o:'Forma', s:'todo', n:'Aug 11 UX ask: open the check-in with an explicit New/Existing choice rather than starting in a search box \u2014 clearer for someone standing at the counter.'},
+        {t:'Intake: drop Make, keep Model and Serial', o:'Forma', s:'todo', n:'Aug 11: every machine on the Jura counter is a Jura, so Make is noise. Model and serial are what matter, and serials are normally read off the machine by the service team rather than typed by the customer.'},
+        {t:'Split the residential bucket into real customer records', o:'QCS \u00b7 Forma', s:'wait', n:'Aug 11: the residential catch-all is the largest account in the system \u2014 14,362 invoices, \u00248.8M, 1,063 machines \u2014 because every residential job was booked against it. Viviana is pulling the full residential history to OneDrive so these can be split out; until then Customer 360 is of limited use on the residential side.'},
+        {t:'Jura intake: August or September rollout', o:'QCS', s:'wait', n:'Aug 11: Viviana to decide with Casto once he is back from his service call. The build is live and usable either way.'},
+        {t:'Client-facing tablet intake', o:'Forma', s:'done', n:'Aug 6 evening: LIVE on your OS (promoted Aug 8), built same-day as the hardware confirmation — a “Machine Check-in” tab in the service desk, iPad-first: find or create the customer, pick or register the machine by serial, describe the issue, done. Carry-in (RI) by default, the on-hold/owing guard included, and it ends on the printable barcode label with a “Next customer” reset for counter use.'},
+        {t:'Barcode label generation + scanner logging', o:'Forma · QCS', s:'done', n:'Aug 6 evening: LIVE on your OS (promoted Aug 8) — labels render at exactly 2.25×1.25″ for the MUNBYN RW402B and print from the iPad via AirPrint: Code 39 barcode (the Adesso scanners read it out of the box), WO number, customer, serial and date. And the other half: scanning any label anywhere in the service desk pops that work order open instantly — the scanners type like a keyboard, so there is nothing to install. Ready to test the day the hardware arrives.'},
+        {t:'Auto emails: confirmation, quote approval, pickup', o:'Forma', s:'todo', n:'Triggered across the intake lifecycle once email is connected.'}
+      ]}
+    ]},
+  { id:'s3', label:'Sprint 3', win:'Weeks 6–8 · CRM & Web', title:'CRM, Portals & Website',
+    sub:'Quote-to-pipeline with imagery, the brand document database, tiered client portals, lead intake with AI prospecting, WooCommerce and the booking replacement.',
+    flags:[
+      '<b>Connect Alissa</b> to spec the built-in booking replacement.',
+      '<b>Order sync already LIVE</b> — keys received; catalogue-side sync is the remaining half.'
+    ],
+    groups:[
+      { title:'CRM & Quoting', tasks:[
+        {t:'Quote builder: discounts in dollars as well as percent', o:'Forma', s:'done', n:'Aug 11 ask (Marie/Kazuto). LIVE on your OS \u2014 every quote line has a \u0024/% toggle beside its discount: a percentage as before, or a flat dollar figure off that line. Totals, the printed quote and saved quotes all follow the mode, and a discount can never exceed the line value.'},
+        {t:'Email a quote with spec sheets attached', o:'Forma', s:'todo', n:'Aug 11: once the Microsoft connection is live the quote builder gets an Email button \u2014 template message, the quote itself, and the spec sheets already attached to each catalogue item included automatically. Replaces today\u2019s save-as-PDF-and-attach-by-hand routine.'},
+        {t:'Walkthrough video: quote to sent email', o:'Forma', s:'todo', n:'Aug 11 ask: record the full quote-to-send flow once the Microsoft connection is live, so the team can follow it without a live session \u2014 useful while Viviana is away.'},
+        {t:'Sales pipeline per rep', o:'Forma', s:'done', n:'Pipeline stages + follow-ups live since Week 1 — ahead of schedule.'},
+        {t:'Quote builder with product images + attachments', o:'Forma', s:'todo', n:'The quote builder itself is LIVE with saved quotes feeding the pipeline (Sprint 2); this row is the enhancement: product photos on the quote document + attaching spec/installation sheets.'},
+        {t:'Brand document database', o:'Forma', s:'todo', n:'Partly live: spec sheets/brochures already attach to machines in the catalogue (19 supplier sheets on 67 machines). This row is the standalone library — 47 brand PDFs received in the Jul 29 data drop — content is in hand, the library module is next.'},
+        {t:'Single lead intake + AI prospecting', o:'Forma', s:'todo', n:'One queue, manual routing, dedupe; AI discovery tuned to QCS’s customers.'},
+        {t:'Chat & approvals between users', o:'Forma', s:'todo', n:'Cross-user chat with inline approval cards (e.g. approve a PO) + request workflow.'}
+      ]},
+      { title:'Portals & Website', tasks:[
+        {t:'Role-based dashboards (sales / service / marketing)', o:'Forma \u00b7 QCS', s:'todo', n:'Aug 11: the full dashboard stays with the four masters (Marie, Viviana, Roya, Roger). Scoped versions to build: sales sees top products, service sees work-order throughput, and Alissa sees marketing performance with no revenue figures. Viviana, Casto, Roger and Roya to agree the exact cut per role, then it is configuration rather than a build.'},
+        {t:'Cards on file: editing limited to Viviana, Roya and Lynn', o:'Forma', s:'todo', n:'Aug 11 decision: card details live on the client profile only \u2014 never on a work order \u2014 and only those three can edit them. Builds with the payments work.'},
+        {t:'Tiered client portals (offices / retailers / operators)', o:'Forma', s:'todo', n:'Per-tier price lists and discounts.'},
+        {t:'WooCommerce order + catalogue sync', o:'QCS · Forma', s:'prog', n:'Half done and LIVE: store orders sync into the ERP every 15 minutes (since Jul 31) and now auto-link to their CRM customer (promoted Aug 8). Remaining half: catalogue/price sync from the OS out to the store.'},
+        {t:'Built-in booking (replace the paid plugin)', o:'Forma · QCS', s:'todo', n:'Scoped with Alissa; retires the WordPress plugin.'}
+      ]}
+    ]},
+  { id:'s4', label:'Sprint 4', win:'Weeks 8–10 · Go-live', title:'Payments, HR, Accounting & docs',
+    sub:'Payment rails, lightweight HR, the QuickBooks migration with Marie, shared-drive documents — and full go-live with training.',
+    flags:[
+      '<b>Cards-on-file decision</b> — QCS management to decide before the payments flow is scoped.',
+      '<b>Accounting deep-dive with Marie</b> — out-of-the-box vs custom + QuickBooks migration volume.',
+      '<b>Outlook webhook validation</b> — de-risk the mail/calendar sync early.'
+    ],
+    groups:[
+      { title:'Payments & Accounting', tasks:[
+        {t:'Payment links, cards on file, EFT, PayPal', o:'Forma · QCS', s:'wait', n:'Pending the internal cards-on-file decision.'},
+        {t:'Multi-currency supplier POs (CAD/USD/CHF/EUR)', o:'Forma', s:'todo', n:'Currency per PO with FX-aware totals.'},
+        {t:'Accounting configuration + QuickBooks migration', o:'Forma · Marie', s:'wait', n:'Scoped in the meeting with Marie; QB stays book of record until cutover.'}
+      ]},
+      { title:'HR, Docs & Go-Live', tasks:[
+        {t:'HR: WHMIS records, private pay stubs, vacation calendar', o:'Forma', s:'todo', n:'Vacation forms + shared calendar with conflict restrictions.'},
+        {t:'Shared-drive document integration', o:'Forma', s:'todo', n:'OneDrive/Google Drive feeding the ERP.'},
+        {t:'Outlook mail + calendar (two-way)', o:'Forma', s:'later', n:'Admin consent + webhook validation; comms sprint.'},
+        {t:'Full go-live + training', o:'Forma · QCS', s:'todo', n:'The finish line: every module on real data, team trained.'}
+      ]}
+    ]}
+];
+
+var CHK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2"><path d="M20 6L9 17l-5-5"/></svg>';
+var SLABEL = {done:"Done",prog:"In progress",blocked:"Blocked",wait:"Waiting on QCS",todo:"Not started",later:"Deferred"};
+var SCLASS = {done:"s-done",prog:"s-prog",blocked:"s-blocked",wait:"s-wait",todo:"s-todo",later:"s-later"};
+var active = 0;
+
+function esc(s){return String(s).replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+
+function stats(d){
+  var all=[]; d.groups.forEach(function(g){g.tasks.forEach(function(t){all.push(t);});});
+  var act=all.filter(function(t){return t.s!=='later';});
+  var c={done:0,prog:0,wait:0,blocked:0,todo:0};
+  act.forEach(function(t){ if(c[t.s]!==undefined) c[t.s]++; });
+  var total=act.length||1;
+  return {c:c,total:total,pct:Math.round((c.done+c.prog*0.5)/total*100),
+    dPct:Math.round(c.done/total*100),pPct:Math.round(c.prog*0.5/total*100)};
+}
+
+function renderTabs(){
+  document.getElementById('tabs').innerHTML = DELIVERIES.map(function(d,i){
+    var s=stats(d);
+    return '<div class="tab'+(i===active?' active':'')+'" data-i="'+i+'">'+
+      '<div class="tl">'+esc(d.label)+'</div><div class="tw">'+esc(d.win)+'</div>'+
+      '<div class="tp"><i class="d" style="width:'+s.dPct+'%"></i><i class="p" style="width:'+s.pPct+'%"></i></div>'+
+      '<div class="tpct">'+s.pct+'%</div></div>';
+  }).join('');
+  var tabs=document.querySelectorAll('.tab');
+  for(var i=0;i<tabs.length;i++){
+    tabs[i].addEventListener('click',function(){ active=+this.getAttribute('data-i'); render(); window.scrollTo({top:0}); });
+  }
+}
+
+function render(){
+  renderTabs();
+  var d=DELIVERIES[active], s=stats(d);
+  var h='<div class="dhead"><h2>'+esc(d.title)+'</h2><span class="win">'+esc(d.win)+'</span><span class="pct">'+s.pct+'%</span></div>'+
+    '<div class="dsub">'+esc(d.sub)+'</div>'+
+    '<div class="track"><div class="seg done" style="width:'+s.dPct+'%"></div><div class="seg prog" style="width:'+s.pPct+'%"></div></div>'+
+    '<div class="tiles">'+
+      '<div class="tile" style="--tc:var(--done)"><div class="n">'+s.c.done+'</div><div class="l">Done</div></div>'+
+      '<div class="tile" style="--tc:var(--prog)"><div class="n">'+s.c.prog+'</div><div class="l">In progress</div></div>'+
+      '<div class="tile" style="--tc:var(--wait)"><div class="n">'+s.c.wait+'</div><div class="l">Waiting on QCS</div></div>'+
+      '<div class="tile" style="--tc:var(--blocked)"><div class="n">'+s.c.blocked+'</div><div class="l">Blocked</div></div>'+
+      '<div class="tile" style="--tc:var(--todo)"><div class="n">'+s.c.todo+'</div><div class="l">Not started</div></div>'+
+    '</div>';
+  if(d.flags && d.flags.length){
+    h+='<div class="callout"><h3>⚑ Keep this delivery moving</h3><ul>'+d.flags.map(function(f){return '<li>'+f+'</li>';}).join('')+'</ul></div>';
+  }
+  h+=d.groups.map(function(g,gi){
+    var done=g.tasks.filter(function(t){return t.s==='done';}).length;
+    var rows=g.tasks.map(function(t){
+      return '<div class="row" data-status="'+t.s+'">'+
+        '<div class="box">'+CHK+'</div>'+
+        '<div class="main"><div class="task"><b>'+esc(t.t)+'</b></div>'+
+        (t.n?'<div class="note">'+esc(t.n)+'</div>':'')+'</div>'+
+        '<div class="meta"><span class="status '+SCLASS[t.s]+'">'+SLABEL[t.s]+'</span>'+
+        '<span class="owner">'+esc(t.o)+'</span></div></div>';
+    }).join('');
+    return '<div class="group"><div class="group-h"><span class="idx">'+(gi+1)+'</span><h2>'+esc(g.title)+'</h2>'+
+      '<span class="gcount">'+done+' / '+g.tasks.length+' done</span></div><div class="list">'+rows+'</div></div>';
+  }).join('');
+  document.getElementById('content').innerHTML=h;
+}
+
+render();
+</script>
 </body>
 </html>
