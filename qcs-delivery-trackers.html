@@ -130,7 +130,7 @@
       <span><i style="background:var(--later)"></i>Deferred</span>
     </div>
     <div class="foot">
-      Status current as of <b>Thu Aug 28, 2026</b> — verified against the live system after the day's production promote. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
+      Status current as of <b>Thu Sep 3, 2026 (evening)</b> — verified against the live system; the full Sept wave (pricing, portal, reports, HR) is live in production, and the Microsoft 365 integration layer is promoted with every switch off until the permission grants land. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
       Quality Coffee Systems · Operating System · Prepared by Atelio — a Forma platform
     </div>
   </div>
@@ -297,7 +297,7 @@ var DELIVERIES = [
   { id:'s3', label:'Sprint 3', win:'Weeks 6–8 · CRM & Web', title:'CRM, Portals & Website',
     sub:'Quote-to-pipeline with imagery, the brand document database, tiered client portals, lead intake with AI prospecting, WooCommerce and the booking replacement.',
     flags:[
-      '<b>Portal answers are in (Aug 28)</b> — order-through, one login per company, clients see their tier price, looks like the OS. Build starts after the Mon Aug 31 meeting with Roya &amp; Marie and the Sept-1 pricelists land on OneDrive.',
+      '<b>Portals are LIVE (Sept 1)</b> — built to the Aug 28 answers the day after the Sept-1 pricelists landed. See the Sept wave tab for the full story.',
       '<b>Connect Alissa</b> to spec the built-in booking replacement.',
       '<b>Order sync already LIVE</b> — keys received; catalogue-side sync is the remaining half.'
     ],
@@ -317,7 +317,7 @@ var DELIVERIES = [
       { title:'Portals & Website', tasks:[
         {t:'Role-based dashboards (sales / service / marketing)', o:'Forma', s:'done', n:'Aug 12, LIVE on your OS (promoted Aug 13) — and it genuinely hides rather than just not showing. The Control Centre opens on a view that matches the job \u2014 Service, Sales, Marketing or Everything \u2014 chosen from your role the first time and remembered after that. On top of that there are now two switches per person, set in Team &amp; Permissions: which parts of the business they see at all, and whether dollar figures appear inside them. They are enforced on the server, so a figure someone isn\u2019t cleared for is never sent to their browser \u2014 not merely left off the screen. Alissa is set to marketing only with no revenue, per the Aug 11 decision; everyone else is on role defaults for Viviana to tune. Only an owner can change these.'},
         {t:'Cards on file: editing limited to Viviana, Roya and Lynn', o:'Forma', s:'done', n:'Aug 12, LIVE on your OS (promoted Aug 13) — and built so the OS never holds a card number. The customer types it on Stripe\u2019s own page; what the OS stores is a token plus the brand and last four digits \u2014 enough to recognise a card, useless to anyone who got hold of the database. Access is by name rather than by role: only Viviana, Roya and Lynn, checked on the server, so being an admin (or even another owner) is not a way in. Cards appear on the client profile only \u2014 never on a work order, never in lists, search or exports \u2014 and every view and every charge is written to the audit log with who did it. Charging a card is always someone typing an amount, never automatic.'},
-        {t:'Tiered client portals (offices / retailers / operators)', o:'QCS \u00b7 Forma', s:'wait', n:'Answers in Aug 28: JURA retailer (30\u201335% off) and operator (20\u201325% off) pricelists, MSRP for offices; order-through; one login per company; clients see their tier price; looks like the OS. Tier will be a field on the client \u2014 default MSRP, retailer list applied in bulk when it lands, operators assigned as accounts get touched. Held for the Mon Aug 31 meeting and the Sept-1 pricelists.'},
+        {t:'Tiered client portals (offices / retailers / operators)', o:'Forma', s:'done', n:'LIVE Sept 1 at atelio-qcs-portal.vercel.app \u2014 exactly as answered Aug 28: order-through, one login per company, each client sees their tier price, and it wears the OS look. Full detail in the Sept wave tab.'},
         {t:'WooCommerce order + catalogue sync', o:'QCS \u00b7 Forma', s:'prog', n:'Order side done and LIVE: store orders sync into the ERP every 15 minutes (since Jul 31) and auto-link to their CRM customer (promoted Aug 8). Catalogue side built and LIVE as of Aug 14, but deliberately idle \u2014 it runs in preview, compares prices only, and can only update products that already exist: it cannot create a product or take a page down. A dry run found two genuine disagreements (JURA Hot Cup Warmer \u0024265 vs \u0024299; Olympia Cremina sale price) and three questions we will not answer for you \u2014 how \u201cavailable to order\u201d should read to a customer, what to do about the 183 website products with no SKU, and which system wins when they disagree. Nothing goes across until the team answers.'},
         {t:'Built-in booking (replace the paid plugin)', o:'Forma · QCS', s:'wait', n:'Waiting on Alissa\u2019s answers to the five booking questions; retires the WordPress plugin.'}
       ]}
@@ -331,22 +331,74 @@ var DELIVERIES = [
     ],
     groups:[
       { title:'Payments & Accounting', tasks:[
-        {t:'Payment links, cards on file, EFT, PayPal', o:'Forma · QCS', s:'wait', n:'Pending the internal cards-on-file decision.'},
+        {t:'Payment links, cards on file, EFT, PayPal', o:'Forma · QCS', s:'prog', n:'Payment links built Sept 2: \u201cPay link\u201d on any issued invoice mints a Stripe-hosted checkout URL, and payment marks the invoice PAID \u2014 card numbers never touch the OS. Goes live when the QCS Stripe account is connected. Cards on file already live for Viviana/Roya/Lynn; EFT + PayPal still to scope.'},
         {t:'Multi-currency supplier POs (CAD/USD/CHF/EUR)', o:'Forma', s:'done', n:'LIVE Aug 28: currency per PO with totals in that currency, editable while the PO is draft or sent.'},
         {t:'Accounting configuration + QuickBooks migration', o:'Forma · Marie', s:'wait', n:'Scoped in the meeting with Marie; QB stays book of record until cutover.'}
       ]},
       { title:'HR, Docs & Go-Live', tasks:[
-        {t:'HR: WHMIS records, private pay stubs, vacation calendar', o:'Forma', s:'prog', n:'HR lite LIVE Aug 28 \u2014 team list and time-off basics. WHMIS records, pay stubs and the vacation calendar still to come; the HR launcher tile needs its own web address before it appears on the hub.'},
+        {t:'HR: WHMIS records, private pay stubs, vacation calendar', o:'Forma', s:'done', n:'LIVE Sept 3 at atelio-qcs-hr.vercel.app \u2014 the hub tile opens it with one-click sign-in. Certifications registry with expiry warnings, pay stubs in a private bucket (owner/admin file; each person sees only their own), and the who\u2019s-away month calendar. Full detail in the Sept wave tab.'},
         {t:'Shared-drive document integration', o:'Forma', s:'todo', n:'OneDrive/Google Drive feeding the ERP.'},
         {t:'Outlook mail + calendar (two-way)', o:'Forma', s:'later', n:'Admin consent + webhook validation; comms sprint.'},
         {t:'Full go-live + training', o:'Forma · QCS', s:'todo', n:'The finish line: every module on real data, team trained.'}
       ]}
     ]},
+  { id:'s5', label:'Sept wave', win:'Sep 1–3 · Pricing, Portal, Reports, HR & M365', title:'Tier pricing, the client portal, the reports the team runs, HR — and Microsoft 365',
+    sub:'The Sept-1 JURA pricelists as live tier pricing, the customer-facing order portal, the QuickBooks report families in click dropdowns exactly as Marie asked — and, Sept 3, the HR app: time off, certifications, pay stubs and the away calendar.',
+    flags:[
+      '<b>Retailer tiers assigned (Sept 3)</b> — the 6 exact matches (Bargreen Ellingson, Hoya Home Living, Pure Range, Cherry Hill Coffee, Whitfield Foodservice, Lansdowne Appliance) now carry retailer pricing, audited. The 6 name variants still await the team’s confirm; Espresso Dolce needs a new customer record.',
+      '<b>Chain split ready to run</b> — dry run counted 102 parent accounts over 875 locations and 19,831 invoices. Runs the moment someone says go; nothing moves before that.',
+      '<b>Two keys unlock two features</b> — the Woo store URL + webhook secret switches on website orders into the ERP; connecting the QCS Stripe account lights up payment links on invoices. Both sides are built and waiting.',
+      '<b>Microsoft permission grants</b> — the deeper Microsoft 365 integrations are in production, every switch OFF. Three application permissions (Files.Read.All, Files.ReadWrite.All, Mail.Read) added once to the existing Entra app + admin consent unlock them; step-by-step instructions are with the team. The two-way calendar needs nothing new.'
+    ],
+    groups:[
+      { title:'Pricing & ERP (LIVE Sept 1)', tasks:[
+        {t:'Sept-1 JURA pricelists as tier pricing', o:'Forma', s:'done', n:'All 88 articles from the three Sept-1 PDFs — MSRP, retailer and operator columns with the exact %-off per product (the discount varies 15–35% by product, so it’s per-article, not one percentage). ERP → Price Lists is the source of truth; 132 price rows seeded and verified against the source files.'},
+        {t:'Price tier on the customer + tier prices on orders', o:'Forma', s:'done', n:'Customer form has the tier field (default retail); once set, new order lines default to that customer’s tier price, still editable per line.'},
+        {t:'INV MM-#### invoice numbering', o:'Forma', s:'done', n:'Roya confirmed the reading Aug 31; live Sept 1. Monthly prefix, one counter that never repeats, existing invoices untouched.'},
+        {t:'Void restricted to owners', o:'Forma', s:'done', n:'Kazuto, Marie, Roger, Roya, Viviana. Roya promoted to owner Sept 1 (was admin).'},
+        {t:'Sub-accounts: parent picker on the customer', o:'Forma', s:'done', n:'Chain locations attach to a head office — the UI the chain split will fill.'},
+        {t:'Sales by rep report + rep on the invoice', o:'Forma', s:'done', n:'Monthly, invoiced-only, voided excluded, CSV for commissions. Rep dropdown on orders and the printed invoice.'}
+      ]},
+      { title:'Client portal (LIVE Sept 1)', tasks:[
+        {t:'Customer order portal at atelio-qcs-portal.vercel.app', o:'Forma', s:'done', n:'One login per company via single-use invite links (customers set their own password — staff never see one). Catalog priced at the company’s tier, cart, order-through, order history. Wears the QCS theme. Portal orders land in ERP → Orders marked “portal”.'},
+        {t:'Staff side: Portal access panel', o:'Forma', s:'done', n:'ERP → Price Lists: pick the company, type the email, copy the invite link; per-company on/off switch.'},
+        {t:'Documents tab in the portal', o:'Forma', s:'done', n:'LIVE Sept 2. Staff share brand documents per-file from the Library (nothing shared by default); partners see brochures, spec sheets and price lists grouped.'},
+        {t:'Portal shows invoices & balances?', o:'QCS', s:'wait', n:'Question 8 — with Marie & Roya. Portal stays orders-only until they decide.'}
+      ]},
+      { title:'Reports — Marie’s Sept 2 list (LIVE Sept 2)', tasks:[
+        {t:'Receivables — A/R aging, open invoices, balances', o:'Forma', s:'done', n:'30/60/90 buckets across BOTH invoice types (service + orders), open-invoice and by-customer views, average days to pay, CSV. QuickBooks-imported balances shown separately, labelled as history.'},
+        {t:'Sales summary — by day / customer / item', o:'Forma', s:'done', n:'Any date range; orders and service invoices side by side; CSV.'},
+        {t:'Inventory valuation + count sheet', o:'Forma', s:'done', n:'On-hand × cost by item and location, value at retail alongside, a printable physical-count sheet, and a negative-stock listing that flags items worth counting.'},
+        {t:'Purchases — by vendor / item + open POs', o:'Forma', s:'done', n:'Any range; open POs with outstanding quantities; USD POs stay USD.'},
+        {t:'Click dropdowns with ADD / EDIT / DELETE', o:'Forma', s:'done', n:'Marie’s ask, verbatim: report categories open on click (no QuickBooks hover-chains), and each dropdown’s entries are manageable — save a configured report under a name, rename it, delete it. Saved views are shared with the whole team; “★ September commissions” is already saved.'},
+        {t:'Full QuickBooks report triage', o:'Forma', s:'done', n:'All ~130 reports from the team’s screenshots mapped: already in the OS / buildable next / stays in QuickBooks until the accounting pack (P&L, GL, payroll, tax). Workbook delivered Sept 2.'}
+      ]},
+      { title:'HR & polish (LIVE Sept 3)', tasks:[
+        {t:'HR app live from the Control Centre tile', o:'Forma', s:'done', n:'atelio-qcs-hr.vercel.app — the HR tile now opens with the same one-click sign-in as ERP and Sales. Four views: Time off, Calendar, Records, Pay stubs.'},
+        {t:'Certifications registry (WHMIS, First Aid…)', o:'Forma', s:'done', n:'Managers keep the registry; each person always sees their own. Issue/expiry dates, attached certificate files, and a “needs attention” strip for anything expired or expiring inside 60 days.'},
+        {t:'Pay stubs — private on purpose', o:'Forma', s:'done', n:'Owner/admin file them; each person sees exactly their own — no manager tier. Files live in a PRIVATE storage bucket and open only through links that expire in ten minutes.'},
+        {t:'Who’s-away month calendar', o:'Forma', s:'done', n:'Approved time off on a month grid — names and dates only, never the kind or the notes.'},
+        {t:'Print-friendly reports', o:'Forma', s:'done', n:'Marie’s “print / email as PDF” toolbar ask: a Print button on Reports strips the app chrome so the print dialog yields clean paper or a PDF.'},
+        {t:'Data fixes from the Sept-2 report QA', o:'Forma', s:'done', n:'Sprinkler’s $1.06 placeholder cost cleared (valuation now flags it as missing-cost instead of pretending), and the three SEB “(USD)” POs corrected from CAD to USD.'},
+        {t:'Team guide published', o:'Forma', s:'done', n:'A how-to page covering sign-in, every app, and who-can-do-what by role — shared from Viviana’s Claude workspace.'}
+      ]},
+      { title:'Microsoft 365 wave (in production Sept 3 — ships switched OFF)', tasks:[
+        {t:'OneDrive → Library sync', o:'QCS · Forma', s:'wait', n:'A designated OneDrive folder auto-files into the brand Library as linked documents (they keep their Microsoft sign-in). Subfolder names set category and brand; removed files deactivate; a dry-run button shows what would happen before anything writes. Waits on the Files.Read.All grant.'},
+        {t:'OS documents auto-archived to OneDrive', o:'QCS · Forma', s:'wait', n:'Every emailed invoice, quote and PO also lands as a file in an OneDrive archive folder, organised by kind and month — service invoices and quotes as the actual PDFs the customer received. Waits on the Files.ReadWrite.All grant.'},
+        {t:'Customer emails logged on their records', o:'QCS · Forma', s:'wait', n:'Mail to/from the company mailbox matched to the customer book and logged on the client\u2019s CRM history — subject + short preview only, never the mailbox; looks back at most 24h when first switched on. Waits on the Mail.Read grant (the broadest of the three — a deliberate decision).'},
+        {t:'Two-way Outlook calendar', o:'Forma', s:'done', n:'Outlook notifies the OS the moment the shared calendar changes — dragging a work-order appointment in Outlook reschedules the work order in the OS within seconds. Uses the already-granted Calendars.ReadWrite; can be switched on any time from the Control Centre panel.'},
+        {t:'Control Centre panel for all four switches', o:'Forma', s:'done', n:'Under Email connection (Microsoft 365): each feature has its own toggle, the Graph permission it needs named beside it, and dry-run / run-now buttons so it can be proven before it is left running hourly.'}
+      ]},
+      { title:'Website & payments groundwork (built, waiting on keys)', tasks:[
+        {t:'WooCommerce orders → ERP sales orders', o:'QCS · Forma', s:'wait', n:'Receiver built: a store order becomes a real sales order (same numbering, customer matched by email, safe against retries). Activates when QCS provides the store URL and a webhook secret.'},
+        {t:'Stripe payment links on invoices', o:'QCS · Forma', s:'wait', n:'“Pay link” on any issued invoice mints a Stripe-hosted checkout URL — card numbers never touch the OS — and payment marks the invoice PAID automatically. Lights up when the QCS Stripe account is connected.'}
+      ]}
+    ]},
   { id:'fb', label:'Team feedback', win:'Aug 27\u201328 \u00b7 40 items', title:'Two feedback docs, three waves, one day to production',
     sub:'The ERP Core and Preventative Maintenance notes, mapped item-by-item on arrival with eight questions back to the team \u2014 answered within a day \u2014 and everything buildable shipped to production Aug 28, verified live the same afternoon.',
     flags:[
-      '<b>Invoice numbering (INV MM-####)</b> \u2014 monthly prefix, counter keeps counting, future invoices only. Built the moment the team confirms that reading.',
-      '<b>Chain-account split</b> \u2014 parent:child accounts (Joey, The Keg\u2026) attribute automatically, same as the residential split. A dry-run shows the numbers first; nothing moves without an explicit go.'
+      '<b>Invoice numbering (INV MM-####)</b> \u2014 confirmed by Roya Aug 31 and LIVE Sept 1: monthly prefix, one counter that never repeats, future invoices only.',
+      '<b>Chain-account split</b> \u2014 dry-run complete: 102 parent accounts over 875 locations, 19,831 invoices re-attributed (Tim Hortons, Costco, Starbucks, The Keg\u2026). Sub-account UI is live; the split itself runs on an explicit go.'
     ],
     groups:[
       { title:'ERP \u2014 Catalog, Parts & Inventory', tasks:[
@@ -367,7 +419,7 @@ var DELIVERIES = [
         {t:'Email option for order invoices', o:'Forma', s:'done', n:'Sends the invoice document from the company mailbox; internal notes never appear on it.'},
         {t:'Invoice prints once, not five times', o:'Forma', s:'done', n:'Print-layout bug fixed \u2014 one copy, in browser print and PDF alike.'},
         {t:'Status banner \u2192 dropdown beside search; filter by rep', o:'Forma', s:'done', n:''},
-        {t:'Invoice numbering: INV MM-####', o:'QCS', s:'wait', n:'Monthly prefix, counter keeps counting, future invoices only \u2014 waiting on the team confirming that reading.'},
+        {t:'Invoice numbering: INV MM-####', o:'Forma', s:'done', n:'Roya confirmed the reading Aug 31; LIVE Sept 1. Monthly prefix, one counter that never repeats, future invoices only.'},
         {t:'Supplier form grown', o:'Forma', s:'done', n:'Address, website, payment-terms dropdown (Net 15/30/45/60, COD, Prepaid, Credit card), tax-code dropdown, multiple emails comma-separated.'},
         {t:'Edit button on existing POs', o:'Forma', s:'done', n:'Draft and sent POs: lines, ETA, currency, carrier, tracking.'},
         {t:'Our cost shown while building a PO + date placed', o:'Forma', s:'done', n:'Cost auto-fills from the catalogue by item name; a Placed column shows when each order went out.'}
@@ -384,7 +436,7 @@ var DELIVERIES = [
       { title:'Service \u2014 Customers & Work Orders', tasks:[
         {t:'Customer form grown: bill-to / ship-to, PST, internal notes', o:'Forma', s:'done', n:'Separate shipping address, PST/tax ID, and internal account notes that never appear to the customer or on any document.'},
         {t:'Subcontractor dropdown with quick-add', o:'Forma', s:'done', n:'Self-managed list (company, address, phone, email), per the Aug 27 answer.'},
-        {t:'Chain sub-accounts under a parent', o:'QCS \u00b7 Forma', s:'wait', n:'Parent-child link built; QuickBooks holds the structure as Parent:Child, same as residential. Dry-run ready \u2014 shows locations to create and invoices to repoint before anything moves.'},
+        {t:'Chain sub-accounts under a parent', o:'QCS \u00b7 Forma', s:'wait', n:'Parent-child link and the sub-account picker are LIVE (Sept 1). Dry-run counted: 102 parents, 875 locations, 19,831 invoices to repoint. The split itself runs on an explicit go from the team.'},
         {t:'Customer Detail tab on the WO', o:'Forma', s:'done', n:'Bill-to/ship-to, terms, PST #, email, the customer\u2019s PO # box, internal notes, and owing / past-due tiles computed from their open invoices.'},
         {t:'Serial dropdown + warranty status on the WO', o:'Forma', s:'done', n:'Change or add the machine right on the job; warranty badge read from the record (\u201cUnder warranty until\u2026\u201d / \u201cWarranty ended\u2026\u201d).'},
         {t:'Scheduled time as a from\u2013to range', o:'Forma', s:'done', n:'The quote-value box moved out of that spot.'},
