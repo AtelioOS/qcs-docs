@@ -130,7 +130,7 @@
       <span><i style="background:var(--later)"></i>Deferred</span>
     </div>
     <div class="foot">
-      Status current as of <b>Thu Sep 3, 2026 (evening)</b> — verified against the live system; the full Sept wave (pricing, portal, reports, HR) is live in production, and the Microsoft 365 integration layer is promoted with every switch off until the permission grants land. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
+      Status current as of <b>Fri Sep 4, 2026</b> — verified against the live system; the full Sept wave (pricing, portal, reports, HR) is live in production, the Microsoft 365 integration layer is promoted with every switch off until the permission grants land, and the accounting pack — double-entry ledger, statements, bank reconciliation — went live Sept 4 to open the QuickBooks parallel run. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
       Quality Coffee Systems · Operating System · Prepared by Atelio — a Forma platform
     </div>
   </div>
@@ -333,7 +333,7 @@ var DELIVERIES = [
       { title:'Payments & Accounting', tasks:[
         {t:'Payment links, cards on file, EFT, PayPal', o:'Forma · QCS', s:'prog', n:'Payment links built Sept 2: \u201cPay link\u201d on any issued invoice mints a Stripe-hosted checkout URL, and payment marks the invoice PAID \u2014 card numbers never touch the OS. Goes live when the QCS Stripe account is connected. Cards on file already live for Viviana/Roya/Lynn; EFT + PayPal still to scope.'},
         {t:'Multi-currency supplier POs (CAD/USD/CHF/EUR)', o:'Forma', s:'done', n:'LIVE Aug 28: currency per PO with totals in that currency, editable while the PO is draft or sent.'},
-        {t:'Accounting configuration + QuickBooks migration', o:'Forma · Marie', s:'wait', n:'Scoped in the meeting with Marie; QB stays book of record until cutover.'}
+        {t:'Accounting configuration + QuickBooks migration', o:'Forma · Marie', s:'prog', n:'The accounting pack went LIVE Sept 4 \u2014 double-entry GL, statements, bank rec (full detail in the Sept wave tab). QuickBooks stays the book of record until Marie reconciles a month side-by-side; her chart export drives the account mapping.'}
       ]},
       { title:'HR, Docs & Go-Live', tasks:[
         {t:'HR: WHMIS records, private pay stubs, vacation calendar', o:'Forma', s:'done', n:'LIVE Sept 3 at atelio-qcs-hr.vercel.app \u2014 the hub tile opens it with one-click sign-in. Certifications registry with expiry warnings, pay stubs in a private bucket (owner/admin file; each person sees only their own), and the who\u2019s-away month calendar. Full detail in the Sept wave tab.'},
@@ -342,13 +342,14 @@ var DELIVERIES = [
         {t:'Full go-live + training', o:'Forma · QCS', s:'todo', n:'The finish line: every module on real data, team trained.'}
       ]}
     ]},
-  { id:'s5', label:'Sept wave', win:'Sep 1–3 · Pricing, Portal, Reports, HR & M365', title:'Tier pricing, the client portal, the reports the team runs, HR — and Microsoft 365',
-    sub:'The Sept-1 JURA pricelists as live tier pricing, the customer-facing order portal, the QuickBooks report families in click dropdowns exactly as Marie asked — and, Sept 3, the HR app: time off, certifications, pay stubs and the away calendar.',
+  { id:'s5', label:'Sept wave', win:'Sep 1–4 · Pricing, Portal, Reports, HR, M365 & Accounting', title:'Tier pricing, the client portal, the reports the team runs, HR, Microsoft 365 — and the books',
+    sub:'The Sept-1 JURA pricelists as live tier pricing, the customer-facing order portal, the QuickBooks report families in click dropdowns exactly as Marie asked — and, Sept 3, the HR app: time off, certifications, pay stubs and the away calendar. Sept 4: the accounting pack — the OS now keeps its own double-entry books alongside QuickBooks until Marie calls the cutover.',
     flags:[
       '<b>Retailer tiers assigned (Sept 3)</b> — the 6 exact matches (Bargreen Ellingson, Hoya Home Living, Pure Range, Cherry Hill Coffee, Whitfield Foodservice, Lansdowne Appliance) now carry retailer pricing, audited. The 6 name variants still await the team’s confirm; Espresso Dolce needs a new customer record.',
       '<b>Chain split ready to run</b> — dry run counted 102 parent accounts over 875 locations and 19,831 invoices. Runs the moment someone says go; nothing moves before that.',
       '<b>Two keys unlock two features</b> — the Woo store URL + webhook secret switches on website orders into the ERP; connecting the QCS Stripe account lights up payment links on invoices. Both sides are built and waiting.',
-      '<b>Microsoft permission grants</b> — the deeper Microsoft 365 integrations are in production, every switch OFF. Three application permissions (Files.Read.All, Files.ReadWrite.All, Mail.Read) added once to the existing Entra app + admin consent unlock them; step-by-step instructions are with the team. The two-way calendar needs nothing new.'
+      '<b>Microsoft permission grants</b> — the deeper Microsoft 365 integrations are in production, every switch OFF. Three application permissions (Files.Read.All, Files.ReadWrite.All, Mail.Read) added once to the existing Entra app + admin consent unlock them; step-by-step instructions are with the team. The two-way calendar needs nothing new.',
+      '<b>The books are live (Sept 4)</b> — the accounting pack posts the OS\u2019s own ledger from Sept-1 activity onward; QuickBooks remains the book of record until a parallel month reconciles. Next input: Marie\u2019s QuickBooks chart-of-accounts export for the mapping column.'
     ],
     groups:[
       { title:'Pricing & ERP (LIVE Sept 1)', tasks:[
@@ -388,6 +389,14 @@ var DELIVERIES = [
         {t:'Customer emails logged on their records', o:'QCS · Forma', s:'wait', n:'Mail to/from the company mailbox matched to the customer book and logged on the client\u2019s CRM history — subject + short preview only, never the mailbox; looks back at most 24h when first switched on. Waits on the Mail.Read grant (the broadest of the three — a deliberate decision).'},
         {t:'Two-way Outlook calendar', o:'Forma', s:'done', n:'Outlook notifies the OS the moment the shared calendar changes — dragging a work-order appointment in Outlook reschedules the work order in the OS within seconds. Uses the already-granted Calendars.ReadWrite; can be switched on any time from the Control Centre panel.'},
         {t:'Control Centre panel for all four switches', o:'Forma', s:'done', n:'Under Email connection (Microsoft 365): each feature has its own toggle, the Graph permission it needs named beside it, and dry-run / run-now buttons so it can be proven before it is left running hourly.'}
+      ]},
+      { title:'Accounting pack (LIVE Sept 4 \u2014 QuickBooks parallel run)', tasks:[
+        {t:'Accounting app on the Control Centre tile', o:'Forma', s:'done', n:'atelio-qcs-accounting.vercel.app \u2014 the Accounting tile opens with the same one-click sign-in as ERP and Sales. Four screens: Statements, Journal, Accounts, Bank rec. Owner, admin and finance roles only.'},
+        {t:'Double-entry general ledger', o:'Forma', s:'done', n:'A real ledger under the OS: every entry balances by construction, wrong entries get reversals \u2014 never deletions \u2014 and months can be locked once they close. The ledger starts Sept 1, 2026.'},
+        {t:'\u201cPost from activity\u201d \u2014 the books fill themselves', o:'Forma', s:'done', n:'One button derives journal entries from what the OS already recorded: issued invoices (service and orders), payments, received POs, voids. Safe to press any time \u2014 nothing ever posts twice. USD POs are skipped and named in the run report until an FX policy is decided.'},
+        {t:'Statements: trial balance, P&L, balance sheet', o:'Forma', s:'done', n:'Any date range, print-clean, CSV export on each \u2014 plus a month-vs-QuickBooks summary built specifically for the parallel-run reconciliation.'},
+        {t:'Bank reconciliation \u2014 CSV import + matching', o:'Forma', s:'done', n:'Upload a bank statement CSV, map the columns once, and tick lines off against OS-recorded payments shown alongside. Re-importing the same statement is safe \u2014 duplicates are skipped.'},
+        {t:'QuickBooks parallel run with Marie', o:'QCS \u00b7 Forma', s:'wait', n:'QuickBooks stays the book of record until Marie runs a month side-by-side and calls the cutover. Waiting on her QuickBooks chart-of-accounts export \u2014 the Accounts screen has a QuickBooks-name column ready for the mapping. Payroll and tax filing stay external in v1.'}
       ]},
       { title:'Website & payments groundwork (built, waiting on keys)', tasks:[
         {t:'WooCommerce orders → ERP sales orders', o:'QCS · Forma', s:'wait', n:'Receiver built: a store order becomes a real sales order (same numbering, customer matched by email, safe against retries). Activates when QCS provides the store URL and a webhook secret.'},
