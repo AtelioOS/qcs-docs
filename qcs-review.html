@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>QCS OS Build Review</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<style>
+  :root{
+    --paper:#F5F3EF; --card:#FFFFFF; --ink:#1C1A17; --sub:#6A6459; --mute:#8A8478;
+    --line:#E3DED6; --line-strong:#D5D0C7; --red:#B3261E; --red-wash:#F7ECEA;
+    --live:#2F6B3A; --live-wash:#EBF2EC; --wait:#8A6100; --wait-wash:#F6F0E0;
+  }
+  :root:not([data-theme="light"]){}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#191714; --card:#211E1B; --ink:#EDE9E2; --sub:#A69E92; --mute:#847C70;
+      --line:#332F2A; --line-strong:#453F38; --red:#E4685F; --red-wash:#33221F;
+      --live:#7FBB8A; --live-wash:#1F2B21; --wait:#D3A94E; --wait-wash:#2E2717;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#191714; --card:#211E1B; --ink:#EDE9E2; --sub:#A69E92; --mute:#847C70;
+    --line:#332F2A; --line-strong:#453F38; --red:#E4685F; --red-wash:#33221F;
+    --live:#7FBB8A; --live-wash:#1F2B21; --wait:#D3A94E; --wait-wash:#2E2717;
+  }
+  body{background:var(--paper); color:var(--ink); font:15px/1.6 "Source Sans 3",-apple-system,"Segoe UI",Roboto,sans-serif; margin:0;}
+  .wrap{max-width:860px; margin:0 auto; padding:44px 24px 80px;}
+  header.top{border-bottom:2px solid var(--ink); padding-bottom:18px; margin-bottom:30px;}
+  .eyebrow{font-size:11.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--red); margin:0 0 6px;}
+  h1{font-family:"Source Serif 4",Georgia,serif; font-size:33px; font-weight:700; margin:0 0 6px; text-wrap:balance;}
+  .meta{font-size:13px; color:var(--sub); display:flex; gap:16px; flex-wrap:wrap;}
+  h2{font-family:"Source Serif 4",Georgia,serif; font-size:21px; font-weight:700; margin:40px 0 6px; text-wrap:balance;}
+  .lede{font-size:13.5px; color:var(--sub); margin:0 0 16px; max-width:64ch;}
+  p{max-width:68ch;}
+
+  .board{display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:10px;}
+  .tile{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 14px; display:flex; flex-direction:column; gap:3px;}
+  .tile b{font-size:13.5px;}
+  .tile span{font-size:12px; color:var(--sub);}
+  .pill{align-self:flex-start; font-size:10.5px; font-weight:800; letter-spacing:.06em; border-radius:999px; padding:2px 9px; margin-bottom:3px;}
+  .pill.live{background:var(--live-wash); color:var(--live);}
+  .pill.off{background:var(--wait-wash); color:var(--wait);}
+
+  .who{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:12px;}
+  .who .card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .who h3{margin:0 0 8px; font-size:14px; font-weight:800;}
+  .who h3 small{font-weight:600; color:var(--mute); font-size:12px;}
+  .who ul{margin:0; padding-left:18px; font-size:13px; color:var(--sub);}
+  .who li{margin:5px 0;}
+  .who li::marker{color:var(--red);}
+  .who li b{color:var(--ink); font-weight:700;}
+
+  .decision{background:var(--card); border:1px solid var(--line); border-left:3px solid var(--red); border-radius:0 10px 10px 0; padding:13px 16px; margin:10px 0;}
+  .decision b{font-size:14px;}
+  .decision p{margin:4px 0 0; font-size:13px; color:var(--sub);}
+  .ready{display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.05em; color:var(--live); background:var(--live-wash); border-radius:999px; padding:2px 9px; margin-left:8px; vertical-align:2px;}
+
+  ol.path{margin:0; padding-left:22px; font-size:13.5px;}
+  ol.path li{margin:8px 0; color:var(--sub);}
+  ol.path li b{color:var(--ink);}
+
+  table{width:100%; border-collapse:collapse; font-size:13.5px; background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .tablewrap{overflow-x:auto; border-radius:10px;}
+  th{text-align:left; font-size:11px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--mute); padding:9px 14px; border-bottom:1px solid var(--line-strong); background:var(--card);}
+  td{padding:9px 14px; border-bottom:1px solid var(--line); vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td.t{white-space:nowrap; font-weight:700; font-variant-numeric:tabular-nums; color:var(--red);}
+
+  .foot{margin-top:44px; padding-top:14px; border-top:1px solid var(--line); font-size:12px; color:var(--mute);}
+  a{color:var(--red);}
+  code{font-family:ui-monospace,"Cascadia Mono",Menlo,monospace; font-size:12.5px; background:var(--red-wash); border-radius:5px; padding:1px 6px;}
+  @media print{ body{background:#fff;} .wrap{padding-top:10px;} }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <p class="eyebrow">Quality Coffee Systems × Atelio</p>
+  <h1>Build review — where the OS stands</h1>
+  <div class="meta"><span>Wednesday, September 9, 2026</span><span>Prepared by Viviana · Atelio, a Loom Tech platform</span></div>
+</header>
+
+<h2>The operating system, module by module</h2>
+<p class="lede">Everything below is verified against the live production system, not a plan. Dates are when each area went live for the team.</p>
+<div class="board">
+  <div class="tile"><span class="pill live">LIVE</span><b>ERP Core &amp; Sales CRM</b><span>Catalog, parts, inventory, orders, purchasing, quotes, pipeline — daily-driver since August.</span></div>
+  <div class="tile"><span class="pill live">LIVE</span><b>Service desk, Machines &amp; PM</b><span>Work orders, bench flow, preventative maintenance, Jura intake, dispatch calendar.</span></div>
+  <div class="tile"><span class="pill live">LIVE · Sept 1</span><b>Tier pricing &amp; price lists</b><span>The Sept-1 JURA pricelists as live per-article tier pricing; orders default to the customer's tier.</span></div>
+  <div class="tile"><span class="pill live">LIVE · Sept 1</span><b>Client portal</b><span>One login per company, catalog at their price, order-through, shared documents.</span></div>
+  <div class="tile"><span class="pill live">LIVE · Sept 2</span><b>Reports</b><span>Marie's QuickBooks families in click dropdowns, shared saved views, CSV everywhere, print-clean.</span></div>
+  <div class="tile"><span class="pill live">LIVE · Sept 3</span><b>HR</b><span>Time off, away calendar, certifications with expiry flags, private pay stubs.</span></div>
+  <div class="tile"><span class="pill off">PROMOTED · SWITCHED OFF</span><b>Microsoft 365 deep integrations</b><span>OneDrive→Library sync, document archive, email logging, two-way calendar — waiting on three permission grants.</span></div>
+  <div class="tile"><span class="pill live">LIVE · Sept 4</span><b>Accounting</b><span>Double-entry ledger, statements, bank rec, QuickBooks parallel run from Sept 1.</span></div>
+  <div class="tile"><span class="pill live">NEW · Sept 8</span><b>This week's wave</b><span>GST/PST tax codes on order invoices, EFT/cheque/PayPal payment recording, the online booking page, portal invoices pre-built behind a switch.</span></div>
+</div>
+
+<h2>New since the last check-in</h2>
+<div class="tablewrap"><table>
+  <tr><th>Shipped</th><th>What it means day-to-day</th></tr>
+  <tr><td class="t">Accounting pack</td><td>The OS keeps real double-entry books. <b>Journal → “Post from activity”</b> fills them from invoices, payments and received POs — safe to press any time, nothing posts twice. Statements (trial balance, P&amp;L, balance sheet) print clean and export CSV; a <b>Month&nbsp;vs&nbsp;QuickBooks</b> tab exists purely for the parallel-run reconciliation. Bank statements import as CSV and tick off against recorded payments.</td></tr>
+  <tr><td class="t">Tax codes on orders</td><td>New orders carry a QuickBooks-style tax code (default S — GST&nbsp;5% + PST&nbsp;7%). Issued invoices itemize the tax, and the ledger splits revenue from GST/PST payable automatically. Existing invoices are untouched.</td></tr>
+  <tr><td class="t">Recorded payments</td><td>“Record payment” on any issued invoice — EFT, cheque, PayPal, cash, card — with a date and reference. It marks the invoice PAID, flows to the books, and shows in Bank rec for statement matching.</td></tr>
+  <tr><td class="t">Online booking page</td><td>A public request form at <a href="https://atelio-api-self.vercel.app/booking/qcs">…/booking/qcs</a>: name, machine, the problem, a preferred time window → a work order lands on the Service desk marked as an online request; the team confirms the time. Built to replace the paid WordPress plugin; Alissa's five answers become settings, not rework.</td></tr>
+  <tr><td class="t">Portal invoices — ready, off</td><td>The invoices-and-balances tab customers would see is fully built and completely invisible. The day the team says yes, one switch in ERP → Price Lists turns it on.</td></tr>
+</table></div>
+
+<h2>In QCS's court</h2>
+<p class="lede">Nothing here needs building — each item is a grant, a key, a data file, or a yes.</p>
+<div class="who">
+  <div class="card"><h3>Kazuto <small>· IT / Microsoft</small></h3><ul>
+    <li><b>Three Entra permission grants</b> (Files.Read.All · Files.ReadWrite.All · Mail.Read) — step-by-step instructions already sent. Unlocks OneDrive sync, the document archive, and customer-email logging.</li>
+    <li><b>Jura workbook</b> for the remaining catalogue enrichment.</li>
+  </ul></div>
+  <div class="card"><h3>Marie <small>· Accounting</small></h3><ul>
+    <li><b>QuickBooks chart-of-accounts export</b> — maps her chart onto the OS ledger via the QuickBooks-name column, no postings move.</li>
+    <li><b>Opening balances</b> at the Sept-1 cutover line, when convenient.</li>
+    <li><b>USD purchase-order FX policy</b> — USD POs are skipped and named in every run report until decided.</li>
+  </ul></div>
+  <div class="card"><h3>Roya &amp; Marie <small>· Front office</small></h3><ul>
+    <li><b>Portal invoices decision</b> (question 8) — now a one-click switch, see decisions below.</li>
+    <li><b>Six retailer name variants</b> to confirm + the Espresso Dolce record; six exact matches already carry retailer pricing.</li>
+  </ul></div>
+  <div class="card"><h3>Alissa <small>· Booking &amp; website</small></h3><ul>
+    <li><b>Five booking questions</b> — the page is live in bones form; her answers set the copy, time windows, and rules.</li>
+    <li><b>WooCommerce store URL + webhook secret</b> — switches on website orders flowing into the ERP.</li>
+  </ul></div>
+  <div class="card"><h3>Management <small>· Keys &amp; go signals</small></h3><ul>
+    <li><b>Stripe account connection</b> — lights up payment links on every invoice.</li>
+    <li><b>Chain-account split</b> — dry run counted 102 parents / 875 locations / 19,831 invoices; runs the moment someone says go.</li>
+    <li><b>Approvals questionnaire</b> (four answers) and the residential contact-details export.</li>
+  </ul></div>
+</div>
+
+<h2>Every question still open</h2>
+<p class="lede">The complete list, gathered in one place so the meeting can close them. Where a feature is already built, the answer is configuration — not a wait for development.</p>
+
+<div class="who">
+  <div class="card"><h3>Booking <small>· five questions</small></h3><ul>
+    <li><b>1.</b> Which services can be booked online — service calls only, or also preventative maintenance, installs, training?</li>
+    <li><b>2.</b> Which days and time windows should the page offer, and how far ahead can someone book?</li>
+    <li><b>3.</b> Should it promise a time slot, or stay request-then-we-confirm (how it works today)?</li>
+    <li><b>4.</b> Any service-area limits or call-out fees the page should state up front?</li>
+    <li><b>5.</b> What should the confirmation say, and who on the team gets notified of a new request?</li>
+  </ul></div>
+  <div class="card"><h3>Website catalogue sync <small>· three questions</small></h3><ul>
+    <li><b>1.</b> How should “available to order” read to a website customer?</li>
+    <li><b>2.</b> What should happen with the 183 website products that have no SKU?</li>
+    <li><b>3.</b> When the website and the OS disagree on a price, which system wins?</li>
+  </ul></div>
+  <div class="card"><h3>Portal <small>· question 8</small></h3><ul>
+    <li>Should the portal show customers their <b>invoices and balances</b>? The tab is built and off — yes is now one switch, no costs nothing.</li>
+  </ul></div>
+  <div class="card"><h3>Accounting <small>· four questions</small></h3><ul>
+    <li><b>USD purchase orders</b> — what FX treatment should the books use? (Skipped and named in every run report until decided.)</li>
+    <li><b>Chart mapping</b> — when can we get the QuickBooks chart-of-accounts export?</li>
+    <li><b>Opening balances</b> — entered as of the Sept-1 line; when suits?</li>
+    <li><b>Cutover test</b> — does “September reconciles side-by-side, October cuts over” work as the criteria?</li>
+  </ul></div>
+  <div class="card"><h3>Approvals <small>· four questions</small></h3><ul>
+    <li><b>1.</b> Which actions should require an approval before they happen?</li>
+    <li><b>2.</b> Who can approve — owners only, or managers too?</li>
+    <li><b>3.</b> Any dollar thresholds (e.g. discounts or POs above $X)?</li>
+    <li><b>4.</b> Where should requests land — the OS Inbox, email, or both?</li>
+  </ul></div>
+  <div class="card"><h3>Payments <small>· two questions</small></h3><ul>
+    <li><b>Cards on file</b> — today only Viviana, Roya and Lynn can store or edit a card. Keep it that tight, or widen it?</li>
+    <li><b>EFT &amp; PayPal</b> — recording shipped Sept 8; is anything more needed than recording (e.g. PayPal checkout links)?</li>
+  </ul></div>
+  <div class="card"><h3>Customer records <small>· three items</small></h3><ul>
+    <li><b>Six retailer name variants</b> to confirm before they get retailer pricing: Midland Appliances – Richmond · Soave Distributing · Vince Vitkoff (Vitory) · Kitchen Therapy (on credit hold) · What’s Cookin → Whats Cooking · Voet’s → Max Voets.</li>
+    <li><b>Espresso Dolce</b> — needs a customer record created before a tier can be assigned.</li>
+    <li><b>Residential contact-details export</b> — still wanted, and in what shape?</li>
+  </ul></div>
+  <div class="card"><h3>Jura intake data <small>· one file</small></h3><ul>
+    <li><b>Jura workbook</b> — the file for the remaining catalogue enrichment.</li>
+  </ul></div>
+</div>
+
+<h2>Decisions for this meeting</h2>
+<div class="decision"><b>Portal invoices &amp; balances — yes or no?</b><span class="ready">READY THE MOMENT YOU SAY YES</span>
+  <p>The tab is built and off. Yes = one switch; no = nothing changes and nothing was wasted.</p></div>
+<div class="decision"><b>Booking page: adopt and configure?</b>
+  <p>It works today at <code>/booking/qcs</code>. Alissa's five answers turn the bones into the finished flow and retire the paid plugin.</p></div>
+<div class="decision"><b>Chain split: when?</b>
+  <p>Everything is rehearsed. Pick a quiet moment; it runs once, on an explicit go.</p></div>
+<div class="decision"><b>Accounting cutover criteria</b>
+  <p>Propose: Marie reconciles September side-by-side with QuickBooks; if the month agrees, October opens with the OS as book of record for sales-side entries (payroll and tax filing stay put).</p></div>
+
+<h2>The path to full go-live</h2>
+<ol class="path">
+  <li><b>Grants land</b> → Microsoft 365 features switch on one at a time, each proven with a dry run first.</li>
+  <li><b>Keys land</b> (Stripe, Woo) → payment links and website orders light up; both sides already built.</li>
+  <li><b>September parallel run</b> → Marie compares month-end; chart mapping fills in as her export arrives.</li>
+  <li><b>Data finishes</b> → retailer confirms, chain split on go, Jura workbook enrichment.</li>
+  <li><b>Training &amp; go-live</b> → the team guide is live now; a walkthrough session closes Sprint 4.</li>
+</ol>
+
+<p class="foot">Live references: <a href="https://atelio-qcs.vercel.app">Control Centre</a> · <a href="https://atelioos.github.io/qcs-docs/qcs-delivery-trackers.html">Delivery tracker</a> · Team guide (shared page). Prepared for the September 9 review; status verified against production the evening before.</p>
+</div>
+
+</body>
+</html>
