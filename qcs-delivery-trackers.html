@@ -51,7 +51,8 @@
   .dhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;margin-bottom:14px}
   .dhead h2{font-family:var(--fd);font-weight:600;font-size:21px;color:var(--ink);letter-spacing:-.01em}
   .dhead .win{font-family:var(--fm);font-size:12px;color:var(--muted)}
-  .dhead .pct{margin-left:auto;font-family:var(--fd);font-weight:600;font-size:19px;color:var(--copper-deep)}
+  .dhead .pct{margin-left:auto;font-family:var(--fd);font-weight:600;font-size:19px;color:var(--copper-deep);white-space:nowrap}
+  .dhead .pct .pctb{font-size:12px;font-weight:600;color:var(--wait)}
   .dsub{font-size:13.5px;color:var(--text2);max-width:760px;margin-bottom:16px}
   .track{height:10px;background:var(--bone);border-radius:999px;overflow:hidden;display:flex;margin-bottom:18px}
   .track .seg{height:100%}
@@ -130,7 +131,7 @@
       <span><i style="background:var(--later)"></i>Deferred</span>
     </div>
     <div class="foot">
-      Status current as of <b>Tue Sep 8, 2026 (evening)</b> — verified against the live system; the full Sept wave (pricing, portal, reports, HR, accounting) is live in production, the Microsoft 365 integration layer is promoted with every switch off until the permission grants land, and the Sept-8 wave — GST/PST tax codes on order invoices, EFT/cheque/PayPal payment recording, the online booking page, portal invoices behind a switch — is verified on staging and promoting to production tonight. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
+      Status current as of <b>Tue Sep 8, 2026 (evening)</b> — verified against the live system; the full Sept wave (pricing, portal, reports, HR, accounting) is live in production, the Microsoft 365 integration layer is promoted with every switch off until the permission grants land, and the Sept-8 wave — GST/PST tax codes on order invoices, EFT/cheque/PayPal payment recording, the online booking page, portal invoices behind a switch — is LIVE in production, verified end-to-end. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
       Quality Coffee Systems · Operating System · Prepared by Atelio — a Loom Tech platform
     </div>
   </div>
@@ -469,6 +470,9 @@ function stats(d){
   act.forEach(function(t){ if(c[t.s]!==undefined) c[t.s]++; });
   var total=act.length||1;
   return {c:c,total:total,pct:Math.round((c.done+c.prog*0.5)/total*100),
+    // 'wait' rows are finished construction gated on a QCS grant, key, data
+    // file, or decision — closed-% scores them 0, built-% scores them 1.
+    builtPct:Math.round((c.done+c.wait+c.prog*0.5)/total*100),
     dPct:Math.round(c.done/total*100),pPct:Math.round(c.prog*0.5/total*100)};
 }
 
@@ -489,7 +493,7 @@ function renderTabs(){
 function render(){
   renderTabs();
   var d=DELIVERIES[active], s=stats(d);
-  var h='<div class="dhead"><h2>'+esc(d.title)+'</h2><span class="win">'+esc(d.win)+'</span><span class="pct">'+s.pct+'%</span></div>'+
+  var h='<div class="dhead"><h2>'+esc(d.title)+'</h2><span class="win">'+esc(d.win)+'</span><span class="pct">'+s.pct+'%<small class="pctb">'+(s.builtPct>s.pct?' closed \u00b7 '+s.builtPct+'% built':'')+'</small></span></div>'+
     '<div class="dsub">'+esc(d.sub)+'</div>'+
     '<div class="track"><div class="seg done" style="width:'+s.dPct+'%"></div><div class="seg prog" style="width:'+s.pPct+'%"></div></div>'+
     '<div class="tiles">'+
