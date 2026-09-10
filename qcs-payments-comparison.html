@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Card Payments: Stripe vs the PayPal-Only Setup</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<style>
+  :root{
+    --paper:#F5F3EF; --card:#FFFFFF; --ink:#1C1A17; --sub:#6A6459; --mute:#8A8478;
+    --line:#E3DED6; --line-strong:#D5D0C7; --red:#B3261E; --red-wash:#F7ECEA;
+    --live:#2F6B3A; --live-wash:#EBF2EC; --wait:#8A6100; --wait-wash:#F6F0E0;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#191714; --card:#211E1B; --ink:#EDE9E2; --sub:#A69E92; --mute:#847C70;
+      --line:#332F2A; --line-strong:#453F38; --red:#E4685F; --red-wash:#33221F;
+      --live:#7FBB8A; --live-wash:#1F2B21; --wait:#D3A94E; --wait-wash:#2E2717;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#191714; --card:#211E1B; --ink:#EDE9E2; --sub:#A69E92; --mute:#847C70;
+    --line:#332F2A; --line-strong:#453F38; --red:#E4685F; --red-wash:#33221F;
+    --live:#7FBB8A; --live-wash:#1F2B21; --wait:#D3A94E; --wait-wash:#2E2717;
+  }
+  body{background:var(--paper); color:var(--ink); font:15px/1.6 "Source Sans 3",-apple-system,"Segoe UI",Roboto,sans-serif; margin:0;}
+  .wrap{max-width:860px; margin:0 auto; padding:44px 24px 80px;}
+  header.top{border-bottom:2px solid var(--ink); padding-bottom:18px; margin-bottom:30px;}
+  .eyebrow{font-size:11.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--red); margin:0 0 6px;}
+  h1{font-family:"Source Serif 4",Georgia,serif; font-size:33px; font-weight:700; margin:0 0 6px; text-wrap:balance;}
+  .meta{font-size:13px; color:var(--sub); display:flex; gap:16px; flex-wrap:wrap;}
+  h2{font-family:"Source Serif 4",Georgia,serif; font-size:21px; font-weight:700; margin:40px 0 6px; text-wrap:balance;}
+  .lede{font-size:13.5px; color:var(--sub); margin:0 0 16px; max-width:64ch;}
+  p{max-width:68ch;}
+  .tblwrap{overflow-x:auto;}
+  table{width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--line); border-radius:10px; font-size:13.5px; min-width:560px;}
+  th{ text-align:left; padding:10px 14px; font-size:11px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--sub); border-bottom:2px solid var(--line-strong);}
+  td{padding:10px 14px; border-bottom:1px solid var(--line); vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td.dim b{font-size:13px;}
+  .good{color:var(--live); font-weight:700;}
+  .bad{color:var(--red); font-weight:700;}
+  .mid{color:var(--wait); font-weight:700;}
+  .note{background:var(--card); border:1px solid var(--line); border-left:3px solid var(--red); border-radius:0 10px 10px 0; padding:13px 16px; margin:14px 0; font-size:13.5px;}
+  .note b{font-size:14px;}
+  footer{margin-top:56px; padding-top:16px; border-top:1px solid var(--line); font-size:12.5px; color:var(--mute);}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <p class="eyebrow">For the Part 2 payments discussion</p>
+  <h1>Card payments: Stripe vs the PayPal-only setup</h1>
+  <div class="meta"><span>Prepared by Viviana · Atelio, a Loom Tech platform</span><span>September 10, 2026</span></div>
+</header>
+
+<p class="lede">The question from the Sept 9 review: online orders are confirmed today by checking PayPal by hand. The OS
+already has Stripe payment links built in (dark until the account is connected). This one-pager compares the two on the
+things that decide it — chargeback and fraud protection, what staff have to do, and how the money lands in the books.
+It is a comparison, not a pitch: the honest answer may be "both."</p>
+
+<h2>How each one works here</h2>
+<p><b>Today (PayPal only):</b> the customer pays on PayPal; someone signs into PayPal, finds the payment, and confirms the
+order by hand. The OS never sees the payment happen — a person carries the fact across. <b>With Stripe connected:</b> staff
+click "Pay link" on an invoice; the customer types their card on Stripe's page (card numbers never touch the OS — that is
+a hard rule of the build); the webhook stamps the invoice paid the moment the charge succeeds, and the ledger posts it on
+the next "Post from activity." No inbox-checking, no marking-paid by hand.</p>
+
+<h2>The comparison</h2>
+<div class="tblwrap">
+<table>
+  <tr><th style="width:24%">What matters</th><th style="width:38%">Stripe (built into the OS)</th><th style="width:38%">PayPal as used today</th></tr>
+  <tr>
+    <td class="dim"><b>Fraud screening</b></td>
+    <td><span class="good">Automatic.</span> Every charge is scored by Stripe Radar (machine-learning fraud screening across Stripe's whole network) before it succeeds; risky cards are blocked or challenged with 3-D Secure without anyone at QCS doing anything.</td>
+    <td><span class="mid">Present but opaque.</span> PayPal screens too, but the merchant controls and risk detail are thin on a standard business account — you mostly see the outcome, not the risk.</td>
+  </tr>
+  <tr>
+    <td class="dim"><b>Chargebacks — who wins</b></td>
+    <td><span class="good">Evidence flows.</span> Disputes arrive with a deadline and a structured evidence form; the OS holds the invoice, the order, the delivery/tracking fields and the customer history in one place, so assembling evidence is minutes. 3-D Secure-authenticated charges generally shift fraud liability to the card issuer.</td>
+    <td><span class="mid">Seller protection has terms.</span> PayPal Seller Protection can cover "unauthorized transaction" and "item not received" claims — but only when its conditions are met (eligible item type, proof of delivery to the address on file, etc.). "Not as described" disputes are commonly decided buyer-friendly.</td>
+  </tr>
+  <tr>
+    <td class="dim"><b>Dispute fees</b></td>
+    <td><span class="mid">Per-dispute fee</span> (returned if you win, on current published terms — verify at signing).</td>
+    <td><span class="mid">Per-dispute fee</span> on card-funded claims; PayPal's own claim process is separate from the card networks'.</td>
+  </tr>
+  <tr>
+    <td class="dim"><b>Holds &amp; frozen funds</b></td>
+    <td><span class="mid">Possible for new accounts</span> — Stripe can hold rolling reserves while it learns the business; equipment-sized tickets ($5–30k) are exactly what triggers a look. Worth pre-empting: tell Stripe the average ticket size when connecting.</td>
+    <td><span class="bad">The famous risk.</span> PayPal is known for 21-day holds and account-level freezes on unusual activity, and a five-figure machine sale IS unusual activity for a new pattern. Money in limbo is the operational story people write about.</td>
+  </tr>
+  <tr>
+    <td class="dim"><b>Staff work per payment</b></td>
+    <td><span class="good">None.</span> Webhook stamps the invoice paid; the red tape disappears. Refunds happen from the invoice (built this week) and reconcile themselves.</td>
+    <td><span class="bad">Manual.</span> Someone checks PayPal, matches the payment to the order, marks it confirmed, and re-keys the amount for the books. Every manual copy is a chance to be wrong.</td>
+  </tr>
+  <tr>
+    <td class="dim"><b>Reconciliation for Marie</b></td>
+    <td><span class="good">Built.</span> Payments land in Stripe clearing until the payout hits the bank; Bank rec matches the payout line. The paper trail is complete without anyone typing.</td>
+    <td><span class="mid">By hand.</span> PayPal balance → transfer → bank line, matched manually; fees have to be split out of the gross by hand.</td>
+  </tr>
+  <tr>
+    <td class="dim"><b>Fees (order of magnitude)</b></td>
+    <td>Standard published card rate around 2.9% + 30¢ per domestic online charge (more for international/currency conversion). Large tickets can justify asking Stripe for custom pricing.</td>
+    <td>Comparable headline rate for card-funded PayPal payments — the two are close enough that fees should not decide this.</td>
+  </tr>
+  <tr>
+    <td class="dim"><b>What the customer sees</b></td>
+    <td>A clean card page with QCS's name — no account needed.</td>
+    <td>Familiar to many buyers; some businesses simply prefer paying through their PayPal account.</td>
+  </tr>
+</table>
+</div>
+
+<div class="note"><b>The honest recommendation: Stripe as the rail, PayPal as an option.</b>
+Connect Stripe and let the payment-link flow do the work — automated fraud screening, structured disputes, hands-free
+reconciliation. Keep accepting PayPal for the customers who insist on it, recorded in one click with the "Record
+payment → PayPal" button that shipped Sept 8, so it still lands in the books properly. What ends either way is the
+manual checking: nobody's morning should start by signing into PayPal to see who paid.</div>
+
+<div class="note"><b>Numbers to verify before signing anything.</b> Exact fees, dispute charges, reserve policy and payout
+timing are set by each provider's current terms and can be negotiated at QCS's volume — treat the figures above as the
+published order of magnitude, and confirm current pricing on both accounts before Part 2 concludes.</div>
+
+<footer>Prepared by Viviana · Atelio, a Loom Tech platform · Internal — for the QCS payments discussion</footer>
+</div>
+</body>
+</html>

@@ -131,7 +131,7 @@
       <span><i style="background:var(--later)"></i>Deferred</span>
     </div>
     <div class="foot">
-      Status current as of <b>Thu Sep 10, 2026</b> — verified against the live system; everything through the Sept-8 wave (tax codes, payment recording, booking page, portal-invoices switch) is live in production, and the Sept-9 in-person walkthrough produced 55 action items — now mapped on their own tab, with the three reported bugs first in line. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
+      Status current as of <b>Thu Sep 10, 2026</b> — verified against the live system. One day after the walkthrough: the three reported bugs are fixed and the first three build waves are LIVE IN PRODUCTION — notifications, booking alerts, the tabbed service desk with the on-hold queue, Send for Review and quote approval. Wave 4 (the documents pass — one header/logo, two-page invoice with photos, RI labels ×2) is built and in staging. Bonus from the OneDrive sweep: Roger’s four historical quotes are in the pipeline and Marie’s QuickBooks chart of accounts — waiting since Aug 5 — is mapped into the ledger. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
       Quality Coffee Systems · Operating System · Prepared by Atelio — a Loom Tech platform
     </div>
   </div>
@@ -412,42 +412,42 @@ var DELIVERIES = [
     ],
     groups:[
       { title:'Bugs \u2014 first out the door', tasks:[
-        {t:'Customer lists stop at the letter \u201cA\u201d', o:'Loom Tech', s:'todo', n:'Reported across modules \u2014 the lists are capping at their first alphabetical page. One global fix.'},
-        {t:'In-system notifications not alerting', o:'Loom Tech', s:'todo', n:'The bell exists but nobody hears it ring \u2014 delivery path to be fixed before the new booking/review alerts pile onto it.'},
-        {t:'Vacation self-approval', o:'Loom Tech', s:'todo', n:'Staff must never be able to approve their own request.'}
+        {t:'Customer lists stop at the letter \u201cA\u201d', o:'Loom Tech', s:'done', n:'Fixed \u2014 paginated lists with prev/next and totals everywhere, plus a full-list CSV export.'},
+        {t:'In-system notifications not alerting', o:'Loom Tech', s:'done', n:'Red count dots live on Inbox in both apps \u2014 unread threads and new online bookings, refreshed every minute and on focus.'},
+        {t:'Vacation self-approval', o:'Loom Tech', s:'done', n:'Blocked server-side \u2014 nobody can decide their own request, whatever their role.'}
       ]},
       { title:'Booking page', tasks:[
-        {t:'New-request alerts \u2014 email + red dot', o:'Loom Tech', s:'todo', n:'A booking-page request notifies the desk by email and marks the app in-system the moment it lands.'},
+        {t:'New-request alerts \u2014 email + red dot', o:'Loom Tech', s:'done', n:'Red dot live; the email fires the moment QCS names the addresses \u2014 a one-minute switch, no build.'},
         {t:'Weekend / after-hours surcharge popup', o:'QCS \u00b7 Loom Tech', s:'todo', n:'Popup wired to the time-window choice; needs the surcharge amounts or wording from the team (question \u2462).'},
-        {t:'Online requests visibly distinct from phone-ins', o:'Loom Tech', s:'todo', n:'Booking-page work orders already carry an online marker \u2014 surfacing it as a badge/filter so Lynn and Anna never mix the two queues.'}
+        {t:'Online requests visibly distinct from phone-ins', o:'Loom Tech', s:'done', n:'ONLINE chip on the pending list \u2014 booking-page jobs can\u2019t be mistaken for phone-ins.'}
       ]},
       { title:'Service desk & dispatch', tasks:[
-        {t:'Bench \u2192 tabbed pending work orders', o:'Loom Tech', s:'todo', n:'Tabs: new \u00b7 dispatched \u00b7 waiting for estimate \u00b7 waiting on approval \u00b7 approved \u00b7 rejected \u00b7 completed \u2014 sortable by status, technician and brand.'},
-        {t:'Technician dropdown filter on pending work orders', o:'Loom Tech', s:'todo', n:''},
+        {t:'Bench \u2192 tabbed pending work orders', o:'Loom Tech', s:'done', n:'Live \u2014 New \u00b7 On hold \u00b7 Dispatched \u00b7 Waiting for estimate \u00b7 Waiting on approval \u00b7 Approved \u00b7 Rejected \u00b7 Completed, each with a live count. Bench-era statuses file under Estimate; the Bench view survives for the workstation until the team votes it off.'},
+        {t:'Technician dropdown filter on pending work orders', o:'Loom Tech', s:'done', n:''},
         {t:'Manage brands from the work-order view (masters only)', o:'Loom Tech', s:'todo', n:''},
-        {t:'Outstanding-balance warning + on-hold queue', o:'Loom Tech', s:'todo', n:'Creating a work order for a customer with open AR flags the balance, queues the job on hold, emails the customer a reminder, and auto-releases when it clears.'},
-        {t:'\u201cSend for Review\u201d on work orders', o:'QCS \u00b7 Loom Tech', s:'todo', n:'For the cases reception can\u2019t wave through \u2014 notifies the approvers by email and in-system. Needs the second approver\u2019s name (question \u2460).'},
-        {t:'Billing & shipping address on the work-order header', o:'Loom Tech', s:'todo', n:''},
-        {t:'Internal customer notes on every work order & invoice', o:'Loom Tech', s:'todo', n:'Visible to staff wherever that customer appears; never printed on customer documents.'},
-        {t:'Scheduled date & time columns in the pending list', o:'Loom Tech', s:'todo', n:''},
-        {t:'PST & GST exemption numbers', o:'Loom Tech', s:'todo', n:'On the customer profile and carried onto the work order (and its tax math).'},
+        {t:'Outstanding-balance warning + on-hold queue', o:'Loom Tech', s:'done', n:'Owing or flagged customers queue new jobs ON HOLD; clearing the balance releases every held job to New automatically. The customer reminder email is built but OFF, per the go-live rule.'},
+        {t:'\u201cSend for Review\u201d on work orders', o:'QCS \u00b7 Loom Tech', s:'done', n:'Live \u2014 emails the approvers and drops an approval thread in their Inbox (red dot). Falls back to all owners until the second name lands (question \u2460).'},
+        {t:'Billing & shipping address on the work-order header', o:'Loom Tech', s:'done', n:''},
+        {t:'Internal customer notes on every work order & invoice', o:'Loom Tech', s:'done', n:'Staff-only banner on the work-order popup \u2014 excluded from print and from every emailed document.'},
+        {t:'Scheduled date & time columns in the pending list', o:'Loom Tech', s:'done', n:''},
+        {t:'PST & GST exemption numbers', o:'Loom Tech', s:'done', n:'Both on the customer form and the work-order header; GST is a new field.'},
         {t:'Billing tab: part/labour search + standard pricing', o:'QCS \u00b7 Loom Tech', s:'todo', n:'Search by part number and name ships now; standard prices auto-fill once the labour & parts price list arrives (see QCS list).'},
         {t:'Deposit destination on payments', o:'QCS \u00b7 Loom Tech', s:'todo', n:'Petty cash, undeposited funds, \u2026 \u2014 needs the full list (question \u2463). Feeds the ledger\u2019s bank accounts properly.'},
         {t:'Refund button \u2014 on the invoice, not the work order', o:'Loom Tech', s:'todo', n:''},
         {t:'Per-line + subtotal discounts', o:'Loom Tech', s:'todo', n:'Across work orders, invoices and quotes; discounts flow into the tax math and the books.'},
         {t:'Payments move to the invoice only', o:'Loom Tech', s:'todo', n:'The payment section leaves the service module; recording happens on the invoice \u2014 one place, one story for the ledger.'},
-        {t:'Quote \u201cApproved\u201d \u2192 auto-move to work orders', o:'Loom Tech', s:'todo', n:''},
-        {t:'Machine warranty fields', o:'Loom Tech', s:'todo', n:'Purchase date and warranty end date (calendar pickers, manual entry).'},
+        {t:'Quote \u201cApproved\u201d \u2192 auto-move to work orders', o:'Loom Tech', s:'done', n:'One click marks the quote approved and lands it in the Approved tab as a real job.'},
+        {t:'Machine warranty fields', o:'Loom Tech', s:'done', n:'Purchase date and warranty end date (calendar pickers, manual entry).'},
         {t:'PM reminder on machine sale', o:'Loom Tech', s:'todo', n:'Selling a machine seeds its preventative-maintenance reminder automatically.'},
-        {t:'\u201cEdit customer\u201d shortcut (masters, new tab)', o:'Loom Tech', s:'todo', n:'From work-order and invoice views.'},
+        {t:'\u201cEdit customer\u201d shortcut (masters, new tab)', o:'Loom Tech', s:'done', n:'From work-order and invoice views.'},
         {t:'Dispatch calendar rework', o:'Loom Tech', s:'todo', n:'Renamed; technician dropdown instead of one column per name; field techs and dispatch staff only. Route map \u2192 Google Maps optimization stays on the horizon.'},
-        {t:'Preventative maintenance moves up the service nav', o:'Loom Tech', s:'todo', n:'Takes the bench\u2019s old slot.'}
+        {t:'Preventative maintenance moves up the service nav', o:'Loom Tech', s:'done', n:'Takes the bench\u2019s old slot.'}
       ]},
       { title:'Documents & printing', tasks:[
-        {t:'Work order and invoice PDFs match', o:'Loom Tech', s:'todo', n:'Same bones, only the title changes.'},
-        {t:'Service invoice \u2192 two pages', o:'Loom Tech', s:'todo', n:'Page 1: charges (labour, travel, parts). Page 2: technician detail, assessment, photos, call log.'},
-        {t:'One header/logo across every document', o:'Loom Tech', s:'todo', n:'Work order, estimate, PO, commercial invoice, packing slip \u2014 one format, the title is the only difference.'},
-        {t:'RI label printing \u2014 two copies', o:'QCS \u00b7 Loom Tech', s:'todo', n:'Repair-in-shop only: one label for the pickup tag, one on the machine. Linked to customer history. Needs printer/label details (question \u2465); scanner is on its way from Staples.'}
+        {t:'Work order and invoice PDFs match', o:'Loom Tech', s:'prog', n:'Built Sept 10 \u2014 one shared spine (header, customer block, machine line, table, totals); in staging, promoting next.'},
+        {t:'Service invoice \u2192 two pages', o:'Loom Tech', s:'prog', n:'Page 1: the charges. Page 2: technician detail, assessment, PHOTOS and the call log \u2014 in the PDF and the printed screen alike. In staging.'},
+        {t:'One header/logo across every document', o:'Loom Tech', s:'prog', n:'One header with the QCS logo on the work order, estimate, service invoice and equipment quotation PDFs \u2014 in staging. PO and packing-slip formats join in wave 5.'},
+        {t:'RI label printing \u2014 two copies', o:'QCS \u00b7 Loom Tech', s:'prog', n:'Two labels per RI job \u2014 machine + counter file \u2014 and labels are reprintable from the work-order popup. In staging. Printer/label details (question \u2465) confirm the stock; scanner en route.'}
       ]},
       { title:'Orders & invoicing', tasks:[
         {t:'Customer detail panel on orders', o:'Loom Tech', s:'todo', n:'Bill to, ship to, tax code, net terms, discounts \u2014 visible while the order is built.'},
@@ -481,7 +481,7 @@ var DELIVERIES = [
         {t:'Labour & parts standard pricing list', o:'QCS', s:'wait', n:'Confirms receipt and gets uploaded \u2014 powers auto-pricing in the billing tab.'},
         {t:'Barcode scanner from Staples', o:'QCS', s:'wait', n:'Confirm arrival; pairs with RI label printing.'},
         {t:'Answers to the Teams questions', o:'QCS', s:'wait', n:'The open-questions page from the review holds them all in one place.'},
-        {t:'QuickBooks opening balances + USD PO policy', o:'QCS', s:'wait', n:'With Marie \u2014 unlocks the parallel-run reconciliation.'}
+        {t:'QuickBooks opening balances + USD PO policy', o:'QCS', s:'wait', n:'The chart itself surfaced in OneDrive (Marie\u2019s Aug-5 upload) and was mapped into the ledger Sept 10 \u2014 19 of 24 accounts matched to QuickBooks names; five need Marie\u2019s pick. Opening balances + the USD PO policy still to come.'}
       ]}
     ]},
   { id:'fb', label:'Team feedback', win:'Aug 27\u201328 \u00b7 40 items', title:'Two feedback docs, three waves, one day to production',
