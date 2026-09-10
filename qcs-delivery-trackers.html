@@ -131,7 +131,7 @@
       <span><i style="background:var(--later)"></i>Deferred</span>
     </div>
     <div class="foot">
-      Status current as of <b>Tue Sep 8, 2026 (evening)</b> — verified against the live system; the full Sept wave (pricing, portal, reports, HR, accounting) is live in production, the Microsoft 365 integration layer is promoted with every switch off until the permission grants land, and the Sept-8 wave — GST/PST tax codes on order invoices, EFT/cheque/PayPal payment recording, the online booking page, portal invoices behind a switch — is LIVE in production, verified end-to-end. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
+      Status current as of <b>Thu Sep 10, 2026</b> — verified against the live system; everything through the Sept-8 wave (tax codes, payment recording, booking page, portal-invoices switch) is live in production, and the Sept-9 in-person walkthrough produced 55 action items — now mapped on their own tab, with the three reported bugs first in line. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
       Quality Coffee Systems · Operating System · Prepared by Atelio — a Loom Tech platform
     </div>
   </div>
@@ -402,6 +402,86 @@ var DELIVERIES = [
       { title:'Website & payments groundwork (built, waiting on keys)', tasks:[
         {t:'WooCommerce orders → ERP sales orders', o:'QCS · Loom Tech', s:'wait', n:'Receiver built: a store order becomes a real sales order (same numbering, customer matched by email, safe against retries). Activates when QCS provides the store URL and a webhook secret.'},
         {t:'Stripe payment links on invoices', o:'QCS · Loom Tech', s:'wait', n:'“Pay link” on any issued invoice mints a Stripe-hosted checkout URL — card numbers never touch the OS — and payment marks the invoice PAID automatically. Lights up when the QCS Stripe account is connected.'}
+      ]}
+    ]},
+  { id:'s9', label:'Sept 9 review', win:'Sept 9 \u00b7 In-person walkthrough \u00b7 55 items', title:'The Sept 9 walkthrough \u2014 every note, mapped',
+    sub:'A full in-person review of service, ERP and HR with the whole team. Every action item from the meeting notes is below, grouped into build waves \u2014 bugs first, then booking, the service-desk restructure, documents, orders & catalog, and dashboard/HR. Items marked Waiting sit with QCS.',
+    flags:[
+      '<b>Questions back from the notes</b> \u2014 \u2460 Send for Review: who is the second approver alongside Viviana? \u2461 Vacation approvers: the notes name Viviana/Roger/Marie in one place and Kazuto/Roger/Marie in another \u2014 which trio is right? \u2462 Weekend / after-hours surcharge: what amounts or wording should the booking popup show? \u2463 Deposit destinations: the full list (petty cash, undeposited funds, \u2026)? \u2464 Fulfilled online orders: archive after how long? \u2465 RI labels: which label printer / label size?',
+      '<b>Still open from before</b> \u2014 Microsoft permission grants (now with Grant), QuickBooks opening balances + USD PO policy, and the Teams questions.'
+    ],
+    groups:[
+      { title:'Bugs \u2014 first out the door', tasks:[
+        {t:'Customer lists stop at the letter \u201cA\u201d', o:'Loom Tech', s:'todo', n:'Reported across modules \u2014 the lists are capping at their first alphabetical page. One global fix.'},
+        {t:'In-system notifications not alerting', o:'Loom Tech', s:'todo', n:'The bell exists but nobody hears it ring \u2014 delivery path to be fixed before the new booking/review alerts pile onto it.'},
+        {t:'Vacation self-approval', o:'Loom Tech', s:'todo', n:'Staff must never be able to approve their own request.'}
+      ]},
+      { title:'Booking page', tasks:[
+        {t:'New-request alerts \u2014 email + red dot', o:'Loom Tech', s:'todo', n:'A booking-page request notifies the desk by email and marks the app in-system the moment it lands.'},
+        {t:'Weekend / after-hours surcharge popup', o:'QCS \u00b7 Loom Tech', s:'todo', n:'Popup wired to the time-window choice; needs the surcharge amounts or wording from the team (question \u2462).'},
+        {t:'Online requests visibly distinct from phone-ins', o:'Loom Tech', s:'todo', n:'Booking-page work orders already carry an online marker \u2014 surfacing it as a badge/filter so Lynn and Anna never mix the two queues.'}
+      ]},
+      { title:'Service desk & dispatch', tasks:[
+        {t:'Bench \u2192 tabbed pending work orders', o:'Loom Tech', s:'todo', n:'Tabs: new \u00b7 dispatched \u00b7 waiting for estimate \u00b7 waiting on approval \u00b7 approved \u00b7 rejected \u00b7 completed \u2014 sortable by status, technician and brand.'},
+        {t:'Technician dropdown filter on pending work orders', o:'Loom Tech', s:'todo', n:''},
+        {t:'Manage brands from the work-order view (masters only)', o:'Loom Tech', s:'todo', n:''},
+        {t:'Outstanding-balance warning + on-hold queue', o:'Loom Tech', s:'todo', n:'Creating a work order for a customer with open AR flags the balance, queues the job on hold, emails the customer a reminder, and auto-releases when it clears.'},
+        {t:'\u201cSend for Review\u201d on work orders', o:'QCS \u00b7 Loom Tech', s:'todo', n:'For the cases reception can\u2019t wave through \u2014 notifies the approvers by email and in-system. Needs the second approver\u2019s name (question \u2460).'},
+        {t:'Billing & shipping address on the work-order header', o:'Loom Tech', s:'todo', n:''},
+        {t:'Internal customer notes on every work order & invoice', o:'Loom Tech', s:'todo', n:'Visible to staff wherever that customer appears; never printed on customer documents.'},
+        {t:'Scheduled date & time columns in the pending list', o:'Loom Tech', s:'todo', n:''},
+        {t:'PST & GST exemption numbers', o:'Loom Tech', s:'todo', n:'On the customer profile and carried onto the work order (and its tax math).'},
+        {t:'Billing tab: part/labour search + standard pricing', o:'QCS \u00b7 Loom Tech', s:'todo', n:'Search by part number and name ships now; standard prices auto-fill once the labour & parts price list arrives (see QCS list).'},
+        {t:'Deposit destination on payments', o:'QCS \u00b7 Loom Tech', s:'todo', n:'Petty cash, undeposited funds, \u2026 \u2014 needs the full list (question \u2463). Feeds the ledger\u2019s bank accounts properly.'},
+        {t:'Refund button \u2014 on the invoice, not the work order', o:'Loom Tech', s:'todo', n:''},
+        {t:'Per-line + subtotal discounts', o:'Loom Tech', s:'todo', n:'Across work orders, invoices and quotes; discounts flow into the tax math and the books.'},
+        {t:'Payments move to the invoice only', o:'Loom Tech', s:'todo', n:'The payment section leaves the service module; recording happens on the invoice \u2014 one place, one story for the ledger.'},
+        {t:'Quote \u201cApproved\u201d \u2192 auto-move to work orders', o:'Loom Tech', s:'todo', n:''},
+        {t:'Machine warranty fields', o:'Loom Tech', s:'todo', n:'Purchase date and warranty end date (calendar pickers, manual entry).'},
+        {t:'PM reminder on machine sale', o:'Loom Tech', s:'todo', n:'Selling a machine seeds its preventative-maintenance reminder automatically.'},
+        {t:'\u201cEdit customer\u201d shortcut (masters, new tab)', o:'Loom Tech', s:'todo', n:'From work-order and invoice views.'},
+        {t:'Dispatch calendar rework', o:'Loom Tech', s:'todo', n:'Renamed; technician dropdown instead of one column per name; field techs and dispatch staff only. Route map \u2192 Google Maps optimization stays on the horizon.'},
+        {t:'Preventative maintenance moves up the service nav', o:'Loom Tech', s:'todo', n:'Takes the bench\u2019s old slot.'}
+      ]},
+      { title:'Documents & printing', tasks:[
+        {t:'Work order and invoice PDFs match', o:'Loom Tech', s:'todo', n:'Same bones, only the title changes.'},
+        {t:'Service invoice \u2192 two pages', o:'Loom Tech', s:'todo', n:'Page 1: charges (labour, travel, parts). Page 2: technician detail, assessment, photos, call log.'},
+        {t:'One header/logo across every document', o:'Loom Tech', s:'todo', n:'Work order, estimate, PO, commercial invoice, packing slip \u2014 one format, the title is the only difference.'},
+        {t:'RI label printing \u2014 two copies', o:'QCS \u00b7 Loom Tech', s:'todo', n:'Repair-in-shop only: one label for the pickup tag, one on the machine. Linked to customer history. Needs printer/label details (question \u2465); scanner is on its way from Staples.'}
+      ]},
+      { title:'Orders & invoicing', tasks:[
+        {t:'Customer detail panel on orders', o:'Loom Tech', s:'todo', n:'Bill to, ship to, tax code, net terms, discounts \u2014 visible while the order is built.'},
+        {t:'\u201cGenerate invoice\u201d for walk-in / phone orders', o:'Loom Tech', s:'todo', n:'Straight to invoice, skipping the pending-order queue.'},
+        {t:'Online order flow finalized', o:'QCS \u00b7 Loom Tech', s:'todo', n:'new \u2192 confirm (manual PayPal check) \u2192 invoice \u2192 fulfill; fulfilled orders auto-archive after a set period (cadence = question \u2464). Customers get the invoice in the package.'},
+        {t:'Backorder field + restock alerts', o:'Loom Tech', s:'todo', n:'Backordered line flags the order; Lynn and Anna are notified when the item is back in stock.'},
+        {t:'View button on the orders list', o:'Loom Tech', s:'todo', n:''},
+        {t:'Stripe vs PayPal protection', o:'Loom Tech \u00b7 QCS', s:'prog', n:'Stripe payment links are already built (cards never touch the OS). A written comparison of chargeback/fraud protection vs the PayPal-only setup comes to the Part-2 payments discussion.'}
+      ]},
+      { title:'Catalog, parts & pricing', tasks:[
+        {t:'Type and brand dropdowns in the catalog', o:'Loom Tech', s:'todo', n:''},
+        {t:'Catalog image editing + approval workflow', o:'Loom Tech', s:'todo', n:'Upload \u2192 notify Alissa \u2192 approve \u2192 publish to the website. Nothing reaches the site unapproved.'},
+        {t:'Parts & services leave the catalog view', o:'Loom Tech', s:'todo', n:'Tableware stays; parts live in the Parts section.'},
+        {t:'Parts: add / edit / delete / archive (masters only)', o:'Loom Tech', s:'todo', n:''},
+        {t:'Part number & name search everywhere', o:'Loom Tech', s:'todo', n:'Orders, POs, catalog entry points \u2014 one search behaviour.'},
+        {t:'\u201cSpecial terms\u201d tab on customer profiles', o:'Loom Tech', s:'todo', n:'Per-client, per-brand discount percentages \u2014 machines, parts and labour separately. The answer to commercial reseller pricing; JURA tiers stay as they are. Existing customers (Caffe Umbria, SPS\u2026) populated by hand after.'},
+        {t:'Rename: retail \u2192 list price \u00b7 wholesale \u2192 retailer price', o:'Loom Tech', s:'todo', n:''},
+        {t:'Price-list section leaves ERP core', o:'Loom Tech', s:'todo', n:'Pricing lives in special terms + the JURA portal tiers. The portal-access panel moves to a sensible new home in the same pass.'},
+        {t:'Library in ERP core AND Sales CRM', o:'Loom Tech', s:'todo', n:'Moved to the bottom of the ERP rail; type dropdown grows WHMIS/hazardous-material; brand dropdown added.'},
+        {t:'Suppliers: multiple emails & phone numbers', o:'Loom Tech', s:'todo', n:''},
+        {t:'Quote builder consolidates in Sales CRM', o:'Loom Tech', s:'todo', n:'Removed from ERP core; gains a send-quote button and customer detail tab. Service quotes stay in dispatch.'}
+      ]},
+      { title:'Dashboard, search & HR', tasks:[
+        {t:'Calendar on the main dashboard', o:'Loom Tech', s:'todo', n:'Fed by dispatch and time off; visible to everyone. Accounting/payment numbers stay masters-only.'},
+        {t:'Global customer search on the dashboard', o:'Loom Tech', s:'todo', n:'Name, phone or postal code \u2014 and phone search works whatever format was typed.'},
+        {t:'One HR page for time off', o:'Loom Tech', s:'todo', n:'Requests, approvals and the calendar together; Records stays for certifications/visas.'},
+        {t:'Vacation approvers locked to three', o:'QCS \u00b7 Loom Tech', s:'todo', n:'All three notified on every request. Confirming the exact trio (question \u2461).'}
+      ]},
+      { title:'On QCS\u2019s side', tasks:[
+        {t:'Microsoft permission grants (with Grant)', o:'QCS', s:'wait', n:'The three Entra application permissions \u2014 unlock OneDrive sync, the document archive and email logging. Instructions already with the team.'},
+        {t:'Labour & parts standard pricing list', o:'QCS', s:'wait', n:'Confirms receipt and gets uploaded \u2014 powers auto-pricing in the billing tab.'},
+        {t:'Barcode scanner from Staples', o:'QCS', s:'wait', n:'Confirm arrival; pairs with RI label printing.'},
+        {t:'Answers to the Teams questions', o:'QCS', s:'wait', n:'The open-questions page from the review holds them all in one place.'},
+        {t:'QuickBooks opening balances + USD PO policy', o:'QCS', s:'wait', n:'With Marie \u2014 unlocks the parallel-run reconciliation.'}
       ]}
     ]},
   { id:'fb', label:'Team feedback', win:'Aug 27\u201328 \u00b7 40 items', title:'Two feedback docs, three waves, one day to production',
