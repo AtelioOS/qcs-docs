@@ -131,7 +131,7 @@
       <span><i style="background:var(--later)"></i>Deferred</span>
     </div>
     <div class="foot">
-      Status current as of <b>Thu Sep 10, 2026</b> — verified against the live system. ALL SIX BUILD WAVES from the Sept-9 walkthrough are LIVE IN PRODUCTION, one day after the meeting: the three bugs, notifications, booking alerts, the tabbed service desk with the on-hold queue, Send for Review, the documents pass (QCS logo on every PDF, two-page invoice with photos, RI labels ×2), discounts and refunds, walk-in invoicing, backorder alerts, special terms, image approval, parts management, the dashboard calendar and format-agnostic customer search, and the one-page HR view. What remains is configuration, not code: the six questions back, the Entra grants, and Marie’s opening balances. Bonus from the OneDrive sweep: Roger’s four historical quotes are in the pipeline and Marie’s QuickBooks chart of accounts — waiting since Aug 5 — is mapped into the ledger. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
+      Status current as of <b>Fri Sep 11, 2026</b> — verified against the live system. ALL SIX BUILD WAVES from the Sept-9 walkthrough are LIVE IN PRODUCTION, one day after the meeting: the three bugs, notifications, booking alerts, the tabbed service desk with the on-hold queue, Send for Review, the documents pass (QCS logo on every PDF, two-page invoice with photos, RI labels ×2), discounts and refunds, walk-in invoicing, backorder alerts, special terms, image approval, parts management, the dashboard calendar and format-agnostic customer search, and the one-page HR view. Sept 11: the paper trail is complete — purchase orders and packing slips now print on the same logo’d PDF spine, the order view carries the full bill-to/ship-to/terms panel, and the catalog opens on a clean Products lens. What remains is configuration, not code: the six questions back, the Entra grants, and Marie’s opening balances. Bonus from the OneDrive sweep: Roger’s four historical quotes are in the pipeline and Marie’s QuickBooks chart of accounts — waiting since Aug 5 — is mapped into the ledger. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
       Quality Coffee Systems · Operating System · Prepared by Atelio — a Loom Tech platform
     </div>
   </div>
@@ -413,7 +413,7 @@ var DELIVERIES = [
     groups:[
       { title:'Bugs \u2014 first out the door', tasks:[
         {t:'Customer lists stop at the letter \u201cA\u201d', o:'Loom Tech', s:'done', n:'Fixed \u2014 paginated lists with prev/next and totals everywhere, plus a full-list CSV export.'},
-        {t:'In-system notifications not alerting', o:'Loom Tech', s:'done', n:'Red count dots live on Inbox in both apps \u2014 unread threads and new online bookings, refreshed every minute and on focus.'},
+        {t:'In-system notifications not alerting', o:'Loom Tech', s:'done', n:'Red count dots live on Inbox in both apps \u2014 unread threads and new online bookings, refreshed every minute and on focus. Sept 10 evening: fixed the dot counting other people\u2019s threads (Viviana\u2019s catch) \u2014 it now counts only conversations YOU are in, threads you start appear in your own inbox, and sign-off requests got their Waiting-on-you column.'},
         {t:'Vacation self-approval', o:'Loom Tech', s:'done', n:'Blocked server-side \u2014 nobody can decide their own request, whatever their role.'}
       ]},
       { title:'Booking page', tasks:[
@@ -446,11 +446,11 @@ var DELIVERIES = [
       { title:'Documents & printing', tasks:[
         {t:'Work order and invoice PDFs match', o:'Loom Tech', s:'done', n:'One shared spine \u2014 header, customer block, machine line, table, totals \u2014 live with the QCS logo on every document.'},
         {t:'Service invoice \u2192 two pages', o:'Loom Tech', s:'done', n:'Page 1: the charges. Page 2: technician detail, assessment, PHOTOS and the call log \u2014 in the PDF and the printed screen alike.'},
-        {t:'One header/logo across every document', o:'Loom Tech', s:'done', n:'The QCS logo now opens the work order, estimate, service invoice and equipment quotation PDFs. PO and packing-slip formats fold into the same spine next.'},
+        {t:'One header/logo across every document', o:'Loom Tech', s:'done', n:'The QCS logo now opens the work order, estimate, service invoice and equipment quotation PDFs \u2014 and as of Sept 11 the purchase order and packing slip too: POs get a Download PDF (and supplier emails attach it), orders get a priceless packing slip with \u201cTo follow\u201d on backordered lines. The whole paper trail shares one spine.'},
         {t:'RI label printing \u2014 two copies', o:'QCS \u00b7 Loom Tech', s:'done', n:'Two labels per RI job \u2014 machine + counter file \u2014 and labels reprint from the WO popup. Question \u2465 (printer/label stock) confirms the physical size; scanner en route.'}
       ]},
       { title:'Orders & invoicing', tasks:[
-        {t:'Customer detail panel on orders', o:'Loom Tech', s:'prog', n:'Tax code, discounts and tier pricing sit on the order form; the full bill-to / ship-to / terms panel joins the View overlay in the next pass.'},
+        {t:'Customer detail panel on orders', o:'Loom Tech', s:'done', n:'Sept 11: the View overlay now carries the full customer panel \u2014 bill-to AND ship-to side by side, phone, account #, terms, GST # and PST # \u2014 alongside the tax code, discounts and tier pricing already on the form.'},
         {t:'\u201cGenerate invoice\u201d for walk-in / phone orders', o:'Loom Tech', s:'done', n:'\u201cCreate + invoice now\u201d \u2014 the counter sale never queues; one click, numbered invoice.'},
         {t:'Online order flow finalized', o:'QCS \u00b7 Loom Tech', s:'done', n:'new \u2192 confirm \u2192 invoice \u2192 fulfill; fulfilled orders auto-archive after 30 quiet days, with an Archived toggle to see them. Cadence = question \u2464, a one-line setting.'},
         {t:'Backorder field + restock alerts', o:'Loom Tech', s:'done', n:'B/O flag per order line seeds the Back-orders ledger; the restock email fires the moment Lynn and Anna\u2019s addresses land (one-line switch).'},
@@ -460,7 +460,7 @@ var DELIVERIES = [
       { title:'Catalog, parts & pricing', tasks:[
         {t:'Type and brand dropdowns in the catalog', o:'Loom Tech', s:'done', n:'Filters on the catalog, and brand / model / type are real fields on the product form.'},
         {t:'Catalog image editing + approval workflow', o:'Loom Tech', s:'done', n:'Upload \u2192 approver notified \u2192 approve publishes / reject discards. Nothing goes public unapproved. Point it at Alissa with her address (until then owners/admins are notified).'},
-        {t:'Parts & services leave the catalog view', o:'Loom Tech', s:'todo', n:'The type dropdown now separates them; hiding parts from the default catalog view outright comes with the next catalog pass.'},
+        {t:'Parts & services leave the catalog view', o:'Loom Tech', s:'done', n:'Sept 11: the catalog opens on a \u201cProducts\u201d lens \u2014 8,773 rows become 282 real products; the 8,458 parts, service parts and QB service items sit behind the type dropdown (pick a type or \u201cEverything\u201d to see them).'},
         {t:'Parts: add / edit / delete / archive (masters only)', o:'Loom Tech', s:'done', n:'From the Parts screen; delete archives by default so history never dangles \u2014 a hard delete only when truly unreferenced.'},
         {t:'Part number & name search everywhere', o:'Loom Tech', s:'done', n:'Parts screen, order lines by item number, and the work-order billing tab.'},
         {t:'\u201cSpecial terms\u201d tab on customer profiles', o:'Loom Tech', s:'done', n:'Per-client, per-brand %s for machines / parts / labour on the CRM card; the quote builder shows a matched customer\u2019s terms inline. JURA tiers untouched. Caffe Umbria, SPS\u2026 can be populated by hand any time.'},
