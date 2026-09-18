@@ -106,6 +106,106 @@
 </style>
 </head>
 <body>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --espresso:#241811;--espresso2:#2E211A;--ink:#211915;
+    --red:#C33A2B;--red-light:#DB574A;--red-deep:#9E2C20;
+    --copper:#B27A45;--copper-deep:#8A5C31;--copper-tint:#F0E4D4;
+    --page:#F5F1EB;--paper:#FFFFFF;--linen:#FBF7F1;--bone:#F1EADF;
+    --border:#E7DECF;--border-strong:#D8CCB8;
+    --text:#241811;--text2:#5C5148;--muted:#8C8074;
+    --done:#3F8C6E;--done-bg:#DDEFE7;
+    --prog:#C9852E;--prog-bg:#F6E9D2;
+    --blocked:#C33A2B;--blocked-bg:#FBE0DC;
+    --wait:#3C6E9E;--wait-bg:#DEEAF3;
+    --todo:#6A7580;--todo-bg:#EAE7E1;
+    --later:#9A8F82;--later-bg:#EFEAE2;
+    --fd:'Space Grotesk',sans-serif;--fs:'Inter',sans-serif;--fm:'IBM Plex Mono',monospace;
+    --sh:0 1px 3px rgba(36,24,17,.05),0 6px 20px rgba(36,24,17,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--page);color:var(--text);font-family:var(--fs);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .bar{background:#1B120D;color:var(--copper);font-weight:600;font-size:13px;letter-spacing:.03em;padding:11px 24px;display:flex;align-items:center;gap:10px}
+  .hero{background:var(--espresso);color:var(--page);border-bottom:5px solid var(--red);padding:34px 24px 0}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .kick{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--copper)}
+  h1{font-family:var(--fd);font-weight:600;font-size:clamp(1.5rem,3.2vw,2.1rem);letter-spacing:-.02em;margin:8px 0 4px}
+  .hero .sub{color:rgba(245,241,235,.66);font-size:14.5px;max-width:680px}
+
+  /* delivery tabs */
+  .tabs{display:flex;gap:6px;margin-top:24px;overflow-x:auto;padding-bottom:0}
+  .tab{flex-shrink:0;background:rgba(245,241,235,.07);border:1px solid rgba(245,241,235,.14);border-bottom:none;border-radius:10px 10px 0 0;padding:10px 16px 12px;cursor:pointer;min-width:150px;transition:.15s}
+  .tab:hover{background:rgba(245,241,235,.12)}
+  .tab.active{background:var(--page);border-color:var(--page)}
+  .tab .tl{font-family:var(--fd);font-weight:600;font-size:13.5px;color:var(--page)}
+  .tab.active .tl{color:var(--ink)}
+  .tab .tw{font-size:10.5px;font-family:var(--fm);color:rgba(245,241,235,.55);margin-top:1px}
+  .tab.active .tw{color:var(--muted)}
+  .tab .tp{margin-top:7px;height:5px;border-radius:99px;background:rgba(245,241,235,.15);overflow:hidden;display:flex}
+  .tab.active .tp{background:var(--bone)}
+  .tab .tp i{height:100%;display:block}
+  .tab .tp .d{background:var(--done)} .tab .tp .p{background:var(--prog)}
+  .tab .tpct{font-size:10px;font-family:var(--fm);color:rgba(245,241,235,.6);margin-top:4px}
+  .tab.active .tpct{color:var(--text2)}
+
+  .body{padding:26px 0 60px}
+  .dhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;margin-bottom:14px}
+  .dhead h2{font-family:var(--fd);font-weight:600;font-size:21px;color:var(--ink);letter-spacing:-.01em}
+  .dhead .win{font-family:var(--fm);font-size:12px;color:var(--muted)}
+  .dhead .pct{margin-left:auto;font-family:var(--fd);font-weight:600;font-size:19px;color:var(--copper-deep);white-space:nowrap}
+  .dhead .pct .pctb{font-size:12px;font-weight:600;color:var(--wait)}
+  .dsub{font-size:13.5px;color:var(--text2);max-width:760px;margin-bottom:16px}
+  .track{height:10px;background:var(--bone);border-radius:999px;overflow:hidden;display:flex;margin-bottom:18px}
+  .track .seg{height:100%}
+  .seg.done{background:var(--done)} .seg.prog{background:var(--prog)}
+
+  .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px}
+  @media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}}
+  .tile{background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:12px 15px;box-shadow:var(--sh);border-top:3px solid var(--tc)}
+  .tile .n{font-family:var(--fd);font-weight:600;font-size:25px;line-height:1;color:var(--tc)}
+  .tile .l{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+
+  .callout{background:#FCEFEC;border:1px solid #F1C7C0;border-left:4px solid var(--red);border-radius:12px;padding:14px 18px;margin:16px 0 4px;box-shadow:var(--sh)}
+  .callout h3{font-family:var(--fd);font-size:14px;color:var(--red-deep)}
+  .callout ul{margin:8px 0 0;padding-left:20px}
+  .callout li{font-size:13px;color:var(--text2);margin:4px 0}
+  .callout li b{color:var(--ink)}
+
+  .group{margin-top:26px}
+  .group-h{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .group-h .idx{font-family:var(--fm);font-size:12px;font-weight:600;color:var(--copper-deep);background:var(--copper-tint);padding:3px 9px;border-radius:6px}
+  .group-h h2{font-family:var(--fd);font-weight:600;font-size:17px;color:var(--ink);letter-spacing:-.01em}
+  .group-h .gcount{margin-left:auto;font-size:12px;font-family:var(--fm);color:var(--muted)}
+  .list{background:var(--paper);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
+  .row{display:flex;align-items:flex-start;gap:13px;padding:12px 18px;border-top:1px solid var(--border)}
+  .row:first-child{border-top:0}
+  .row:hover{background:var(--linen)}
+  .box{flex-shrink:0;width:21px;height:21px;border-radius:6px;border:2px solid var(--border-strong);display:grid;place-items:center;margin-top:1px}
+  .row[data-status="done"] .box{background:var(--done);border-color:var(--done)}
+  .box svg{opacity:0}
+  .row[data-status="done"] .box svg{opacity:1}
+  .row[data-status="done"] .task{color:var(--muted)}
+  .row[data-status="done"] .task b{text-decoration:line-through;text-decoration-color:rgba(140,128,116,.5)}
+  .main{flex:1;min-width:0}
+  .task{font-size:14px;color:var(--text2)}
+  .task b{color:var(--ink);font-weight:600}
+  .note{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .meta{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px;min-width:120px}
+  @media(max-width:680px){.meta{min-width:0}.owner{display:none}}
+  .status{font-size:10.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .s-done{background:var(--done-bg);color:var(--done)}
+  .s-prog{background:var(--prog-bg);color:var(--prog)}
+  .s-blocked{background:var(--blocked-bg);color:var(--blocked)}
+  .s-wait{background:var(--wait-bg);color:var(--wait)}
+  .s-todo{background:var(--todo-bg);color:var(--todo)}
+  .s-later{background:var(--later-bg);color:var(--later)}
+  .owner{font-size:10.5px;font-family:var(--fm);color:var(--muted);white-space:nowrap}
+  .foot{color:var(--muted);font-size:12px;text-align:center;padding:34px 24px 0;line-height:1.7}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin:26px 0 6px}
+  .legend span{font-size:11.5px;color:var(--text2);display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+</style>
 <div class="bar">
   <svg width="16" height="16" viewBox="0 0 48 48" fill="none"><path d="M12 20h20a2 2 0 0 1 2 2v3a11 11 0 0 1-11 11h-2A11 11 0 0 1 10 25v-3a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="3.2"/><path d="M34 22h4a5 5 0 0 1 0 10h-4" stroke="currentColor" stroke-width="3.2"/><path d="M18 8c-1.5 2-1.5 3.5 0 5.5M24 7c-1.5 2-1.5 3.5 0 5.5" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
   Quality Coffee Systems × Atelio — Delivery Trackers
@@ -114,7 +214,7 @@
   <div class="wrap">
     <div class="kick">Scope &amp; Build Plan · Live Status</div>
     <h1>Every delivery, tracked</h1>
-    <p class="sub">One tracker per delivery, mirroring the Scope &amp; Build Plan: the Week-1 launch, then four sprints. Statuses are verified against the live system and updated as the build progresses.</p>
+    <p class="sub">One tracker per delivery, mirroring the Scope &amp; Build Plan: the Week-1 launch, the four sprints, then each review session as its own tab. Statuses are verified against the live system and updated as the build progresses.</p>
     <div class="tabs" id="tabs"></div>
   </div>
 </header>
@@ -131,9 +231,7 @@
       <span><i style="background:var(--later)"></i>Deferred</span>
     </div>
     <div class="foot">
-      Status current as of <b>Fri Sep 11, 2026</b> — verified against the live system. ALL SIX BUILD WAVES from the Sept-9 walkthrough are LIVE IN PRODUCTION, one day after the meeting: the three bugs, notifications, booking alerts, the tabbed service desk with the on-hold queue, Send for Review, the documents pass (QCS logo on every PDF, two-page invoice with photos, RI labels ×2), discounts and refunds, walk-in invoicing, backorder alerts, special terms, image approval, parts management, the dashboard calendar and format-agnostic customer search, and the one-page HR view. Sept 11: the paper trail is complete — purchase orders and packing slips now print on the same logo’d PDF spine, the order view carries the full bill-to/ship-to/terms panel, and the catalog opens on a clean Products lens. What remains is configuration, not code: the six questions back, the Entra grants, and Marie’s opening balances. Bonus from the OneDrive sweep: Roger’s four historical quotes are in the pipeline and Marie’s QuickBooks chart of accounts — waiting since Aug 5 — is mapped into the ledger. Sprints overlap by design — done rows in later sprints simply mean we're ahead of schedule.<br>
-      Quality Coffee Systems · Operating System · Prepared by Atelio — a Loom Tech platform
-    </div>
+      Status current as of <b>Fri Sep 18, 2026</b> — verified against the live system. The Sept 16 working session is its own tab: 44 requests across the homepage, orders, quote builder, partner portal, the booking form and reports, grouped the way the meeting ran. <b>Twenty-six of them are now live</b>, shipped across 17–18 September: the Control Centre split into Today and Apps with the month on the home screen and a rail you arrange yourself; Orders on four tabs with one options menu per row and the tracking number captured at fulfilment; Reports on four tabs with any date range; and the booking page rebuilt with pictures, a real calendar and per-service required fields. Marie&rsquo;s opening balances went in the same week. What still gates the rest is configuration and answers, not code: the three Entra grants, the Stripe and WooCommerce keys, the barcode scanner, and the booking page&rsquo;s terms, privacy and overtime wording.</div>
   </div>
 </div>
 
@@ -320,7 +418,7 @@ var DELIVERIES = [
         {t:'Cards on file: editing limited to Viviana, Roya and Lynn', o:'Loom Tech', s:'done', n:'Aug 12, LIVE on your OS (promoted Aug 13) — and built so the OS never holds a card number. The customer types it on Stripe\u2019s own page; what the OS stores is a token plus the brand and last four digits \u2014 enough to recognise a card, useless to anyone who got hold of the database. Access is by name rather than by role: only Viviana, Roya and Lynn, checked on the server, so being an admin (or even another owner) is not a way in. Cards appear on the client profile only \u2014 never on a work order, never in lists, search or exports \u2014 and every view and every charge is written to the audit log with who did it. Charging a card is always someone typing an amount, never automatic.'},
         {t:'Tiered client portals (offices / retailers / operators)', o:'Loom Tech', s:'done', n:'LIVE Sept 1 at atelio-qcs-portal.vercel.app \u2014 exactly as answered Aug 28: order-through, one login per company, each client sees their tier price, and it wears the OS look. Full detail in the Sept wave tab.'},
         {t:'WooCommerce order + catalogue sync', o:'QCS \u00b7 Loom Tech', s:'prog', n:'Order side done and LIVE: store orders sync into the ERP every 15 minutes (since Jul 31) and auto-link to their CRM customer (promoted Aug 8). Catalogue side built and LIVE as of Aug 14, but deliberately idle \u2014 it runs in preview, compares prices only, and can only update products that already exist: it cannot create a product or take a page down. A dry run found two genuine disagreements (JURA Hot Cup Warmer \u0024265 vs \u0024299; Olympia Cremina sale price) and three questions we will not answer for you \u2014 how \u201cavailable to order\u201d should read to a customer, what to do about the 183 website products with no SKU, and which system wins when they disagree. Nothing goes across until the team answers.'},
-        {t:'Built-in booking (replace the paid plugin)', o:'Loom Tech · QCS', s:'prog', n:'Sept 15: Alissa\u2019s spec arrived and the page is BUILT and verified on staging — all eight services (sales appointments, maintenance, calibration, four trainings) with real time slots sized to each service, per-service forms (brand inquiry, machine model, on-site address), terms tick, prices displayed and paragraph descriptions; the repair request flow rides along unchanged. Needs from the team: real durations, prices, the terms link and Saturday hours — then it promotes and the WordPress plugin can retire.'}
+        {t:'Built-in booking (replace the paid plugin)', o:'Loom Tech · QCS', s:'prog', n:'Sept 15: Alissa\u2019s spec arrived and the page is BUILT and verified on staging — all eight services (sales appointments, maintenance, calibration, four trainings) with real time slots sized to each service, per-service forms (brand inquiry, machine model, on-site address), terms tick, prices displayed and paragraph descriptions; the repair request flow rides along unchanged. Sept 16: the team reviewed it and asked for a different flow — request → staff confirm → automatic email, with the option to propose another time — plus a visual Calendly-style calendar, descriptions and images, a two-column category grid, stat-holiday rules and Reza’s vacation feeding availability through HR. All eight services stay switched OFF until that lands, so nothing customer-facing moves in the meantime. Full list on the Sept 16 tab.'}
       ]}
     ]},
   { id:'s4', label:'Sprint 4', win:'Weeks 8–10 · Go-live', title:'Payments, HR, Accounting & docs',
@@ -479,9 +577,82 @@ var DELIVERIES = [
       { title:'On QCS\u2019s side', tasks:[
         {t:'Microsoft permission grants (with Grant)', o:'QCS', s:'wait', n:'The three Entra application permissions \u2014 unlock OneDrive sync, the document archive and email logging. Instructions already with the team.'},
         {t:'Labour & parts standard pricing list', o:'QCS', s:'wait', n:'Confirms receipt and gets uploaded \u2014 powers auto-pricing in the billing tab.'},
-        {t:'Barcode scanner from Staples', o:'QCS', s:'wait', n:'Confirm arrival; pairs with RI label printing.'},
+        {t:'Barcode scanner from Staples', o:'QCS', s:'wait', n:'Sept 16: checked during the session \u2014 not on site, and the team believes it was never ordered. Counter check-in stays blocked until one arrives and can be tested against the label printer.'},
         {t:'Answers to the Teams questions', o:'QCS', s:'wait', n:'The open-questions page from the review holds them all in one place.'},
-        {t:'QuickBooks opening balances + USD PO policy', o:'QCS', s:'wait', n:'The chart itself surfaced in OneDrive (Marie\u2019s Aug-5 upload) and was mapped into the ledger Sept 10 \u2014 19 of 24 accounts matched to QuickBooks names; five need Marie\u2019s pick. Opening balances + the USD PO policy still to come.'}
+        {t:'QuickBooks opening balances', o:'QCS', s:'done', n:'Sept 15: Marie\u2019s full chart is IN \u2014 147 accounts loaded name-for-name, codes preserved, with the twelve automatic posting roles pointed at her accounts. Sept 16: the USD purchase-order question is ANSWERED \u2014 USD POs stay in USD. Sept 18: THE OPENING BALANCES ARE IN. Marie\u2019s dated trial balance as at 1 September posted as a single opening entry \u2014 102 lines, 99 matched to her chart by account code, and the books balance: assets $3,153,662.20 against liabilities $365,227.65 plus equity $2,788,434.55, to the cent. The September parallel run can start on real balances. Three lines are parked rather than guessed at, each waiting on Marie: the unnumbered \u201cAccount for Credit Transfer\u201d $195.00 sits in a new 1999 \u00b7 Suspense; 2050 \u00b7 Visa was added back to the chart for its $86.09; and the $0.16 the source document is out by went to 5999 \u00b7 Reconciliation Discrepancies as its own line. Each is a two-line correction once she says where they belong.'}
+      ]}
+    ]},
+  { id:'s16', label:'Sept 16 review', win:'Sept 16 · Team working session · 44 items', title:'The Sept 16 working session — every request, mapped',
+    sub:'A full team session on the homepage, orders, quote builder, partner portal, the booking form and reports, prepared by an internal QCS meeting the Monday before. Every action item is below, grouped the way the meeting ran. Nothing here is built yet unless the note says so.',
+    flags:[
+      '<b>The booking flow changes.</b> The team asked for request → staff confirm → auto-email, with the option to propose a different time. What is built today books a specific slot outright. The eight services stay switched off until the new flow lands, so nothing customer-facing changes in the meantime.',
+      '<b>Answers the meeting settled</b> — USD purchase orders stay in USD (this closes a question open since Sept 9); commissions stay manual, not calculated; no loyalty or rewards tier programme (distributor pricing is the reward); reports do not need to hyperlink back into the catalogue; cost stays visible on catalogue items, only the dealer/retailer price is hidden.',
+      '<b>Questions back from this session</b> — ① Which Q&amp;A page should the booking terms link to? ② What should the privacy / data-deletion wording say? ③ What are the overtime charge amounts customers are agreeing to? ④ Marie: the sales-summary filter list. ⑤ The barcode scanner has not been ordered yet — who is placing it?'
+    ],
+    groups:[
+      { title:'Homepage & Control Centre', tasks:[
+        {t:'Inbox pinned to the top of every page, with the unread badge', o:'Loom Tech', s:'done', n:'Sept 18: shipped, then corrected the same day — it went to the rail only, and the first person to look for it did not find it. It is now a labelled button with its unread count in the top bar, on both tabs, and a panel on Today. Visible from any section, not just the Control Centre — red count for unread. The badge itself already exists and counts correctly (Sept 10); this moves it somewhere it is always in view and removes the conversations block from the homepage.'},
+        {t:'Control Centre splits into two tabs', o:'Loom Tech', s:'done', n:'Sept 18: live — Today and Apps. Tab 1: the calendar plus Needs Attention. Tab 2: Apps. Agreed layout — calendar and Needs Attention side by side in two columns, with the summary counts (open deals, open orders, backorders, follow-up needed) underneath the calendar, and a pop-out button for a full-screen calendar.'},
+        {t:'Apps tab customisable per user, plus a shortcuts bar', o:'Loom Tech', s:'done', n:'Sept 18: live. Star an app and the rail becomes just your starred ones; unstar to take it off. Drag a tool out of Apps into a personal favourites bar and reorder it. Raised in the session: the rail looks heavy to the four master accounts precisely because they see everything — the team sees far less by default. The shortcuts bar is the answer to the click depth (Sales CRM → scroll → Quote Builder).'},
+        {t:'Accounting widgets come off the general homepage', o:'Loom Tech', s:'done', n:'Sept 18: live — receivables sits on the Money focus only. Receivables and the rest move to Reports, where Marie works anyway. Today’s Schedule stays — it fills in once Service & Dispatch is running.'}
+      ]},
+      { title:'Orders', tasks:[
+        {t:'Four tabs: In-house, Online, Dealer, Backorder', o:'Loom Tech', s:'done', n:'Sept 18: live. Dealer beats Online, so a retailer ordering through the portal files as a dealer order. In-house covers walk-in and showroom. Settled live in the session: the first pass was three tabs until dealer orders came up, which need their own. The status counts bar stays at the top.'},
+        {t:'Source column removed', o:'Loom Tech', s:'done', n:'Sept 18: live. The tabs make it redundant — the customer name tells you the rest.'},
+        {t:'Customer notes and special pricing on the order edit view', o:'Loom Tech', s:'done', n:'Sept 18: live — internal notes, credit hold, balance and the customer’s own percentages, on the order form. Their account terms surface while you are editing — e.g. 30% on cleaning supplies. Internal only; never printed on a quote or invoice.'},
+        {t:'Row buttons become a side options column', o:'Loom Tech', s:'done', n:'Sept 18: live — one menu per row. Edit, View, Delete, Fulfil, Complete in one column, matching the pending work orders view rather than buttons repeated on every line.'},
+        {t:'Status wording: Fulfilled for online, Invoiced for in-house', o:'Loom Tech', s:'done', n:'Sept 18: live. Both green. Fulfilled is pressed when the box is packed and ready; Invoiced means the customer is at the pay station and walking out with it.'},
+        {t:'Tracking number captured at fulfilment', o:'Loom Tech', s:'done', n:'Sept 18: live — required on online orders, with a picked-up-in-store exit. Entered as part of pressing Fulfil, so the customer gets the tracking info with the notification. The order form already carries ship-via and tracking fields (Aug 28) — this wires them into the fulfilment step.'},
+        {t:'Backorder tab with a parts-arrived indicator', o:'Loom Tech', s:'done', n:'Sept 18: live. Backordered lines collect here with an arrival status so the desk knows when they can be fulfilled and shipped. Online orders are always prepaid; in-house and dealer backorders may be paid or unpaid, so the tab cannot assume either.'},
+        {t:'Refunds — four master accounts only', o:'Loom Tech', s:'done', n:'Sept 18: live — narrowed from owner+admin to owner, matching Void. Viviana, Roya, Kazuto and Roger. Line-item or whole-order, adjustable by hand, with a quick link through to accounting from the order. Deliberately gated: refunds must not be issuable by the desk, partly because they land in the middle of Marie’s reconciling.'}
+      ]},
+      { title:'Quote Builder', tasks:[
+        {t:'Customer account panel when a customer is selected', o:'Loom Tech', s:'todo', n:'Their notes, discounts by brand (e.g. 30% Nelson, 35% Conti, 45% WMF), billing and shipping, balance owing — the same information Marie reads off the QuickBooks customer notes. Internal only; a button or a tab, not on the sent quote.'},
+        {t:'Description-only line under zeroed items', o:'Loom Tech', s:'done', n:'Sept 17: live. Required for accounting: whenever a line is zeroed, the reason has to be stated — bundled sale, manufacturer warranty, included in service agreement. Typed each time rather than preset, because it varies by job.'},
+        {t:'Documents auto-attached to the quote email', o:'Loom Tech', s:'todo', n:'Spec sheets, care instructions and manuals for the items on the quote, pulled from the system and attached to the email — agreed as attachments rather than extra pages on the PDF.'},
+        {t:'Line items hidden and shown with an eye icon', o:'Loom Tech', s:'done', n:'Sept 17: live. Water filter, softener, freight, payment terms — hidden without deleting, and brought back the same way. A rep quoting a Jura office machine hides the softener; a dealer quote hides payment terms.'},
+        {t:'Quotes send from the orders@ mailbox', o:'QCS · Loom Tech', s:'todo', n:'Switching the send-from address to the company orders@ Quality Coffee Systems mailbox.'}
+      ]},
+      { title:'Catalogue & pricing', tasks:[
+        {t:'Dealer price column hidden, field kept', o:'Loom Tech', s:'done', n:'Sept 17: live. Renamed from retailer to Dealer Price and taken off the screen for now. The field stays in place so it can be switched back on the day pricing is standardised across the non-Jura brands — exposing it again is one column, not a rebuild.'},
+        {t:'Cost stays, list price drives the website', o:'Loom Tech', s:'done', n:'Confirmed in the session: cost stays visible so margins work; list price is what goes to the website. It was the retailer price, not cost, that was to come off.'}
+      ]},
+      { title:'Partner portal', tasks:[
+        {t:'Accounts for Viviana and the team', o:'Loom Tech', s:'todo', n:'So the team can see the portal from the customer side rather than over a shared screen.'},
+        {t:'Product cards clickable', o:'Loom Tech', s:'done', n:'Sept 17: live. They are static today — the card has to open the product.'},
+        {t:'Multiple images, mirroring the website', o:'Loom Tech', s:'todo', n:'The portal shows the same image selection as the website; the OS keeps the full set and controls which are exposed.'},
+        {t:'Confirmation step before an order is placed', o:'Loom Tech', s:'done', n:'Sept 17: live. Raised in the session — Place Order currently submits on one click with no way back.'},
+        {t:'Promotions banner, updated monthly', o:'Loom Tech · Alyssa', s:'todo', n:'A banner section in the shop, with Alyssa maintaining a shared sheet of image plus promotion details each month. Jura runs a monthly promotion — this month the J10 Twin.'},
+        {t:'Promotional accessories zero out automatically', o:'Loom Tech', s:'todo', n:'If a machine on promotion includes a free accessory — a Giga 10 with a one-litre Cool Control, say — the accessory strikes through and zeroes in the customer’s order.'},
+        {t:'Staff can pre-fill a cart and send an order link', o:'Loom Tech', s:'todo', n:'The team loads a dealer’s cart with an agreed price — last month’s promo honoured this month, for instance — and emails a link for the dealer to complete. Expected once or twice a month, mostly as a loyalty gesture.'},
+        {t:'Password setup and admin reset', o:'Loom Tech', s:'todo', n:'Email invitation → the partner sets their own password → a reset button on the QCS side for when they forget. Confirmed in the session that partners set their own.'},
+        {t:'Dealer pricing tiers', o:'QCS · Loom Tech', s:'wait', n:'Investigating pricing groups so a dealer band can sit at, say, 5% off list — the incentive for buying tablets and accessories from QCS rather than Amazon. Explicitly after the retailer and operator price lists, which are the priority.'}
+      ]},
+      { title:'Booking page', tasks:[
+        {t:'Request → confirm → auto-email, with propose-another-time', o:'Loom Tech', s:'todo', n:'The flow the team asked for: the customer requests a slot, it lands in the inbox and as an email, staff check the calendar and confirm — which emails the customer automatically — or propose a different time. Replaces today’s book-the-slot-outright behaviour. Roya confirms every sales appointment by hand today, so this is the step being automated.'},
+        {t:'Descriptions and images on every service', o:'Loom Tech', s:'done', n:'Sept 18: live. The page is deliberately plain at the moment. Full descriptions per service plus imagery.'},
+        {t:'Two-column grid for the categories', o:'Loom Tech', s:'done', n:'Sept 18: live — one column on a phone. Residential and Commercial sales side by side, the four trainings as a block — matching how the current website form reads.'},
+        {t:'Visual calendar rather than a date dropdown', o:'Loom Tech', s:'done', n:'Sept 18: live. Days that are FULL are greyed as well as days you are closed, which the dropdown could never show. Calendly-style: the month laid out, open days and times visible at a glance. Named as the thing the team likes about the current plugin.'},
+        {t:'Terms link to the Q&A page, plus privacy and overtime', o:'QCS · Loom Tech', s:'todo', n:'The existing terms link on the website loops back to the booking form, so there is no page to point at. Agreed: link the Q&A page (it carries the restocking terms), add a privacy line for data-deletion requests, and an acknowledgement of overtime charges. Needs the page and the wording from QCS.'},
+        {t:'Stat holidays blocked — except maintenance and repair', o:'Loom Tech', s:'todo', n:'Closed on stat holidays: Residential Sales, Commercial Sales, Commercial Calibration and all four trainings. Open around the clock: Commercial General Maintenance and Machine repair.'},
+        {t:'Reza’s calendar and vacation drive availability', o:'Loom Tech', s:'todo', n:'Calibration and all the training run through one person, so his booked time and his approved vacation have to close those slots — through the HR module, which already holds the time-off requests.'},
+        {t:'Required fields configurable per service', o:'Loom Tech', s:'done', n:'Sept 18: the mechanism is live — do not ask / ask / require, per field, per service. Which fields each service should require is still Alissa’s to set. Which fields are mandatory set per service rather than fixed.'}
+      ]},
+      { title:'Reports', tasks:[
+        {t:'Custom date range', o:'Loom Tech', s:'done', n:'Sept 18: live. Alongside the existing 3 / 6 / 12-month filters. The full history is there to query.'},
+        {t:'Sales by rep', o:'Loom Tech', s:'done', n:'Sept 18: live, with a showroom pool so counter sales are not attributed to nobody. Maggie, Reza, Kazuto, Roger, plus a showroom pool — showroom sales are commissioned jointly, so they report as one rep. Commissions stay manual by choice, not calculated by the system.'},
+        {t:'Reports reorganised into tabs', o:'Loom Tech', s:'done', n:'Sept 18: live — four tabs. Overview, Accounts Receivable & Payable, Service, Inventory. Everything currently sits on one long scrolling page. Sales by rep and the sales summary live inside the receivables tab rather than becoming tabs of their own.'},
+        {t:'Sales summary filters — by rep, item and customer', o:'QCS · Loom Tech', s:'todo', n:'Same dropdown format as the rest of the system. Marie is sending the list of how she wants them filtered.'},
+        {t:'PDF export alongside CSV', o:'Loom Tech', s:'todo', n:'Both formats, on every report.'},
+        {t:'Inventory valuation: filters and a search bar', o:'Loom Tech', s:'done', n:'Sept 17: live. Filter by brand and by category — machines, parts, cleaning supplies — plus a search bar. Confirmed the section does not need to link back into the catalogue.'},
+        {t:'Receivables link through to the full invoice', o:'Loom Tech', s:'prog', n:'The aging list already shows the invoice, its age and where it sits in the pipeline; clicking through to the invoice itself follows once the integrations are finished.'}
+      ]},
+      { title:'Follow-ups', tasks:[
+        {t:'Re-share the open questions doc and ping Viviana directly', o:'Loom Tech', s:'done', n:'Sept 17: superseded and done — the questions live inside the OS, and the panel now has an Answered view with counts, so a reply is visible without anyone re-sending anything. Alissa answered two on Sept 17. Shared in Teams the previous Wednesday with the meeting notes and missed. Re-sending it directly rather than in a thread.'},
+        {t:'Re-forward the accounting report email to Marie', o:'QCS', s:'todo', n:'Marie’s screenshots and the list of reports she needs.'},
+        {t:'Separate accounting session — Marie, Viviana and her father', o:'QCS · Loom Tech', s:'todo', n:'The chart of accounts and ledger are already in the system, so the meeting is about how it gets used rather than setting it up.'},
+        {t:'Barcode scanner — confirm it was ordered', o:'QCS', s:'wait', n:'Checked during the session: not found, and the team believes it was never ordered. Counter check-in stays blocked until it arrives and can be tested with the label printer.'},
+        {t:'Roll-out plan once testing settles', o:'Loom Tech · QCS', s:'todo', n:'Agreed at the close: more of the team puts the system through its paces, then we plan how it rolls out to everyone.'}
       ]}
     ]},
   { id:'fb', label:'Team feedback', win:'Aug 27\u201328 \u00b7 40 items', title:'Two feedback docs, three waves, one day to production',
